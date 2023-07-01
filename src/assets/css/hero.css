@@ -1,0 +1,92 @@
+.hero {
+    padding: 2rem 1.2rem;
+    min-height: 350px;;
+    background: rgba(0, 153, 255, 0.116);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+    margin-top: 0;
+}
+
+.container.container__hero {
+    width: 62%;
+    min-height: 300px;
+    display: flex;
+    align-items: flex-end;
+    background: var(--overlay-bg);
+    backdrop-filter: var(--backdrop-filter);
+    position: relative;
+}
+
+.anime__hero__info {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.2rem;
+    width: 70%;
+    color: var(--primary);
+}
+
+.anime__hero__title h3 {
+    font-size: 1.7rem;
+    margin-bottom: 5px;
+}
+
+.anime__status__episodes {
+    font-size: 12px;
+    display: flex;
+    gap: 5px;
+}
+
+.anime__hero__info p {
+    font-size: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.anime__hero__cover {
+    height: 250px;
+    width: 250px;
+}
+
+.anime__hero__cover img{
+    padding: 1.2rem;
+}
+
+/*************** MEDIAY QUERIES (1024) *************/
+@media screen and (max-width: 1024px ){
+    .container.container__hero {
+        width: var(--container-md);
+    }
+}
+
+/*************** MEDIAY QUERIES (600) *************/
+@media screen and (max-width: 600px ){
+    .container.container__hero {
+        width: var(--container-sm);
+        min-height: auto;
+    }
+
+    .anime__hero__cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        box-shadow: var(--box-shadow);
+    }
+
+    .anime__hero__info { 
+        height: 100%;
+        width: 100%;
+        background: var(--overlay-bg);
+        z-index: 1;
+    }
+
+    .anime__hero__cover img {
+        padding: 0;
+    }
+}

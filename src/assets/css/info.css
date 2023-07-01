@@ -1,0 +1,202 @@
+
+.info {
+    min-height: 250px;;
+    background: (--primary-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 2rem 1.2rem;
+    margin-top: 0;
+}
+
+.container__info {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    padding: 2rem;
+    gap: 2%;
+    background: var(--overlay-bg);
+    position: relative;
+}
+
+.anime__info__cover {
+    width: 100%;
+    height: 100%;
+}
+
+.anime__info__info {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    justify-content: center;
+    position: relative;
+}
+
+.anime__info__info span {
+    font-size: 11px;
+    color: var(--secondary)
+}
+
+.anime__info__info h3 {
+    color: var(--primary)
+}
+
+.anime__info__info li,
+.anime__info__info p,
+.anime__info__ul li p {
+    font-size: 13px;
+    color: var(--primary);
+    display: inline;
+}
+
+.anime__info,
+.anime__info__ul {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.anime__info h3 {
+    font-size: 2rem;
+}
+
+
+/***************** EPISODES *****************/
+.info__episodes h2,
+.info__recommendation h2,
+.info__recommendation p {
+    width: var(--container-lg);
+    margin: 0 auto;
+}
+
+.episodes {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 1rem;
+    padding-bottom: 1rem;
+}
+
+.episodes .btn {
+    width: 100%;
+    text-align: center;
+}
+
+.info__recommendation {
+    margin-top: 7rem;
+}
+
+.container__recommendation {
+    height: 350px;
+}
+
+.recommendation {
+    height: 100%;
+    width: 300px;
+    position: relative;
+    box-shadow: var(--box-shadow);
+}
+
+.recommention__image {
+    width: 100%;
+    height: 100%;
+}
+
+.recommendation__rating,
+.recommendation__episodes,
+.recommendation__title {
+    position: absolute;
+}
+
+.recommendation__title {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--overlay-bg);
+}
+
+.recommendation__title h4 {
+    padding: 7px;
+}
+
+.recommendation span {
+    font-size: 12px;
+    padding: 7px;
+    color: var(--primary);
+    box-shadow: var(--box-shadow);
+}
+
+.recommendation__rating {
+    top: 7px;
+    left: 5px;
+    background: var(--rating);
+}
+
+.recommendation__episodes {
+    top: 7px;
+    right: 5px;
+    background: var(--secondary);
+}
+
+/***************** MEDIA QUERIES (1440) *****************/
+@media screen and (max-width: 1440px) {
+    .episodes {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+/***************** MEDIA QUERIES (1024) *****************/
+@media screen and (max-width: 1024px) {
+    .container__info {
+        padding: 1.2rem;
+    }
+
+    .info__episodes h2,
+    .info__recommendation h2,
+    .info__recommendation p {
+        width: var(--container-md);
+    }
+
+}
+
+/***************** MEDIA QUERIES (800) *****************/
+@media screen and (max-width: 800px) {
+    .container__info {
+        grid-template-columns: 2fr 4fr;
+        padding: 1.2rem;
+    }
+
+    .episodes {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/***************** MEDIA QUERIES (600) *****************/
+@media screen and (max-width: 600px) {
+    .info {
+        padding: 1rem .7rem;
+    }
+
+    .container__info {
+        grid-template-columns: 1fr;
+        padding: 0rem;
+    }
+
+    .anime__info__info {
+        background: var(--overlay-bg);
+        padding: 0.8rem;
+    }
+
+    .anime__info__cover {
+        position: absolute;
+    }
+
+    .info__episodes h2,
+    .info__recommendation h2,
+    .info__recommendation p {
+        width: var(--container-sm);
+    }
+
+    .episodes {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}

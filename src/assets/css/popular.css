@@ -1,0 +1,88 @@
+.popular h2 {
+    width: var(--container-lg);
+    margin: 0 auto;
+}
+
+.popular h2 span {
+    font-size: 12px;
+}
+
+.popular__anime {
+    width: 350px;
+    min-height: 350px;
+    position: relative;
+    box-shadow: var(--box-shadow);
+}
+
+.popular__anime__image,
+.popular__anime__title,
+.popular__anime__rating,
+.popular__anime__episodes {
+    position: absolute;
+}
+
+.popular__anime__image {
+    height: 100%;
+    width: 100%;
+}
+
+.popular__anime__title {
+    bottom: 0px;
+    left: 0px;
+    padding: 7px;
+    background: var(--overlay-bg);
+    width: 100%;
+}
+
+.popular__anime__rating {
+    top: 7px;
+    left: 5px;
+    padding: 7px;
+    font-size: 12px;
+    background: var(--rating);
+    color: var(--primary);
+    box-shadow: var(--box-shadow);
+}
+
+.popular__anime__episodes {
+    top: 7px;
+    right: 5px;
+    padding: 7px;
+    font-size: 12px;
+    background: var(--secondary);
+    color: var(--primary);
+    box-shadow: var(--box-shadow);
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    z-index: 99;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    color: var(--primary);
+    text-shadow: var(--text-shadow);
+}
+
+/*************** MEDIAY QUERIES (1024) *************/
+@media screen and (max-width: 1024px ){
+    .popular h2 {
+        width: var(--container-md);
+    }
+}
+
+/*************** MEDIAY QUERIES (600) *************/
+@media screen and (max-width: 600px ){
+    .popular h2 {
+        width: var(--container-sm);
+    }
+}

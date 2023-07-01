@@ -1,0 +1,114 @@
+.latest h2 {
+    width: var(--container-lg);
+    margin: 0 auto;
+}
+
+.container__latest {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2%;
+    height: 100%;
+}
+
+.latest__card__container {
+    margin-bottom: 2rem;
+}
+
+.latest__card {
+    display: flex;
+    min-height: 250px;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    box-shadow: var(--box-shadow);
+}
+
+.latest__card__image {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.latest__card__image img {
+    transition: var(--transition);
+}
+
+.latest__card__title {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 7px;
+    width: 100%;
+    background: var(--overlay-bg);
+    font-size: 14px;
+}
+
+.latest__card__rating {
+    position: absolute;
+    top: 7px;
+    left: 5px;
+    background-color: var(--rating);
+    padding: 5px;
+    font-size: 10px;
+    color: var(--primary);
+    box-shadow: var(--box-shadow);
+}
+
+.latest__card:hover .latest__card__image img {
+    transform: scale(1.2);
+}
+
+.latest__card {
+    transition: var(--transition);
+}
+
+.latest__card:hover {
+    color: var(--secondary);
+}
+
+/*************** MEDIAY QUERIES (1024) *************/
+@media screen and (max-width: 1024px ){
+    .container__latest {
+        grid-template-columns: repeat(4, 1fr);
+        padding-bottom: 3.5rem;
+    }
+
+    .latest__card__container {
+        margin-bottom: 1.5rem;
+    }
+
+    .latest h2 {
+        width: var(--container-md);
+    }
+}
+
+/*************** MEDIAY QUERIES (768) *************/
+@media screen and (max-width: 768px ){
+    .container__latest {
+        grid-template-columns: repeat(3, 1fr);
+        padding-bottom: 5rem;
+    }
+
+    .latest__card__container {
+        margin-bottom: 1rem;
+    }
+}
+
+/*************** MEDIAY QUERIES (600) *************/
+@media screen and (max-width: 600px ){
+    .container__latest {
+        grid-template-columns: repeat(2, 1fr);
+        padding-bottom: 7.5rem;
+    }
+
+    .latest__card__container {
+        margin-bottom: 0.5rem;
+    }
+
+    .latest h2 {
+        width: var(--container-sm);
+    }
+}

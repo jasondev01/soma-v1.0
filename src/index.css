@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;500;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    outline: none;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;;
+    background: var(--primary-bg);
+    color: var(--primary);
+    transition: var(--transition);
+}
+
+.light {
+    color: var(--primary);
+}
+
+:root {
+    
+    --primary: rgb(241, 241, 241);
+    --secondary-variant: rgb(0, 62, 107);
+    --secondary: rgb(77, 181, 255);
+    
+
+    --primary-bg: rgb(19, 19, 19);
+    --overlay-bg: rgba(0, 0, 0, 0.5);
+
+    --text-shadow: 2px 1px 2px rgba(124, 124, 124, 0.6);
+    --box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);;
+
+    --rating: rgb(255, 87, 87);
+
+    --container-lg: 72%;
+    --container-md: 86%;
+    --container-sm: 90%;
+
+    --transition: all .3s ease-in-out;
+    --backdrop-filter: blur(3px);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ============ GENERAL ===========*/
+.container {
+    width: var(--container-lg);
+    margin: 0 auto;
+}
+
+section {
+    margin-top: 2.2rem;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    margin-bottom: 1.2rem!important;
+}
+
+a {
+    color: var(--primary);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--secondary);
+}
+
+.btn {
+    width: max-content;
+    display: inline-block;
+    color: var(--primary);
+    padding: 0.65rem 1.2rem;
+    cursor: pointer;
+    border: 1px solid var(--primary);
+    letter-spacing: 1px;
+    font-size: 14px;
+    box-shadow: var(--box-shadow);
+}
+
+.btn:hover {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--primary);
+}
+
+.btn-primary {
+    border-color: var(--secondary);
+    background: var(--secondary);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-variant);
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+span, p, h1, h2, h3, h4, h5 {
+    text-shadow: var(--text-shadow);
+}
+
+.green {
+    background-color: green!important;
+}
+
+/* ================== MEDIA QUERIES (MEDIUM DEVICES) =============== */
+@media screen and (max-width: 1024px) {
+    .container {
+        width: var(--container-md);
+    }
+}
+
+/* ================== MEDIA QUERIES (SMALL DEVICES) =============== */
+@media screen and (max-width: 800px) {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        width: var(--container-sm);
+    }
+}

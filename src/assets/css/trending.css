@@ -1,0 +1,193 @@
+.trending h2 {
+    width: var(--container-lg);
+    margin: 0 auto;
+}
+
+.container__trending {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2%;
+}
+
+/********** HIGHEST RATING BOX *********/
+.highest__rating {
+    grid-column: span 2;
+    grid-row: span 2;
+    height: 520px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: var(--box-shadow);
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background: var(--overlay-bg);
+    opacity: 0;
+    transition: var(--transition);
+    color: var(--primary);
+    backdrop-filter: blur(2px);
+    z-index: 1;
+}
+
+.overlay:hover {
+    opacity: 1;
+    color: var(--primary);
+}
+
+.highest__rating img,
+.highest__rating__rate,
+.highest__rating__info-active {
+    position: absolute;
+}
+
+.highest__rating__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 2rem;
+    margin-top: 4rem;
+}
+
+.highest__rating__info h4,
+.highest__rating__info-active h4 {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+.highest__rating__info-active h4,
+.highest__rating__info-active span {
+    padding: 1.2rem 2rem;
+}
+
+.highest__rating__description {
+    font-size: 14px;
+    margin-bottom: 1.2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.highest__rating__info-active {
+    bottom: 0;
+    background: var(--overlay-bg);
+    width: 100%;
+    backdrop-filter: var(--backdrop-filter);
+    opacity: 1;
+    transition: var(--transition);
+    display: flex;
+    align-items: end;
+}
+
+.highest__rating:hover .highest__rating__info-active {
+    opacity: 0;
+}
+
+.highest__rating__buttons {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.trending__card__rating,
+.highest__rating__rate {
+    position: absolute;
+    top: 7px;
+    left: 5px;
+    background: var(--rating);
+    padding: 7px;
+    font-size: 12px;
+    color: var(--primary);
+    box-shadow: var(--box-shadow);
+    z-index: 5;
+}
+
+.highest__rating__rate__episodes,
+.trending__card__episodes {
+    position: absolute;
+    top: 7px;
+    right: 5px;
+    padding: 7px;
+    font-size: 12px;
+    background: var(--secondary);
+    z-index: 5;
+    color: var(--primary);
+    box-shadow: var(--box-shadow);
+}
+
+/********** THE REST OF THE TRENDING BOX  *********/
+.trending__card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: .5rem;
+    flex-wrap: wrap;
+    box-shadow: var(--box-shadow);
+}
+
+.trending__card__image,
+.trending__card__title,
+.trending__card__rating {
+    position: absolute;
+}
+
+.trending__card__image {
+    height: 100%;
+    width: 100%
+}
+
+.trending__card__image img {
+    transition: var(--transition);
+}
+
+.trending__card__title {
+    bottom: 0px;
+    left: 0px;
+    background: var(--overlay-bg);
+    width: 100%;
+    padding: 7px;
+}
+
+.trending__card:hover .trending__card__image img{
+    transform: scale(1.2);
+}
+
+
+/*************** MEDIAY QUERIES (1024) *************/
+@media screen and (max-width: 1024px ){
+    .container__trending {
+        grid-template-columns: repeat(4, 1fr);
+        padding-bottom: 3.5rem;
+    }
+    
+    .trending h2 {
+        width: var(--container-md);
+    }   
+}
+
+/*************** MEDIAY QUERIES (600) *************/
+@media screen and (max-width: 600px ){
+    .container__trending {
+        grid-template-columns: repeat(3, 1fr);
+        padding-bottom: 3.5rem;
+    }
+
+    .trending h2 {
+        width: var(--container-sm);
+    }   
+}
+
+/*************** MEDIAY QUERIES (600) *************/
+@media screen and (max-width: 600px ){
+    .container__trending {
+        grid-template-columns: repeat(2, 1fr);
+        padding-bottom: 5.5rem;
+    }
+}
