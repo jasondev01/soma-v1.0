@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const Latest = () => {
     const [data, setData] = useState([]);
 
-    const latestURL = `https://api.consumet.org/meta/anilist/recent-episodes?page=1&perPage=10}&provider=gogoanime`;
+    const latestURL = `https://api.consumet.org/meta/anilist/recent-episodes?page=1&perPage=10&provider=gogoanime`;
 
     useEffect(() => {
         const fetchLatest = async () => {

@@ -1,0 +1,85 @@
+.episode {
+    margin-top: 0;
+}
+
+.container__episode {
+    padding-top: 2rem;
+    min-height: 650px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+}
+
+.episode__video {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.buttons,
+.episode__info,
+.iframe__container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+option span {
+    padding: 2rem;
+}
+
+.episode__info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 2.5rem;
+}
+
+.episode__title {
+    margin-bottom: 12px;
+}
+
+.episode__title h3 {
+    margin-bottom: 5px;
+}
+
+.episode__title span {
+    font-size: 12px;
+}
+
+.iframe__container {
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* border: 1px solid red; */
+}
+
+iframe {
+    overflow: hidden;
+}
+
+
+/**************** MORE EPISODES ***************/
+.more__episodes {
+    padding-top: 2.5rem;
+}
+
+.more__episodes h2 {
+    text-align: center;
+}
+
+.__episodes {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 1.2rem;
+    justify-items: center;
+}

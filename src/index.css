@@ -21,12 +21,15 @@ body {
     color: var(--primary);
 }
 
+.dark {
+    color: var(--primary-bg);
+}
+
 :root {
     
     --primary: rgb(241, 241, 241);
     --secondary-variant: rgb(0, 62, 107);
     --secondary: rgb(77, 181, 255);
-    
 
     --primary-bg: rgb(19, 19, 19);
     --overlay-bg: rgba(0, 0, 0, 0.5);
@@ -70,6 +73,7 @@ h2 {
 a {
     color: var(--primary);
     transition: var(--transition);
+    cursor: pointer;
 }
 
 a:hover {

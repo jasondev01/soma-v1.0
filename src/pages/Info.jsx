@@ -3,43 +3,56 @@ import '../assets/css/info.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
-import { FreeMode, Navigation } from "swiper";
 import 'swiper/swiper-bundle.min.css';
 import DOMPurify from 'dompurify';
+import Pageloader from '../components/Pageloader';
 
 const Info = () => {
     const [ data, setData ] = useState([])
     const { id } = useParams();
     const [ showAllEpisodes, setShowAllEpisodes ] = useState(false);
     const navigate = useNavigate();
+    const [ pageLoad, setPageLoad ] = useState(false)
 
-    const info = `https://api.consumet.org/meta/anilist/info/${id}`
+    // Api urll queue for info
+    const info = `https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
 
+    // Get the data
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(info);
                 const responseData = response.data;
+                // removeHTML tags on a text upon receiving/using
                 const cleanedDescription = removeHtmlTags(responseData.description)
                 console.log(responseData);
                 setData({...responseData, description: cleanedDescription});
+                setPageLoad(true)
             } catch(error) {
                 console.log(error.message);
-            }
+                setTimeout(() => {
+                    fetchData();
+                }, 6000);
+            } 
         }
         fetchData();
+        setPageLoad(false)
     }, [id])
 
+    // title filtering
     const title = data.title ? (data.title.english || data.title.romaji) : 'N/A';
 
+    // removeHTML tags on a text
     const removeHtmlTags = (htmlString) => {
         const sanitizedString = DOMPurify.sanitize(htmlString, { ALLOWED_TAGS: [] });
         return sanitizedString;
     };
 
+    // Swiper breakpoints
     const breakpoints = {
         1200: {
             slidesPerView: 4,
@@ -53,13 +66,17 @@ const Info = () => {
           slidesPerView: 2,
           spaceBetween: 10,
         },
-      };
+    };
     
     // Scroll to the top
     useEffect(() => {
-    window.scrollTo({top: 0});
-    }, [data.recommendations]); 
-      
+        window.scrollTo({top: 0});
+    }, [id]); 
+
+    // Pageload
+    if(!pageLoad) {
+        return <Pageloader />
+    }
 
     return (
         <>
@@ -94,8 +111,6 @@ const Info = () => {
                                     )
                                 })
                             )
-                            
-                            
                         }
                     </ul>
 
@@ -118,9 +133,9 @@ const Info = () => {
                         <li>
                         { 
                             data.synonyms && (
-                                data.synonyms.map((item) => {
+                                data.synonyms.map((item, index) => {
                                         return (
-                                            <p>{item}, </p>
+                                            <p key={index}>{item}, </p>
                                         )
                                     })
                             )
@@ -141,7 +156,6 @@ const Info = () => {
                                 })
                             )
                         }
-                        
                     </ul>
                     {
                         data.rating && (
@@ -153,7 +167,22 @@ const Info = () => {
                             </div>
                         )
                     }
-                    
+                    <div className='anime__info'>
+                        <span>Category:</span>
+                        {
+                            data.type &&
+                            data.type === 'TV' ? (
+                                <p>
+                                    {data.type} Series
+                                </p>
+                            ) : (
+                                <p>
+                                    {data.type}
+                                </p>
+                            )
+                        }
+                        
+                    </div>
 
                     <div className='anime__info'>
                         <span>Total Episodes:</span>
@@ -189,9 +218,9 @@ const Info = () => {
                         data.episodes && data.episodes.length > 0 ? (
                             data.episodes.slice(0, showAllEpisodes ? data.episodes.length : 45).map((item, index) => {
                                 return (
-                                    <a href="#" className='btn btn-primary' key={index}>
+                                    <Link to={`/episode/${id}/${item.id}/`} className='btn btn-primary' key={index}>
                                         EP {item.number}
-                                    </a>
+                                    </Link>
                                 )
                             })
                         ) : (
@@ -213,7 +242,7 @@ const Info = () => {
 
         
         <section className='info__recommendation'>
-            <h2>Recommendations</h2>
+            <h2>You might also like</h2>
             {
                 data.recommendations && data.recommendations.length > 0 ? (
                     <Swiper className='container container__recommendation'

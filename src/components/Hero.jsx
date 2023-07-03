@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 import { Link } from 'react-router-dom';
+import Pageloader from './Pageloader';
 
 const Hero = () => {
     const [data, setData] = useState([]);
+    const [pageLoad, setPageLoad] = useState(false);
 
-    const randomURL = `https://api.consumet.org/meta/anilist/random-anime`;
+    const randomURL = `https://api.consumet.org/meta/anilist/random-anime?provider=gogoanime`;
 
     useEffect(() => {
         const fetchLatest = async () => {
@@ -17,17 +19,26 @@ const Hero = () => {
                 const cleanedDescription = removeHtmlTags(responseData.description);
                 console.log(responseData.id);
                 setData({...responseData, description: cleanedDescription });
+                setPageLoad(true)
             } catch(error) {
                 console.log(error.message);
+                setTimeout(() => {
+                    fetchLatest();
+                }, 6000);
             }
         };
         fetchLatest();
+        setPageLoad(false)
     }, []);
 
     const removeHtmlTags = (htmlString) => {
         const sanitizedString = DOMPurify.sanitize(htmlString, { ALLOWED_TAGS: [] });
         return sanitizedString;
     };
+
+    if (!pageLoad) {
+        return <Pageloader />
+    }
 
     return (
         <section id='hero' className='hero' style={{backgroundImage: `url(${data.cover})`}} >
@@ -53,7 +64,7 @@ const Hero = () => {
                         { data.description }
                     </p>
                     <Link to={`/info/${data.id}`} className='btn btn-primary'>
-                        Details
+                        Read Info
                     </Link>
                 </article>
                 <div className='anime__hero__cover'>

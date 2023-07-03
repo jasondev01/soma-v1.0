@@ -1,10 +1,11 @@
 import React from 'react'
+import Pageloader from '../components/Pageloader'
 
 const About = () => {
     return (
-        <div>
-            ABOUT
-        </div>
+        <>
+            <Pageloader />
+        </>
     )
 }
 

@@ -40,7 +40,7 @@
 }
 
 .anime__hero__info p {
-    font-size: 1rem;
+    font-size: 14px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

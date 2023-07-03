@@ -2,25 +2,11 @@ import '../assets/css/header.css'
 import{ SiZincsearch } from 'react-icons/si'
 import{ RxMoon } from 'react-icons/rx'
 import{ GiSun } from 'react-icons/gi'
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import useThemeContext from '../context/ThemeContext'
 
 const Header = () => {
-    const [theme, setTheme ] = useState(true);
-
-    const toggleTheme = () => {
-        setTheme(!theme)
-    }
-
-    useEffect(() => {
-        if (theme) {
-          document.body.style.backgroundColor = 'var(--primary-bg)';
-          document.body.style.color = 'var(--primary)';
-        } else {
-          document.body.style.backgroundColor = 'rgb(228, 228, 228)';
-          document.body.style.color = 'var(--primary-bg)';
-        }
-      }, [theme]);
+    const { theme, toggleTheme } = useThemeContext();
 
     return (
         <header id='header'>
@@ -28,7 +14,7 @@ const Header = () => {
                 <div className='container container__navbar'>
                     <div className="navbar__logo">
                         <Link to='/'>
-                            <h1 className='logo'>
+                            <h1 className={`logo ${theme ? 'light' : 'dark'}`}>
                                 soma
                             </h1>
                         </Link>
