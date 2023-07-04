@@ -1,0 +1,159 @@
+.episode {
+    margin-top: 0;
+}
+
+.container__episode {
+    padding-top: 2rem;
+    min-height: 650px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+}
+
+.episode__video {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.buttons,
+.episode__info,
+.iframe__container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.opacity {
+    opacity: 0;
+    user-select: none;
+    cursor: default!important;
+}
+
+option span {
+    padding: 2rem;
+}
+
+.episode__info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 2.5rem;
+}
+
+.episode__title {
+    margin-bottom: 12px;
+}
+
+.episode__title h3 {
+    margin-bottom: 5px;
+}
+
+.episode__title span {
+    font-size: 12px;
+}
+
+.iframe__container {
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/**************** MORE EPISODES ***************/
+.more__episodes {
+    padding-top: 2.5rem;
+}
+
+.more__episodes h2 {
+    text-align: center;
+}
+
+.__range {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+}
+
+.__episodes {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+/******************* MEDIA QUERY (1200) ******************/
+@media screen and (max-width: 1200px){
+    .buttons,
+    .episode__info,
+    .iframe__container {
+        width: 100%;
+    }
+
+    .__range {
+        flex-direction: row;
+    }
+}
+
+/******************* MEDIA QUERY (1024-1439) ******************/
+@media screen and (min-width: 1024px) and (max-width: 1439px){
+    .iframe__container {
+        min-height: 520px;
+    }
+}
+
+/******************* MEDIA QUERY (900-1024) ******************/
+@media screen and (min-width: 900px) and (max-width: 1024px){
+    .buttons,
+    .episode__info,
+    .iframe__container {
+        width: 96%;
+    }
+    .iframe__container {
+        min-height: 480px;
+    }
+}
+
+/******************* MEDIA QUERY (768-899) ******************/
+@media screen and (min-width: 768px) and (max-width: 899px){
+    .iframe__container {
+        min-height: 440px;
+    }
+}
+
+/******************* MEDIA QUERY (500-767) ******************/
+@media screen and (min-width: 600px) and (max-width: 767px){
+    .iframe__container {
+        min-height: 380px;
+    }
+}
+
+/******************* MEDIA QUERY (500-767) ******************/
+@media screen and (min-width: 600px) and (max-width: 767px){
+    .iframe__container {
+        min-height: 375px;
+    }
+}
+
+/******************* MEDIA QUERY (400-599) ******************/
+@media screen and (min-width: 365px) and (max-width: 599px){
+    .iframe__container {
+        min-height: 310px;
+    }
+
+    .episode__info {
+        padding: 0 7px;
+    }
+}

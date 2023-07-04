@@ -6,6 +6,7 @@
     background-size: cover;
     background-position: bottom center;
     margin-top: 0;
+    position: relative;
 }
 
 .container.container__hero {
@@ -16,6 +17,7 @@
     background: var(--overlay-bg);
     backdrop-filter: var(--backdrop-filter);
     position: relative;
+    justify-content: space-between;
 }
 
 .anime__hero__info {
@@ -49,12 +51,12 @@
 }
 
 .anime__hero__cover {
-    height: 250px;
-    width: 250px;
+    height: 300px;
+    width: 300px;
 }
 
 .anime__hero__cover img{
-    padding: 1.2rem;
+    padding: 2rem;
 }
 
 /*************** MEDIAY QUERIES (1024) *************/
@@ -68,7 +70,7 @@
 @media screen and (max-width: 600px ){
     .container.container__hero {
         width: var(--container-sm);
-        min-height: auto;
+        height: 300px;
     }
 
     .anime__hero__cover {
@@ -84,6 +86,7 @@
         width: 100%;
         background: var(--overlay-bg);
         z-index: 1;
+        justify-content: end;
     }
 
     .anime__hero__cover img {

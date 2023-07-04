@@ -68,7 +68,6 @@ const Trending = () => {
                             <h4>
                                 {highestRatedItem.title.english ? highestRatedItem.title.english : highestRatedItem.title.romaji} 
                             </h4>
-                            
                         </div>
                         <span className='highest__rating__rate'>
                             HOT
@@ -98,20 +97,22 @@ const Trending = () => {
                                         <span className='trending__card__rating'>
                                             HOT
                                         </span>
-                                        
                                     ) 
                                 }
                                 {   
-                                    item.totalEpisodes ? (
+                                    item.type === 'MOVIE' ? (
+                                        <span className='trending__card__episodes'>
+                                           Movie
+                                        </span>
+                                    ) : item.totalEpisodes ? ( 
                                         <span className='trending__card__episodes'>
                                             Episodes {item.totalEpisodes }
                                         </span>
                                     ) : (
                                         <span className='trending__card__episodes'>
-                                            Coming Soon
+                                           Coming Soon
                                         </span>
                                     )
-                                    
                                 }
                             </Link>
                         </div>

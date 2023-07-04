@@ -3,7 +3,8 @@ import MainLayout from './layouts/MainLayout'
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Info from "./pages/Info"
-import Episode from "./pages/Episode"
+import Watch from "./pages/Watch"
+import PassingData from "./components/PassingData"
 
 function App() {
 
@@ -15,7 +16,8 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/info/:id" element={<Info />} />
-                        <Route path="/episode/:id/:episodeID/" element={<Episode />} />
+                        <Route path="/watch/:id/:episodeID" element={<Watch />} />
+                        <Route path="/pass/:id/:epNum" element={<PassingData />} />
                     </Route>
                 </Routes>
             </Router>

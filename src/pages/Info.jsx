@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/css/info.css'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/free-mode";
-import 'swiper/swiper-bundle.min.css';
+
 import DOMPurify from 'dompurify';
 import Pageloader from '../components/Pageloader';
+import Recommendation from '../components/Recommendation';
 
 const Info = () => {
     const [ data, setData ] = useState([])
     const { id } = useParams();
     const [ showAllEpisodes, setShowAllEpisodes ] = useState(false);
-    const navigate = useNavigate();
+    const [ episodeRange, setEpisodeRange ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false)
+    // const navigate = useNavigate();
 
     // Api urll queue for info
     const info = `https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
@@ -29,7 +26,8 @@ const Info = () => {
                 const responseData = response.data;
                 // removeHTML tags on a text upon receiving/using
                 const cleanedDescription = removeHtmlTags(responseData.description)
-                console.log(responseData);
+                // console.log(responseData);
+                setEpisodeRange(responseData.episodes.length)
                 setData({...responseData, description: cleanedDescription});
                 setPageLoad(true)
             } catch(error) {
@@ -52,22 +50,6 @@ const Info = () => {
         return sanitizedString;
     };
 
-    // Swiper breakpoints
-    const breakpoints = {
-        1200: {
-            slidesPerView: 4,
-            spaceBetween: 25,
-        },
-        600: {
-            slidesPerView: 3,
-            spaceBetween: 25,
-          },
-        0: {
-          slidesPerView: 2,
-          spaceBetween: 10,
-        },
-    };
-    
     // Scroll to the top
     useEffect(() => {
         window.scrollTo({top: 0});
@@ -77,6 +59,24 @@ const Info = () => {
     if(!pageLoad) {
         return <Pageloader />
     }
+
+    const totalEpisodes = episodeRange; // Replace with your total episode count
+    const rangeSize = 200; // Number of episodes in each range
+    const numRanges = Math.ceil(totalEpisodes / rangeSize);
+
+    const range = [];
+    for (let i = 0; i < numRanges; i++) {
+    const start = i * rangeSize;
+    const end = Math.min(start + rangeSize - 1, totalEpisodes - 1);
+    range.push({ start, end });
+    }
+    
+    const handleRangeClick = (range) => {
+        const start = totalEpisodes - range.end - 1;
+        const end = totalEpisodes - range.start - 1;
+        const episodesToShow = episodeRange.slice(start, end + 1);
+        console.log(episodesToShow);
+    };
 
     return (
         <>
@@ -181,7 +181,6 @@ const Info = () => {
                                 </p>
                             )
                         }
-                        
                     </div>
 
                     <div className='anime__info'>
@@ -207,18 +206,28 @@ const Info = () => {
                     
                 </article>
             </div>
-            
         </section>
 
         <section className='info__episodes'>
             <h2>Episodes</h2>
             <div className='container container__episodes'>
+                <div className='__range'>
+                    {   
+                        episodeRange > 200 && 
+                        range.map((range, index) => (
+                            <button className='btn btn-primary' key={index} onClick={() => handleRangeClick(range)}>
+                            EP {`${range.start + 1}-${range.end + 1}`}
+                            </button>
+                        ))
+                    }
+                </div>
+                   
                 <div className='episodes'>
                     {
                         data.episodes && data.episodes.length > 0 ? (
                             data.episodes.slice(0, showAllEpisodes ? data.episodes.length : 45).map((item, index) => {
                                 return (
-                                    <Link to={`/episode/${id}/${item.id}/`} className='btn btn-primary' key={index}>
+                                    <Link to={`/watch/${id}/${item.id}`} onClick={() => navigate(`/watch/${id}/${item.id}`)} className='btn btn-primary' key={index}>
                                         EP {item.number}
                                     </Link>
                                 )
@@ -241,67 +250,7 @@ const Info = () => {
         </section>
 
         
-        <section className='info__recommendation'>
-            <h2>You might also like</h2>
-            {
-                data.recommendations && data.recommendations.length > 0 ? (
-                    <Swiper className='container container__recommendation'
-                        slidesPerView={4}
-                        breakpoints={breakpoints}
-                        spaceBetween={25}
-                        navigation={true}
-                        freeMode={true}
-                        // loop={true}
-                        modules={[FreeMode, Navigation]}
-                    >
-                    {
-                        data.recommendations.map((item, index) => {
-                            return (
-                                <SwiperSlide key={index} className='recommendation'>
-                                    <Link to={`/info/${item.id}`} onClick={() => navigate(`/info/${item.id}`)}>
-                                        <div className='recommention__image'>
-                                            <img src={item.image} alt="" />
-                                        </div>
-                                        <div className='recommendation__title'>
-                                            <h4>
-                                                {item.title && item.title.english ? item.title.english : item.title.romaji}
-                                            </h4>
-                                        </div>
-                                        {
-                                            item.rating &&
-                                            item.rating >= 75 ? (
-                                                <span className='recommendation__rating'>
-                                                    HOT
-                                                </span>
-                                            ) : (
-                                                <span className='recommendation__rating green'>
-                                                    {item.rating}%
-                                                </span>
-                                            )
-                                        }
-                                        {
-                                            item.episodes &&
-                                            item.type === 'MOVIE' ? (
-                                                <span className='recommendation__episodes'>
-                                                    Movie
-                                                </span>
-                                            ) : (
-                                                <span className='recommendation__episodes'>
-                                                    Episodes {item.episodes}
-                                                </span>
-                                            )
-                                        }
-                                    </Link>
-                                </SwiperSlide>
-                            )
-                        })
-                    }
-                    </Swiper>
-                ) : (
-                    <p>NO RECOMMENDATION</p>
-                )
-            } 
-        </section>
+        <Recommendation data={data}/>
         </>
     )
 }

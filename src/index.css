@@ -83,7 +83,6 @@ a:hover {
 .btn {
     width: max-content;
     display: inline-block;
-    color: var(--primary);
     padding: 0.65rem 1.2rem;
     cursor: pointer;
     border: 1px solid var(--primary);
@@ -93,7 +92,7 @@ a:hover {
 }
 
 .btn:hover {
-    background: var(--secondary);
+    background: var(--secondary-variant);
     border-color: var(--secondary);
     color: var(--primary);
 }
@@ -101,6 +100,7 @@ a:hover {
 .btn-primary {
     border-color: var(--secondary);
     background: var(--secondary);
+    color: var(--primary);
 }
 
 .btn-primary:hover {
@@ -119,6 +119,10 @@ span, p, h1, h2, h3, h4, h5 {
 
 .green {
     background-color: green!important;
+}
+
+.active {
+    background-color: var(--secondary-variant);
 }
 
 /* ================== MEDIA QUERIES (MEDIUM DEVICES) =============== */

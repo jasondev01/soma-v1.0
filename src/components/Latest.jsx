@@ -13,6 +13,7 @@ const Latest = () => {
             try {
                 const response = await axios.get(latestURL);
                 const responseData = response.data.results;
+                console.log(responseData)
                 setData(responseData);
             } catch(error) {
                 console.log(error.message);
@@ -47,7 +48,9 @@ const Latest = () => {
                                 ) 
                             }
                         </Link>
-                        <a href="" className='btn btn-primary'>Episode {item.episodeNumber}</a>
+                        <Link to={`/pass/${item.id}/${item.episodeNumber}`} className='btn btn-primary'>
+                            Episode {item.episodeNumber}
+                        </Link>
                     </div>
                         )
                     })

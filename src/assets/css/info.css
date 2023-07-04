@@ -159,6 +159,9 @@
 
 /***************** MEDIA QUERIES (800) *****************/
 @media screen and (max-width: 800px) {
+    .info {
+        padding: 2rem 0rem;
+    }
     .container__info {
         grid-template-columns: 2fr 4fr;
         padding: 1.2rem;
