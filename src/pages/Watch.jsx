@@ -46,7 +46,7 @@ const Watch = () => {
             }
         }
         fetchInfo();
-    }, [id]) 
+    }, []) 
 
     useEffect(() => {
         const fetchData = async () => {

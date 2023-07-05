@@ -7,8 +7,8 @@ import Pageloader from './Pageloader';
 import LoaderBox from './LoaderBox';
 
 const Hero = () => {
-    const [data, setData] = useState([]);
-    const [pageLoad, setPageLoad] = useState(false);
+    const [ data, setData ] = useState([]);
+    const [ pageLoad, setPageLoad ] = useState(false);
 
     const randomURL = `https://api.consumet.org/meta/anilist/random-anime?provider=gogoanime`;
 
