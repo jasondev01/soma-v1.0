@@ -13,7 +13,7 @@ const Info = () => {
     const [ showAllEpisodes, setShowAllEpisodes ] = useState(false);
     const [ episodeRange, setEpisodeRange ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false)
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     // Api urll queue for info
     const info = `https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
