@@ -15,6 +15,7 @@ const Watch = () => {
     const { id, episodeID } = useParams();
     const [ epID, setEpID ] = useState(episodeID);
     const { theme } = useThemeContext();
+    const navigate = useNavigate();
 
     const infoURL =`https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
     const epURL = `https://api.consumet.org/meta/anilist/watch/${epID}`;
@@ -40,6 +41,9 @@ const Watch = () => {
                 }
             } catch(error) {
                 console.log(error.message);
+                setTimeout(() => {
+                    fetchInfo();
+                }, 5000);
             }
         }
         fetchInfo();
@@ -55,6 +59,9 @@ const Watch = () => {
                 setData(responseData);
             } catch(error) {
                 console.log(error.message)
+                setTimeout(() => {
+                    fetchData();
+                }, 5000);
             }
         }
         setPageLoad(false);
