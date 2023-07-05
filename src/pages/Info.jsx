@@ -15,6 +15,7 @@ const Info = () => {
     const [ pageLoad, setPageLoad ] = useState(false)
     const navigate = useNavigate();
 
+    console.log(id)
     // Api urll queue for info
     const info = `https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
 
