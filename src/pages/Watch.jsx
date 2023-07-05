@@ -119,7 +119,7 @@ const Watch = () => {
         const nextEpisodeID = getNextEpisodeID(currentEpisodeNumber);
         if (nextEpisodeID) {
           setEpID(nextEpisodeID);
-          navigate(`/`);
+          navigate(`/watch/${id}/${nextEpisodeID}`);
         }
     };
     const handlePreviousEpisode = () => {
@@ -127,7 +127,7 @@ const Watch = () => {
         const previousEpisodeID = getPreviousEpisodeID(currentEpisodeNumber);
         if (previousEpisodeID) {
           setEpID(previousEpisodeID);
-          navigate(`/`);
+          navigate(`/watch/${id}/${previousEpisodeID}`);
         }
     };
 
@@ -214,7 +214,7 @@ const Watch = () => {
                         totalEpisodes > 200 ? (
                             displayedEpisodes.map((item, index) => {
                                 return (
-                                    <Link to={`/watch/${id}/${item.id}`} key={index} className="btn btn-primary" onClick={() => navigate(`/watch/${id}/${item.id}`)}>
+                                    <Link to={`/watch/${id}/${item.id}`} onClick={() => navigate(`/watch/${id}/${item.id}`)} key={index} className="btn btn-primary" >
                                         {
                                             item.number < 10 ? `Episode 0${item.number}` : `Episode ${item.number}`
                                         } 
@@ -224,7 +224,7 @@ const Watch = () => {
                         ) : (
                             episodeRange.map((item, index) => {
                                 return (
-                                    <Link to={`/watch/${id}/${item.id}`} key={index} className='btn btn-primary' onClick={() => navigate(`/watch/${id}/${item.id}`)}>
+                                    <Link to={`/watch/${id}/${item.id}`} onClick={() => navigate(`/watch/${id}/${item.id}`)} key={index} className='btn btn-primary'>
                                         {
                                             item.number < 10 ? `Episode 0${item.number}` : `Episode ${item.number}`
                                         } 
