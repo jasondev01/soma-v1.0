@@ -3,7 +3,7 @@ import MainLayout from './layouts/MainLayout'
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Info from "./pages/Info"
-import Watch from "./pages/Watch"
+import Watch from "./pages/Watch.jsx"
 import PassingData from "./components/PassingData"
 
 function App() {

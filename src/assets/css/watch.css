@@ -35,6 +35,7 @@
     opacity: 0;
     user-select: none;
     cursor: default!important;
+    pointer-events: none;
 }
 
 option span {

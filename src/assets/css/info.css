@@ -45,14 +45,14 @@
 .anime__info__ul li p {
     font-size: 13px;
     color: var(--primary);
-    display: inline;
 }
 
 .anime__info,
 .anime__info__ul {
-    display: inline-flex;
+    display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .anime__info h3 {
@@ -190,6 +190,7 @@
 
     .anime__info__cover {
         position: absolute;
+        width: 100%;
     }
 
     .info__episodes h2,

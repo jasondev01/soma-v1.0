@@ -10,12 +10,12 @@ const PassingData = () => {
 
     const passUrl = `https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
 
-    console.log(epNum)
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(passUrl);
                 const responseData = response.data;
+                console.log(epNum)
                 const matchingEpisode = responseData.episodes.find(
                     (item) => item.number === Number(epNum)
                 );
@@ -24,6 +24,7 @@ const PassingData = () => {
                     const episodeID = matchingEpisode.id;
                     navigate(`/watch/${id}/${episodeID}`);
                 }
+                setPageLoad(true)
             } catch(error) {
                 console.log(error.message);
                 setTimeout(() => {
@@ -32,6 +33,7 @@ const PassingData = () => {
             }
         }
         fetchData();
+        setPageLoad(false)
     }, [])
 
     // Pageload

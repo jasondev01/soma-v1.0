@@ -12,7 +12,7 @@ const Info = () => {
     const { id } = useParams();
     const [ showAllEpisodes, setShowAllEpisodes ] = useState(false);
     const [ episodeRange, setEpisodeRange ] = useState([]);
-    const [ pageLoad, setPageLoad ] = useState(false)
+    // const [ pageLoad, setPageLoad ] = useState(false)
     const navigate = useNavigate();
 
     // Api urll queue for info
@@ -29,7 +29,7 @@ const Info = () => {
                 // console.log(responseData);
                 setEpisodeRange(responseData.episodes.length)
                 setData({...responseData, description: cleanedDescription});
-                setPageLoad(true)
+                // setPageLoad(true)
             } catch(error) {
                 console.log(error.message);
                 setTimeout(() => {
@@ -38,7 +38,7 @@ const Info = () => {
             } 
         }
         fetchData();
-        setPageLoad(false)
+        // setPageLoad(false)
     }, [id])
 
     // title filtering
@@ -56,9 +56,9 @@ const Info = () => {
     }, [id]); 
 
     // Pageload
-    if(!pageLoad) {
-        return <Pageloader />
-    }
+    // if(!pageLoad) {
+    //     return <Pageloader />
+    // }
 
     const totalEpisodes = episodeRange; // Replace with your total episode count
     const rangeSize = 200; // Number of episodes in each range

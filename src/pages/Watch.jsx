@@ -13,12 +13,11 @@ const Watch = () => {
     const [ pageLoad, setPageLoad ] = useState(false);
 
     const { id, episodeID } = useParams();
-    const [ epID, setEpID ] = useState(episodeID);
+    const [ episodeNumber, setEpisodeNumber ] = useState();
     const { theme } = useThemeContext();
-    const navigate = useNavigate();
 
     const infoURL =`https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
-    const epURL = `https://api.consumet.org/meta/anilist/watch/${epID}`;
+    const epURL = `https://api.consumet.org/meta/anilist/watch/${episodeID}`;
 
     useEffect(()=> {
         const fetchInfo = async () => {
@@ -66,7 +65,7 @@ const Watch = () => {
         }
         setPageLoad(false);
         fetchData();
-    }, [epID])
+    }, [])
 
     // formatted values date and number 
     let formattedDate = '';
@@ -103,33 +102,40 @@ const Watch = () => {
     const getNextEpisodeID = (currentEpisodeNumber) => {
         const nextEpisode = episodeRange.find((episode) => episode.number === currentEpisodeNumber + 1);
         if (nextEpisode) {
-          return nextEpisode.id;
+        //   console.log(nextEpisode.number);
+          return nextEpisode.number;
         }
+        console.log('No next episode');
         return null; // No next episode
     };
     const getPreviousEpisodeID = (currentEpisodeNumber) => {
         const previousEpisode = episodeRange.find((episode) => episode.number === currentEpisodeNumber - 1);
         if (previousEpisode) {
-          return previousEpisode.id;
+        //   console.log(previousEpisode.number);
+          return previousEpisode.number;
         }
+        console.log('No previous episode');
         return null; // No previous episode
     };
     const handleNextEpisode = () => {
         const currentEpisodeNumber = info.number;
         const nextEpisodeID = getNextEpisodeID(currentEpisodeNumber);
         if (nextEpisodeID) {
-          setEpID(nextEpisodeID);
-          navigate(`/watch/${id}/${nextEpisodeID}`);
+            setEpisodeNumber(nextEpisodeID);
+            console.log(nextEpisodeID)
         }
     };
     const handlePreviousEpisode = () => {
         const currentEpisodeNumber = info.number;
         const previousEpisodeID = getPreviousEpisodeID(currentEpisodeNumber);
         if (previousEpisodeID) {
-          setEpID(previousEpisodeID);
-          navigate(`/watch/${id}/${previousEpisodeID}`);
+            setEpisodeNumber(previousEpisodeID)
+            console.log(previousEpisodeID)
         }
     };
+
+    console.log(episodeNumber)
+    console.log(info.number)
 
     return (
         <section id='episode' className='episode'>
@@ -150,32 +156,20 @@ const Watch = () => {
                         }
                     </div>
                     <div className='buttons'>
-                        {
-                            getPreviousEpisodeID(info.number) && 
-                            getPreviousEpisodeID(info.number) ? (
-                                <Link to={`/watch/${id}/${epID}`} className='btn btn-primary' onClick={handlePreviousEpisode}>
-                                    Prev EP
-                                </Link>
-                            ) : (
-                                <Link to={`/watch/${id}/${epID}`} className='btn btn-primary opacity' onClick={handlePreviousEpisode}>
-                                    Prev EP
-                                </Link>
-                            )
-                        }
-                        <h3>Episode {info.number} </h3>
-                        {
-                            getNextEpisodeID(info.number) && 
-                            getNextEpisodeID(info.number) ? (
-                                <Link to={`/watch/${id}/${epID}`} className='btn btn-primary' onClick={handleNextEpisode}>
-                                    Next EP
-                                </Link>
-                            ) : (
-                                <Link to={`/watch/${id}/${epID}`} className='btn btn-primary opacity' onClick={handleNextEpisode}>
-                                    Next EP
-                                </Link>
-                            )
-                        }
+                        <Link to={`/pass/${id}/${info.number - 1}`} className={`btn btn-primary ${getPreviousEpisodeID(info.number) ? '' : 'opacity'}`} onClick={handlePreviousEpisode}>
+                            Prev EP
+                        </Link>
                         
+                        {
+                            info.number && (
+                                <h3>Episode {info.number} </h3>
+                            )
+                        }
+
+                        <Link to={`/pass/${id}/${info.number + 1}`} className={`btn btn-primary ${getNextEpisodeID(info.number) ? '' : 'opacity'}`} onClick={handleNextEpisode}>
+                            Next EP
+                        </Link>
+                        {/*  */}
                     </div>
                     <article className='episode__info'>
                         <div className='episode__title'>
@@ -214,7 +208,7 @@ const Watch = () => {
                         totalEpisodes > 200 ? (
                             displayedEpisodes.map((item, index) => {
                                 return (
-                                    <Link to={`/watch/${id}/${item.id}`} onClick={() => navigate(`/watch/${id}/${item.id}`)} key={index} className="btn btn-primary" >
+                                    <Link to={`/pass/${id}/${item.number}`} key={index} className="btn btn-primary" >
                                         {
                                             item.number < 10 ? `Episode 0${item.number}` : `Episode ${item.number}`
                                         } 
@@ -224,7 +218,7 @@ const Watch = () => {
                         ) : (
                             episodeRange.map((item, index) => {
                                 return (
-                                    <Link to={`/watch/${id}/${item.id}`} onClick={() => navigate(`/watch/${id}/${item.id}`)} key={index} className='btn btn-primary'>
+                                    <Link to={`/pass/${id}/${item.number}`} key={index} className='btn btn-primary'>
                                         {
                                             item.number < 10 ? `Episode 0${item.number}` : `Episode ${item.number}`
                                         } 
