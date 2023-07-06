@@ -16,8 +16,8 @@ const Info = () => {
     const navigate = useNavigate();
 
     console.log(id)
-    // Api urll queue for info
-    const info = `https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
+    // Api url queue for info
+    const info = `https://api.consumet.org/meta/anilist/info/${id}`
 
     // Get the data
     useEffect(() => {
@@ -45,7 +45,7 @@ const Info = () => {
     // title filtering
     const title = data.title ? (data.title.english || data.title.romaji) : 'N/A';
 
-    // removeHTML tags on a text
+    // remove HTML tags on a text
     const removeHtmlTags = (htmlString) => {
         const sanitizedString = DOMPurify.sanitize(htmlString, { ALLOWED_TAGS: [] });
         return sanitizedString;
@@ -131,14 +131,14 @@ const Info = () => {
 
                     <ul className='anime__info__ul'>
                         <span>Other Names:</span>
-                        <li>
+                        <li> 
                         { 
                             data.synonyms && (
                                 data.synonyms.map((item, index) => {
-                                        return (
-                                            <p key={index}>{item}, </p>
-                                        )
-                                    })
+                                    return (
+                                        <p key={index}> {item}, &nbsp;</p>
+                                    )
+                                })
                             )
                         }
                         </li>

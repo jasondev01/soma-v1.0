@@ -15,6 +15,7 @@ body {
     background: var(--primary-bg);
     color: var(--primary);
     transition: var(--transition);
+    position: relative;
 }
 
 .light {

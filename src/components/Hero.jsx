@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 import { Link } from 'react-router-dom';
-import Pageloader from './Pageloader';
 import LoaderBox from './LoaderBox';
 
 const Hero = () => {

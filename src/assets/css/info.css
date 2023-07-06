@@ -24,7 +24,7 @@
 }
 
 .anime__info__info {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     gap: .8rem;
     justify-content: center;
@@ -45,6 +45,10 @@
 .anime__info__ul li p {
     font-size: 13px;
     color: var(--primary);
+}
+
+.anime__info__ul li p {
+    display: inline-flex;
 }
 
 .anime__info,
