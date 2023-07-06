@@ -5,6 +5,18 @@
     height: 80px;
 }
 
+.navbar__home {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar__menu {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 10px;
+}
+
 .logo {
     font-size: 2.5rem;
 }

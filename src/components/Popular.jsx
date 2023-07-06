@@ -8,6 +8,7 @@ import axios from 'axios';
 import '../assets/css/popular.css'
 import 'swiper/swiper-bundle.min.css';
 import { Link } from 'react-router-dom';
+import { breakpoints } from '../utilities/utility';
 
 const Popular = () => {
     const [ data, setData ] = useState([]);
@@ -27,85 +28,72 @@ const Popular = () => {
         fetchData();
     }, [])
 
-    const breakpoints = {
-        1200: {
-            slidesPerView: 4,
-            spaceBetween: 25,
-        },
-        600: {
-            slidesPerView: 3,
-            spaceBetween: 25,
-          },
-        0: {
-          slidesPerView: 2,
-          spaceBetween: 10,
-        },
-      };
-
-
     return (
-        <section id='popular' className='popular'>
-            <h2>Popular 
-                <br />
-                <span>
-                    (nagivate through arrows or grab)
-                </span>
-            </h2>
-            <Swiper className='container container__popular mySwiper'
-                slidesPerView={4}
-                breakpoints={breakpoints}
-                spaceBetween={25}
-                navigation={true}
-                freeMode={true}
-                // loop={true}
-                modules={[FreeMode, Navigation]}
-            >   
-                {   
-                    data.map( (item, index) => {
-                        return (
-                            <SwiperSlide key={index} className='popular__anime'>
-                                <Link to={`/info/${item.id}`} href="#">
-                                    <div className='popular__anime__image'>
-                                        <img src={item.image} alt="" />
-                                    </div>
-                                    <div className='popular__anime__title'>
-                                        <h4>
-                                            {item.title.english ? item.title.english : item.title.romaji}
-                                        </h4>
-                                    </div>
-                                    {
-                                        item.rating >= 75 ? (
-                                            <span className='popular__anime__rating'>
-                                                HOT
-                                            </span>
-                                        ) : (
-                                            <span className='popular__anime__rating green'>
-                                                {item.rating}%
-                                            </span>
-                                        )
-                                        
-                                    }
-                                    {   
-                                        item.type === 'MOVIE' ? (
-                                            <span className='popular__anime__episodes'>
-                                                Movie
-                                            </span>
-                                        ) : (
-                                            <span className='popular__anime__episodes'>
-                                                Episodes {item.totalEpisodes}
-                                            </span>
-                                        ) 
-                                    }
-                                    
-                                </Link >
-                            </SwiperSlide>
-                        )
-                    })
-                    
-                }
-                   
-            </Swiper>
-        </section>
+        <>
+            {   
+                data && (
+                    <section id='popular' className='popular'>
+                        <h2>Popular 
+                            <br />
+                            <span>
+                                (nagivate through arrows or grab)
+                            </span>
+                        </h2>
+                        <Swiper className='container container__popular mySwiper'
+                            slidesPerView={4}
+                            breakpoints={breakpoints}
+                            spaceBetween={25}
+                            navigation={true}
+                            freeMode={true}
+                            // loop={true}
+                            modules={[FreeMode, Navigation]}
+                        >   
+                            {   
+                                data.map( (item, index) => {
+                                    return (
+                                        <SwiperSlide key={index} className='popular__anime'>
+                                            <Link to={`/info/${item.id}`} href="#">
+                                                <div className='popular__anime__image'>
+                                                    <img src={item.image} alt="" />
+                                                </div>
+                                                <div className='popular__anime__title'>
+                                                    <h4>
+                                                        {item.title.english ? item.title.english : item.title.romaji}
+                                                    </h4>
+                                                </div>
+                                                {
+                                                    item.rating >= 75 ? (
+                                                        <span className='popular__anime__rating'>
+                                                            HOT
+                                                        </span>
+                                                    ) : (
+                                                        <span className='popular__anime__rating green'>
+                                                            {item.rating}%
+                                                        </span>
+                                                    )
+                                                }
+                                                {   
+                                                    item.type === 'MOVIE' ? (
+                                                        <span className='popular__anime__episodes'>
+                                                            Movie
+                                                        </span>
+                                                    ) : (
+                                                        <span className='popular__anime__episodes'>
+                                                            Episodes {item.totalEpisodes}
+                                                        </span>
+                                                    ) 
+                                                }
+                                            </Link >
+                                        </SwiperSlide>
+                                    )
+                                })
+                            }
+                            
+                        </Swiper>
+                    </section>
+                )
+            }
+        </>
     )
 }
 

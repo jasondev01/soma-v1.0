@@ -12,13 +12,29 @@ const Header = () => {
         <header id='header'>
             <nav className='navbar'>
                 <div className='container container__navbar'>
-                    <div className="navbar__logo">
+                    <div className="navbar__home">
                         <Link to='/'>
                             <h1 className={`logo ${theme ? 'light' : 'dark'}`}>
                                 soma
                             </h1>
                         </Link>
-                        
+                        <ul className='navbar__menu'>
+                            <li>
+                                <a href="#" className={`${theme ? 'light' : 'dark'}`}>
+                                    Latest
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className={`${theme ? 'light' : 'dark'}`}>
+                                    Trending
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className={`${theme ? 'light' : 'dark'}`}>
+                                    Popular
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                     <div className='navbar__search__user'>
                         <form action="" className='search__form'>

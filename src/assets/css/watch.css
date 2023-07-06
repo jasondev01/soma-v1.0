@@ -71,7 +71,7 @@ option span {
 
 /**************** MORE EPISODES ***************/
 .more__episodes {
-    padding-top: 2.5rem;
+    padding-top: 2rem;
 }
 
 .more__episodes h2 {
@@ -92,6 +92,7 @@ option span {
     gap: 1.2rem;
     justify-content: center;
     flex-wrap: wrap;
+    padding: 10px 0;
 }
 
 
@@ -133,6 +134,21 @@ option span {
         min-height: 440px;
     }
 }
+/******************* MEDIA QUERY (600) ******************/
+@media screen and (max-width: 600px){
+    .container.container__episode {
+        width: 100%;
+    }
+
+    .container__episode {
+        min-height: 400px;
+    }
+
+    .buttons,
+    .episode__info {
+        width: var(--container-sm);
+    }
+}
 
 /******************* MEDIA QUERY (500-767) ******************/
 @media screen and (min-width: 600px) and (max-width: 767px){
@@ -143,18 +159,30 @@ option span {
 
 /******************* MEDIA QUERY (500-767) ******************/
 @media screen and (min-width: 600px) and (max-width: 767px){
+
     .iframe__container {
         min-height: 375px;
     }
 }
 
 /******************* MEDIA QUERY (400-599) ******************/
-@media screen and (min-width: 365px) and (max-width: 599px){
+@media screen and (min-width: 465px) and (max-width: 599px){
     .iframe__container {
-        min-height: 310px;
+        min-height: 350px;
     }
 
     .episode__info {
         padding: 0 7px;
+    }
+}
+
+/******************* MEDIA QUERY (355-464) ******************/
+@media screen and (min-width: 355px) and (max-width: 464px){
+    .container__episode {
+        min-height: 400px;
+    }
+
+    .iframe__container {
+        min-height: 280px;
     }
 }

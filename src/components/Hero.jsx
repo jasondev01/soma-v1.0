@@ -1,9 +1,9 @@
 import '../assets/css/hero.css'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import DOMPurify from 'dompurify';
 import { Link } from 'react-router-dom';
 import LoaderBox from './LoaderBox';
+import { removeHtmlTags } from '../utilities/utility';
 
 const Hero = () => {
     const [ data, setData ] = useState([]);
@@ -31,20 +31,10 @@ const Hero = () => {
         setPageLoad(false)
     }, []);
 
-    const removeHtmlTags = (htmlString) => {
-        const sanitizedString = DOMPurify.sanitize(htmlString, { ALLOWED_TAGS: [] });
-        return sanitizedString;
-    };
-
-    // if (!pageLoad) {
-    //     return <Pageloader />
-    // }
-
     return (
-        
         <section id='hero' className='hero' style={{backgroundImage: `url(${data.cover})`}} >
                 {
-                    pageLoad === false ? (
+                    !pageLoad ? (
                         <LoaderBox />
                     ) : (
                         <div className="container container__hero" >
@@ -60,9 +50,13 @@ const Hero = () => {
                                         <li>
                                             { data.status }
                                         </li>
-                                        <li >
-                                            EP: { data.totalEpisodes }
-                                        </li>
+                                            {
+                                                data.totalEpisodes && (
+                                                    <li> 
+                                                        EP: { data.totalEpisodes }
+                                                    </li>
+                                                )
+                                            }
                                     </ul>
                                 </div>
                                 <p>

@@ -27,7 +27,6 @@ body {
 }
 
 :root {
-    
     --primary: rgb(241, 241, 241);
     --secondary-variant: rgb(0, 62, 107);
     --secondary: rgb(77, 181, 255);
@@ -123,7 +122,7 @@ span, p, h1, h2, h3, h4, h5 {
 }
 
 .active {
-    background-color: var(--secondary-variant);
+    background-color: var(--secondary-variant)!important;
 }
 
 /* ================== MEDIA QUERIES (MEDIUM DEVICES) =============== */

@@ -5,24 +5,9 @@ import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import 'swiper/swiper-bundle.min.css';
 import { Link } from "react-router-dom";
+import { breakpoints } from "../utilities/utility";
 
 const Recommendation = ({data}) => {
-
-     // Swiper breakpoints
-     const breakpoints = {
-        1200: {
-            slidesPerView: 4,
-            spaceBetween: 25,
-        },
-        600: {
-            slidesPerView: 3,
-            spaceBetween: 25,
-          },
-        0: {
-          slidesPerView: 2,
-          spaceBetween: 10,
-        },
-    };
 
     return (
         <section className='info__recommendation'>
