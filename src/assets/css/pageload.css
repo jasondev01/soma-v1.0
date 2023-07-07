@@ -34,7 +34,7 @@
 
 .effect:nth-child(1) {
     border-bottom-width: 4px;
-    border-color: var(--primary);
+    border-color: hsl(176.89, 99.07%, 58.04%);
     animation: rotate1 2s linear infinite;
 }
 
@@ -49,7 +49,7 @@
 
 .effect:nth-child(2) {
     border-right-width: 4px;
-    border-color: var(--rating);
+    border-color: rgb(42, 254, 243);
     animation: rotate2 2s linear infinite;
 }
 
@@ -64,7 +64,7 @@
 
 .effect:nth-child(3) {
     border-top-width: 4px;
-    border-color: var(--secondary);
+    border-color: hsl(176.89, 99.07%, 58.04%);
     animation: rotate3 2s linear infinite;
 }
 

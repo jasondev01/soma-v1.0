@@ -17,7 +17,7 @@ const Hero = () => {
                 const response = await axios.get(randomURL);
                 const responseData = response.data;
                 const cleanedDescription = removeHtmlTags(responseData.description);
-                console.log(responseData.id);
+                console.log(responseData);
                 setData({...responseData, description: cleanedDescription });
                 setPageLoad(true)
             } catch(error) {
@@ -51,9 +51,13 @@ const Hero = () => {
                                             { data.status }
                                         </li>
                                             {
-                                                data.totalEpisodes && (
+                                                data.currentEpisode ? (
                                                     <li> 
-                                                        EP: { data.totalEpisodes }
+                                                        EP: { data.currentEpisode }
+                                                    </li>
+                                                ) : (
+                                                    <li>
+                                                        Coming Soon
                                                     </li>
                                                 )
                                             }

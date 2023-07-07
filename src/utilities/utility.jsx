@@ -20,10 +20,10 @@ export const breakpoints = {
     },
 }
 
-export const createBlobURL = (blobData) => {
-    return URL.createObjectURL(blobData);
-};
+// export const createBlobURL = (blobData) => {
+//     return URL.createObjectURL(blobData);
+// };
   
-export const revokeBlobURL = (blobURL) => {
-    URL.revokeObjectURL(blobURL);
-};
+// export const revokeBlobURL = (blobURL) => {
+//     URL.revokeObjectURL(blobURL);
+// };

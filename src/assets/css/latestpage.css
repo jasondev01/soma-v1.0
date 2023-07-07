@@ -1,0 +1,54 @@
+.latest__page__cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.2rem;
+}
+
+.latest__page__card {
+    position: relative;
+    height: 320px;
+}
+
+.latest__page__card__image,
+.latest__page__episode {
+    position: absolute;
+}
+
+.latest__page__card__image {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.latest__page__card__image:hover img {
+    transform: scale(1.1);
+}
+
+.latest__page__episode {
+    right: 5px;
+    top: 7px;
+    background-color: var(--secondary);
+    color: var(--primary);
+    padding: 7px;
+}
+
+/*************** MEDIAY QUERIES (1024) *************/
+@media screen and (max-width: 1024px ){
+    .latest__page__cards {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/*************** MEDIAY QUERIES (768) *************/
+@media screen and (max-width: 768px ){
+    .latest__page__cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/*************** MEDIAY QUERIES (600) *************/
+@media screen and (max-width: 600px ){
+    .latest__page__cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -27,7 +27,7 @@ const Latest = () => {
     return (
         <>
             {
-                data && (
+                data && 
                 <section id='latest' className='latest'>
                     <h2>Latest Release</h2>
                     <div className='container container__latest'>
@@ -61,8 +61,6 @@ const Latest = () => {
                         }
                     </div>
                 </section>
-                )
-                
             }
         </>
         

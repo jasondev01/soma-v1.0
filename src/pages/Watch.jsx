@@ -139,7 +139,9 @@ const Watch = () => {
     return (
         <section id='episode' className='episode'>
             <div className="container container__episode">
+               
                 <div className='episode__video'>
+                    
                     <div className='iframe__container'>
                         {
                             !pageLoad ? (
@@ -162,14 +164,19 @@ const Watch = () => {
                             Prev EP
                         </Link>
                         {
-                            info.number && (
-                                <h3>Episode {info.number} </h3>
-                            )
+                            info.number && 
+                            <h3>Episode {info.number} </h3>
+                            
                         }
                         <Link to={`/pass/${id}/${info.number + 1}`} 
-                            className={`btn btn-primary ${getNextEpisodeID(info.number) ? '' : 'opacity'}`}
+                            className={`btn btn-primary ${getNextEpisodeID(info.number) ? '' : 'd-none'}`}
                         >
                             Next EP
+                        </Link>
+                        <Link to={`/info/${id}`} 
+                            className={`btn btn-primary ${getNextEpisodeID(info.number) ? 'd-none' : ''}`}
+                        >
+                            Anime Info
                         </Link>
                     </div>
                     <article className='episode__info'>
@@ -194,20 +201,23 @@ const Watch = () => {
 
             <div className='container more__episodes'> 
                 <h2>More Episodes</h2>
-                <div className='__range'>
-                    {
-                        totalEpisodes > 200 && 
-                        range.map((range, index) => (
-                            <button 
-                                className={`btn ${theme ? 'light' : 'dark'}`} 
-                                key={index} 
-                                onClick={() => handleRangeClick(range)}
-                            >
-                              EP {`${range.start + 1}-${range.end + 1}`}
-                            </button>
-                        ))
-                    }
-                </div>
+                {   
+                    totalEpisodes > 200 &&
+                    <div className='__range'>
+                        {
+                            range.map((range, index) => (
+                                <button 
+                                    className={`btn ${theme ? 'light' : 'dark'}`} 
+                                    key={index} 
+                                    onClick={() => handleRangeClick(range)}
+                                >
+                                EP {`${range.start + 1}-${range.end + 1}`}
+                                </button>
+                            ))
+                        }
+                    </div>
+                }
+               
                 <div className='__episodes'>
                     {
                         totalEpisodes > 200 ? (

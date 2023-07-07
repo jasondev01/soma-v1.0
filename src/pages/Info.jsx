@@ -5,7 +5,7 @@ import axios from 'axios';
 import Pageloader from '../components/Pageloader';
 import Recommendation from '../components/Recommendation';
 import InfoBanner from '../components/InfoBanner';
-import { removeHtmlTags, createBlobURL, revokeBlobURL } from '../utilities/utility';
+import { removeHtmlTags } from '../utilities/utility';
 
 
 const Info = () => {
@@ -13,7 +13,6 @@ const Info = () => {
     const [ displayedEpisodes, setDisplayedEpisodes ] = useState([]);
     const [ episodeRange, setEpisodeRange ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false)
-    const [ blobURL, setBlobURL ] = useState('');
     const { id } = useParams();
 
     // Api url queue for info
@@ -27,7 +26,7 @@ const Info = () => {
                 const responseData = response.data;
                 // removeHTML tags on a text upon receiving/using
                 const cleanedDescription = removeHtmlTags(responseData.description)
-                // console.log(responseData);
+                console.log(responseData);
                 setEpisodeRange(responseData.episodes)
                 setData({...responseData, description: cleanedDescription});
                 setPageLoad(true)

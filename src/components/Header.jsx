@@ -20,19 +20,19 @@ const Header = () => {
                         </Link>
                         <ul className='navbar__menu'>
                             <li>
-                                <a href="#" className={`${theme ? 'light' : 'dark'}`}>
+                                <Link to="/about" className={`${theme ? 'light' : 'dark'}`}>
                                     Latest
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className={`${theme ? 'light' : 'dark'}`}>
+                                <Link href="#" className={`${theme ? 'light' : 'dark'}`}>
                                     Trending
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className={`${theme ? 'light' : 'dark'}`}>
+                                <Link href="#" className={`${theme ? 'light' : 'dark'}`}>
                                     Popular
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

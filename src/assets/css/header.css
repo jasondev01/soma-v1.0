@@ -61,3 +61,10 @@ button {
 .profile__user {
     font-size: 1.2rem;
 }
+
+/*************** MEDIAY QUERIES (768) *************/
+@media screen and (max-width: 768px ){
+    .navbar__menu {
+        display: none;
+    }
+}
