@@ -4,15 +4,15 @@ import '../assets/css/watch.css'
 import { Link, useParams } from 'react-router-dom';
 import useThemeContext from '../context/ThemeContext';
 import LoaderBox from '../components/LoaderBox';
-// import { createBlobURL, revokeBlobURL } from '../utilities/utility';
+import Episodes from '../components/Episodes';
+import { formatDate } from '../utilities/utility';
 
 const Watch = () => {
     const [ data, setData ] = useState([]);
     const [ info, setInfo ] = useState([]);
     const [ episodeRange, setEpisodeRange  ] = useState([]);
-    const [ displayedEpisodes, setDisplayedEpisodes ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
-    // const [ videoBlobURL, setVideoBlobURL ] = useState('');
+    const [ animeResult, setAnimeResult ] = useState([])
 
     const { id, episodeID } = useParams();
     const { theme } = useThemeContext();
@@ -25,19 +25,19 @@ const Watch = () => {
             try {
                 const response = await axios.get(infoURL);
                 const responseData = response.data;
-                // console.log(responseData)
-
+                // console.log("responseData", responseData)
+                setAnimeResult(responseData)
                 // setting the episode range
                 const episodes = responseData.episodes;
                 setEpisodeRange(episodes)
-
+                // console.log(episodes)
                 // finds the episode with episode id
                 const matchingEpisode = responseData.episodes.find(
                     (episode) => episode.id === episodeID
                 );
                 if (matchingEpisode) {
                     setInfo(matchingEpisode);
-                    // console.log(matchingEpisode)
+                    console.log("matchingEpisode",matchingEpisode)
                 }
             } catch(error) {
                 console.log(error.message);
@@ -54,15 +54,7 @@ const Watch = () => {
             try {
                 const response = await axios.get(epURL);
                 console.log(response.data)
-
                 const responseData = response.data.headers;
-
-                // Create Blob URL for the video source
-                // const videoBlob = new Blob([responseData.Referer], { type: 'video/mp4' });
-                // const blobURL = createBlobURL(videoBlob);
-                // setVideoBlobURL(blobURL);
-                // console.log(blobURL)
-
                 setPageLoad(true);
                 setData(responseData);
             } catch(error) {
@@ -76,44 +68,8 @@ const Watch = () => {
         fetchData();
     }, [])
 
-    // useEffect(() => {
-    //     return () => {
-    //       // Revoke the Blob URL when the component is unmounted
-    //       if (videoBlobURL) {
-    //         revokeBlobURL(videoBlobURL);
-    //       }
-    //     };
-    // }, [videoBlobURL]);
-
     // formatted values date and number 
-    let formattedDate = '';
-    if ( info.airDate ) {
-        const date = new Date(info.airDate);
-        formattedDate = date.toLocaleDateString("en-US", {
-            year: "numeric", month: "long", day: "numeric"
-        })
-    } 
-
-    // get total episodes and range
-    const totalEpisodes = episodeRange.length; 
-    const rangeSize = 200; 
-    const numRanges = Math.ceil(totalEpisodes / rangeSize);
-
-    // get the ranges
-    const range = [];
-    for (let i = 0; i < numRanges; i++) {
-        const start = i * rangeSize;
-        const end = Math.min(start + rangeSize - 1, totalEpisodes - 1);
-        range.push({ start, end });
-    }
-
-    // display the episodes according to the range
-    const handleRangeClick = (range) => {
-        const start = totalEpisodes - range.end - 1;
-        const end = totalEpisodes - range.start - 1;
-        const episodesToShow = episodeRange.slice(start, end + 1);
-        setDisplayedEpisodes(episodesToShow);
-    };
+    const formattedDate = formatDate(info);
 
     // get the next and previous episodes
     const getNextEpisodeID = (currentEpisodeNumber) => {
@@ -165,10 +121,10 @@ const Watch = () => {
                         </Link>
                         {
                             info.number && 
-                            <h3>Episode {info.number} </h3>
+                            <h3>Episode {info?.number} </h3>
                             
                         }
-                        <Link to={`/pass/${id}/${info.number + 1}`} 
+                        <Link to={`/pass/${id}/${info?.number + 1}`} 
                             className={`btn btn-primary ${getNextEpisodeID(info.number) ? '' : 'd-none'}`}
                         >
                             Next EP
@@ -182,18 +138,14 @@ const Watch = () => {
                     <article className='episode__info'>
                         <div className='episode__title'>
                             <h3>
-                                {   
-                                    info?.title 
-                                }
+                                {info?.title}
                             </h3>
                             <span>
-                                {
-                                    formattedDate
-                                }
+                                {formattedDate}
                             </span>
                         </div>
                         <p>
-                            {info.description}
+                            {info?.description}
                         </p>
                     </article>
                 </div>
@@ -201,54 +153,8 @@ const Watch = () => {
 
             <div className='container more__episodes'> 
                 <h2>More Episodes</h2>
-                {   
-                    totalEpisodes > 200 &&
-                    <div className='__range'>
-                        {
-                            range.map((range, index) => (
-                                <button 
-                                    className={`btn ${theme ? 'light' : 'dark'}`} 
-                                    key={index} 
-                                    onClick={() => handleRangeClick(range)}
-                                >
-                                EP {`${range.start + 1}-${range.end + 1}`}
-                                </button>
-                            ))
-                        }
-                    </div>
-                }
-               
-                <div className='__episodes'>
-                    {
-                        totalEpisodes > 200 ? (
-                            displayedEpisodes.map((item, index) => {
-                                return (
-                                    <Link to={`/pass/${id}/${item.number}`} 
-                                        key={index} 
-                                        className="btn btn-primary" 
-                                    >
-                                        {
-                                            item.number < 10 ? `EP 0${item.number}` : `EP ${item.number}`
-                                        } 
-                                    </Link> 
-                                )
-                            })
-                        ) : (
-                            episodeRange.map((item, index) => {
-                                return (
-                                    <Link to={`/pass/${id}/${item.number}`} 
-                                        key={index} 
-                                        className='btn btn-primary'
-
-                                    >
-                                        {
-                                            item.number < 10 ? `EP 0${item.number}` : `EP ${item.number}`
-                                        } 
-                                    </Link> 
-                                )
-                            })
-                        )
-                    }
+                <div className="__episodes">
+                    <Episodes animeResult={animeResult} id={id}/>
                 </div>
             </div>          
         </section>

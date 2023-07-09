@@ -41,7 +41,7 @@ body {
 
     --container-lg: 72%;
     --container-md: 86%;
-    --container-sm: 90%;
+    --container-sm: 94%;
 
     --transition: all .3s ease-in-out;
     --backdrop-filter: blur(3px);

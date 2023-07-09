@@ -25,15 +25,15 @@
 
 /********** CIRCLES **********/
 .effect {
-    width: 170px;
-    height: 170px;
+    width: 100px;
+    height: 100px;
     border: 0px solid var(--primary-bg);
     border-radius: 50%;
     position: absolute;
 }
 
 .effect:nth-child(1) {
-    border-bottom-width: 4px;
+    border-bottom-width: 2px;
     border-color: hsl(176.89, 99.07%, 58.04%);
     animation: rotate1 2s linear infinite;
 }
@@ -48,7 +48,7 @@
 }
 
 .effect:nth-child(2) {
-    border-right-width: 4px;
+    border-right-width: 2px;
     border-color: rgb(42, 254, 243);
     animation: rotate2 2s linear infinite;
 }
@@ -63,7 +63,7 @@
 }
 
 .effect:nth-child(3) {
-    border-top-width: 4px;
+    border-top-width: 2px;
     border-color: hsl(176.89, 99.07%, 58.04%);
     animation: rotate3 2s linear infinite;
 }

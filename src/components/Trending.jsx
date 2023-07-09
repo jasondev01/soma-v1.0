@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { removeHtmlTags } from '../utilities/utility';
 
 const Trending = () => {
-
     const [ data, setData ] = useState([]);
     const [ highestRatedItem, setHighestRatedItem ] = useState(null);
 
@@ -16,7 +15,7 @@ const Trending = () => {
             try {
                 const response = await axios.get(trendingURL);
                 const responseData = response.data.results;
-                console.log(responseData);
+                console.log("trending",responseData);
                 const sanitizedData = responseData.map(item => ({
                     ...item,
                     // removing html tags using the function 

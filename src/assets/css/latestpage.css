@@ -32,6 +32,13 @@
     padding: 7px;
 }
 
+.pagination {
+    padding: 1.2rem 0;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
 /*************** MEDIAY QUERIES (1024) *************/
 @media screen and (max-width: 1024px ){
     .latest__page__cards {
@@ -43,6 +50,10 @@
 @media screen and (max-width: 768px ){
     .latest__page__cards {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .pagination {
+        justify-content: center;
     }
 }
 

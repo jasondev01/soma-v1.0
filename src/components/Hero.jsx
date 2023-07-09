@@ -17,7 +17,7 @@ const Hero = () => {
                 const response = await axios.get(randomURL);
                 const responseData = response.data;
                 const cleanedDescription = removeHtmlTags(responseData.description);
-                console.log(responseData);
+                console.log("hero",responseData);
                 setData({...responseData, description: cleanedDescription });
                 setPageLoad(true)
             } catch(error) {
@@ -48,18 +48,18 @@ const Hero = () => {
                                             { data.startDate?.year }
                                         </li>
                                         <li>
-                                            { data.status }
+                                            { 
+                                                data.type === "MOVIE" 
+                                                ? ""
+                                                : data.status
+                                            }
                                         </li>
-                                            {
-                                                data.currentEpisode ? (
-                                                    <li> 
-                                                        EP: { data.currentEpisode }
-                                                    </li>
-                                                ) : (
-                                                    <li>
-                                                        Coming Soon
-                                                    </li>
-                                                )
+                                            {   
+                                                data.type = "MOVIE" 
+                                                ? ( "MOVIE" ) 
+                                                : data.currentEpisode 
+                                                ? ( `EP: ${ data.currentEpisode } `) 
+                                                : ("Coming Soon" )
                                             }
                                     </ul>
                                 </div>

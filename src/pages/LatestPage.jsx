@@ -2,26 +2,40 @@ import axios from "axios"
 import '../assets/css/latestpage.css'
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react";
+import Pageloader from "../components/Pageloader";
+import PaginationButtons from "../components/PaginationButtons";
 
 
 const LatestPage = () => {
     const [ data, setData ] = useState([]);
-
-    const url = `https://api.consumet.org/meta/anilist/recent-episodes?page=1&perPage=20&provider=gogoanime`
+    const [ pageLoad, setPageLoad ] = useState(false);
+    const [ pageNumber, setPageNumber ] = useState(1);
+ 
+    const url = `https://api.consumet.org/meta/anilist/recent-episodes?page=${pageNumber}&perPage=20&provider=gogoanime`
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(url);
                 const responseData = response.data.results;
-                console.log(responseData);
+                console.log("latestPage",responseData);
                 setData(responseData);
+                setPageLoad(true)
             } catch(error) {
                 console.log(error.message)
             }
         }
         fetchData();
-    }, [])
+        setPageLoad(false)
+    }, [pageNumber])
+
+    if(!pageLoad) {
+        return <Pageloader />
+    }
+
+    const handlePageClick = (page) => {
+        setPageNumber(page);
+    };
 
     return (
         <section className="latest__page" >
@@ -29,7 +43,6 @@ const LatestPage = () => {
                 <h2>
                     Latest Release
                 </h2>
-                
                 <div className="latest__page__cards">
                     {
                         data && 
@@ -64,11 +77,11 @@ const LatestPage = () => {
                                 </Link>
                             )
                         })
-                        
                     }
-                    
                 </div>
-
+                <div className="pagination">
+                    <PaginationButtons handlePageClick={handlePageClick} pageNumber={pageNumber}/>
+                </div>
             </div>
         </section>
     )

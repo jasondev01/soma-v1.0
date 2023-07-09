@@ -76,25 +76,11 @@ option span {
 
 .more__episodes h2 {
     text-align: center;
-}
-
-.__range {
-    display: flex;
-    gap: 1.2rem;
-    justify-content: center;
-    margin-bottom: 1.2rem;
-    flex-wrap: wrap;
-    flex-direction: row-reverse;
-}
+}       
 
 .__episodes {
-    display: flex;
-    gap: 1.2rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 10px 0;
+    padding: 20px 0;
 }
-
 
 /******************* MEDIA QUERY (1200) ******************/
 @media screen and (max-width: 1200px){
@@ -102,10 +88,6 @@ option span {
     .episode__info,
     .iframe__container {
         width: 100%;
-    }
-
-    .__range {
-        flex-direction: row;
     }
 }
 

@@ -36,10 +36,10 @@ const Popular = () => {
                     <h2>Popular 
                         <br />
                         <span>
-                            (nagivate through arrows or grab)
+                            (swipe to navigate)
                         </span>
                     </h2>
-                    <Swiper className='container container__popular mySwiper'
+                    <Swiper className='container container__popular'
                         slidesPerView={4}
                         breakpoints={breakpoints}
                         spaceBetween={25}
@@ -52,7 +52,7 @@ const Popular = () => {
                             data.map( (item, index) => {
                                 return (
                                     <SwiperSlide key={index} className='popular__anime'>
-                                        <Link to={`/info/${item.id}`} href="#">
+                                        <Link to={`/info/${item.id}`}>
                                             <div className='popular__anime__image'>
                                                 <img src={item.image} alt="" />
                                             </div>

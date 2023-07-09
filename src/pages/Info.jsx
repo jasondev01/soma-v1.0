@@ -26,7 +26,7 @@ const Info = () => {
                 const responseData = response.data;
                 // removeHTML tags on a text upon receiving/using
                 const cleanedDescription = removeHtmlTags(responseData.description)
-                console.log(responseData);
+                console.log("infoPage", responseData);
                 setEpisodeRange(responseData.episodes)
                 setData({...responseData, description: cleanedDescription});
                 setPageLoad(true)
@@ -119,7 +119,6 @@ const Info = () => {
                         ) : (
                             <p>NO EPISODES</p>
                         )
-                        
                     }
                 </div>
             </div>

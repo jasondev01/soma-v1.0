@@ -20,10 +20,14 @@ export const breakpoints = {
     },
 }
 
-// export const createBlobURL = (blobData) => {
-//     return URL.createObjectURL(blobData);
-// };
+export const formatDate = (info) => {
+    let formattedDate = '';
+    if (info.airDate) {
+      const date = new Date(info.airDate);
+      formattedDate = date.toLocaleDateString("en-US", {
+        year: "numeric", month: "long", day: "numeric"
+      });
+    }
+    return formattedDate;
+}
   
-// export const revokeBlobURL = (blobURL) => {
-//     URL.revokeObjectURL(blobURL);
-// };
