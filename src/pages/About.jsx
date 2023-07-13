@@ -7,7 +7,7 @@ const About = () => {
     return (
         <>
             {/* <LoaderBox /> */}
-            <LatestPage />
+            {/* <LatestPage /> */}
         </>
     )
 }

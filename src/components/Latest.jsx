@@ -1,28 +1,29 @@
 import '../assets/css/latest.css'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import useApiContext from '../context/ApiContext'
 
 const Latest = () => {
-    const [ data, setData ] = useState([]);
-
-    const latestURL = `https://api.consumet.org/meta/anilist/recent-episodes?page=1&perPage=10&provider=gogoanime`;
-
+    const { fetchLatest } = useApiContext()
+    const [ data, setData ] = useState();
+   
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await axios.get(latestURL);
-                const responseData = response.data.results;
-                setData(responseData);
+            try {   
+                const response = await fetchLatest();
+                setData(response);
+                console.log("Latest: ", response)
             } catch(error) {
-                console.log(error.message);
+                console.log("latest", error.message)
                 setTimeout(() => {
                     fetchData();
-                }, 6000)
+                }, 6000 )
             }
         };
         fetchData();
-    }, [])
+    }, []);
+
+    console.log("latestData", data)
 
     return (
         <>
@@ -32,7 +33,7 @@ const Latest = () => {
                     <h2>Latest Release</h2>
                     <div className='container container__latest'>
                         {
-                            data.map( (item, index) => {
+                            data?.map( (item, index) => {
                                 return (
                             <div key={index} className='latest__card__container'>
                                 <Link to={`/info/${item.id}`} className="latest__card">

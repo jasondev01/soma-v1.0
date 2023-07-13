@@ -20,7 +20,7 @@ const Header = () => {
                         </Link>
                         <ul className='navbar__menu'>
                             <li>
-                                <Link to="/about" className={`${theme ? 'light' : 'dark'}`}>
+                                <Link to="/latest" className={`${theme ? 'light' : 'dark'}`}>
                                     Latest
                                 </Link>
                             </li>

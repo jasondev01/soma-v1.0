@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import '../assets/css/watch.css'
 import { Link, useParams } from 'react-router-dom';
-import useThemeContext from '../context/ThemeContext';
 import LoaderBox from '../components/LoaderBox';
 import Episodes from '../components/Episodes';
 import { formatDate } from '../utilities/utility';
+import useApiContext from '../context/ApiContext';
+import { AiOutlineInfoCircle } from 'react-icons/ai'
 
 const Watch = () => {
     const [ data, setData ] = useState([]);
@@ -14,59 +14,44 @@ const Watch = () => {
     const [ pageLoad, setPageLoad ] = useState(false);
     const [ animeResult, setAnimeResult ] = useState([])
 
-    const { id, episodeID } = useParams();
-    const { theme } = useThemeContext();
-
-    const infoURL =`https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
-    const epURL = `https://api.consumet.org/meta/anilist/watch/${episodeID}`;
-
-    useEffect(()=> {
-        const fetchInfo = async () => {
-            try {
-                const response = await axios.get(infoURL);
-                const responseData = response.data;
-                // console.log("responseData", responseData)
-                setAnimeResult(responseData)
-                // setting the episode range
-                const episodes = responseData.episodes;
-                setEpisodeRange(episodes)
-                // console.log(episodes)
-                // finds the episode with episode id
-                const matchingEpisode = responseData.episodes.find(
-                    (episode) => episode.id === episodeID
-                );
-                if (matchingEpisode) {
-                    setInfo(matchingEpisode);
-                    console.log("matchingEpisode",matchingEpisode)
-                }
-            } catch(error) {
-                console.log(error.message);
-                setTimeout(() => {
-                    fetchInfo();
-                }, 5000);
-            }
-        }
-        fetchInfo();
-    }, []) 
+    const { id, episodeId } = useParams();
+    const { fetchWatch, fetchEpisodeWatch } = useApiContext();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(epURL);
-                console.log(response.data)
-                const responseData = response.data.headers;
-                setPageLoad(true);
-                setData(responseData);
+                const response = await fetchWatch(id);
+                setAnimeResult(response);
+                const episodes = response.episodes;
+                setEpisodeRange(episodes);
+                const matchingEpisode = episodes.find(episode => episode.id === episodeId)
+                if (matchingEpisode) setInfo(matchingEpisode);
             } catch(error) {
-                console.log(error.message)
+                console.log("fetchWatch", error.message);
                 setTimeout(() => {
                     fetchData();
-                }, 5000);
+                }, 6000);
+            }
+        }
+        fetchData();
+    }, [id])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetchEpisodeWatch(episodeId);
+                setPageLoad(true);
+                setData(response);
+            } catch(error) {
+                console.log("fetchEpisode", error.message)
+                setTimeout(() => {
+                    fetchData();
+                }, 6000);
             }
         }
         setPageLoad(false);
         fetchData();
-    }, [])
+    }, [episodeId])
 
     // formatted values date and number 
     const formattedDate = formatDate(info);
@@ -90,7 +75,7 @@ const Watch = () => {
     // Scroll to the top
     useEffect(() => {
         window.scrollTo({top: 0});
-    }, [episodeID]);
+    }, [episodeId]);
 
     return (
         <section id='episode' className='episode'>
@@ -132,7 +117,7 @@ const Watch = () => {
                         <Link to={`/info/${id}`} 
                             className={`btn btn-primary ${getNextEpisodeID(info.number) ? 'd-none' : ''}`}
                         >
-                            Anime Info
+                            Info <AiOutlineInfoCircle className='info-icon'/>
                         </Link>
                     </div>
                     <article className='episode__info'>

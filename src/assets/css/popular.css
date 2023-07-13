@@ -9,7 +9,7 @@
 
 .popular__anime {
     width: 350px;
-    min-height: 350px;
+    min-height: 400px;
     position: relative;
     box-shadow: var(--box-shadow);
 }

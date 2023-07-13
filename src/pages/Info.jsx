@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../assets/css/info.css'
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
 import Pageloader from '../components/Pageloader';
 import Recommendation from '../components/Recommendation';
 import InfoBanner from '../components/InfoBanner';
-import { removeHtmlTags } from '../utilities/utility';
-
+import useApiContext from '../context/ApiContext';
 
 const Info = () => {
     const [ data, setData ] = useState([])
@@ -14,28 +12,21 @@ const Info = () => {
     const [ episodeRange, setEpisodeRange ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false)
     const { id } = useParams();
+    const { fetchInfo } = useApiContext();
 
-    // Api url queue for info
-    const info = `https://api.consumet.org/meta/anilist/info/${id}?provider=gogoanime`
-
-    // Get the data
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(info);
-                const responseData = response.data;
-                // removeHTML tags on a text upon receiving/using
-                const cleanedDescription = removeHtmlTags(responseData.description)
-                console.log("infoPage", responseData);
-                setEpisodeRange(responseData.episodes)
-                setData({...responseData, description: cleanedDescription});
+                const response = await fetchInfo(id);
+                setData(response);
+                setEpisodeRange(response.episodes);
                 setPageLoad(true)
             } catch(error) {
-                console.log(error.message);
+                console.log("fetchInfo", error.message)
                 setTimeout(() => {
                     fetchData();
-                }, 6000);
-            } 
+                }, 6000)
+            }
         }
         fetchData();
         setPageLoad(false)

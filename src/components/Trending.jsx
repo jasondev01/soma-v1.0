@@ -1,43 +1,33 @@
-import axios from 'axios'
 import '../assets/css/trending.css'
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { removeHtmlTags } from '../utilities/utility';
+import useApiContext from '../context/ApiContext';
 
 const Trending = () => {
     const [ data, setData ] = useState([]);
-    const [ highestRatedItem, setHighestRatedItem ] = useState(null);
-
-    const trendingURL = `https://api.consumet.org/meta/anilist/trending?page=1&perPage=7`;
+    const [ highestRatedAnime, sethighestRatedAnime ] = useState(null);
+    const { fetchTrending } = useApiContext();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(trendingURL);
-                const responseData = response.data.results;
-                console.log("trending",responseData);
-                const sanitizedData = responseData.map(item => ({
-                    ...item,
-                    // removing html tags using the function 
-                    htmlString: removeHtmlTags(item.htmlString)
-                }));
-                setData(sanitizedData);
-
-                // Find the item with the highest rating
-                const highestRating = Math.max(...sanitizedData.map(item => item.rating));
-                const highestRatedItem = sanitizedData.find(item => item.rating === highestRating);
-                setHighestRatedItem(highestRatedItem);
+                const response = await fetchTrending();
+                const highestRating = Math.max(...response.map(item => item.rating));
+                const highestRatedAnime = response.find(item => item.rating === highestRating);
+                setData(response);
+                sethighestRatedAnime(highestRatedAnime)
+                console.log("trending", response)
             } catch(error) {
-                console.log(error.message);
+                console.log("trending", error.message)
                 setTimeout(() => {
-                    fetchData()
-                }, 6000);
+                    fetchData();
+                }, 6000)
             }
-        }
+        };
         fetchData();
-    }, [])
+    }, []);
 
-    const filteredData = data.filter(item => item !== highestRatedItem);
+    const filteredData = data.filter(item => item !== highestRatedAnime);
 
     return (
         <>
@@ -47,17 +37,17 @@ const Trending = () => {
                     <h2>Trending</h2>
                     <div className='container container__trending'>
                     {
-                        highestRatedItem && (
+                        highestRatedAnime && (
                             <div className='highest__rating'>
-                                <img src={highestRatedItem.image} alt={highestRatedItem.title?.english} />
-                                <Link to={`/info/${highestRatedItem.id}`} className='overlay'>
+                                <img src={highestRatedAnime.image} alt={highestRatedAnime.title?.english} />
+                                <Link to={`/info/${highestRatedAnime.id}`} className='overlay'>
                                     <div className='highest__rating__info'>
                                         <h4>
-                                            {highestRatedItem.title.english ? highestRatedItem.title.english : highestRatedItem.title.romaji}
+                                            {highestRatedAnime.title.english ? highestRatedAnime.title.english : highestRatedAnime.title.romaji}
                                         </h4>
                                         <p className='highest__rating__description'>
                                             {
-                                                removeHtmlTags(highestRatedItem.description )
+                                                highestRatedAnime.description
                                             }
                                         </p>
                                         <div className='highest__rating__buttons'>
@@ -67,14 +57,14 @@ const Trending = () => {
                                 </Link>
                                 <div className='highest__rating__info-active'>
                                     <h4>
-                                        {highestRatedItem.title.english ? highestRatedItem.title.english : highestRatedItem.title.romaji} 
+                                        {highestRatedAnime.title.english ? highestRatedAnime.title.english : highestRatedAnime.title.romaji} 
                                     </h4>
                                 </div>
                                 <span className='highest__rating__rate'>
                                     HOT
                                 </span>
                                 <span className='highest__rating__rate__episodes'>
-                                    Episodes {highestRatedItem.totalEpisodes}
+                                    Episodes {highestRatedAnime.totalEpisodes}
                                 </span>
                             </div>
                         )

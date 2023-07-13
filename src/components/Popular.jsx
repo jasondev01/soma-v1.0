@@ -4,23 +4,23 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import { FreeMode, Navigation } from "swiper";
-import axios from 'axios';
 import '../assets/css/popular.css'
 import 'swiper/swiper-bundle.min.css';
 import { Link } from 'react-router-dom';
 import { breakpoints } from '../utilities/utility';
+import useApiContext from '../context/ApiContext';
 
 const Popular = () => {
     const [ data, setData ] = useState([]);
+    const { fetchPopular } = useApiContext()
 
     const popularURL = `https://api.consumet.org/meta/anilist/popular?page=1&perPage=20`;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(popularURL);
-                const responseData = response.data.results;
-                setData(responseData)
+                const response = await fetchPopular();
+                setData(response)
             } catch(error) {
                 console.log(error.message)
             }

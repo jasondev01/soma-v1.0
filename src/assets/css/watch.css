@@ -31,6 +31,18 @@
     margin-top: 1rem;
 }
 
+.buttons .btn {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.info-icon {
+    font-size: 1.2rem;
+}
+
 .opacity {
     opacity: 0;
     user-select: none;
