@@ -5,13 +5,14 @@
     align-items: center;
     position: absolute;
     bottom: 45%;
+    right: 0.2%;
 }
 
 .cube-loader {
     position: relative;
   /* u can choose any size */
-    width: 75px;
-    height: 75px;
+    width: 55px;
+    height: 55px;
     transform-style: preserve-3d;
     transform: rotateX(-30deg);
     animation: animate 4s linear infinite;
@@ -42,8 +43,8 @@
     height: 100%;
     /* top: 0;
     left: 0; */
-                                       /* width 75px / 2 = 37.5px */
-    transform: rotateY(calc(90deg * var(--i))) translateZ(37.5px);
+                                       /* width 75px / 2 = 37.5px (default)*/
+    transform: rotateY(calc(90deg * var(--i))) translateZ(27.5px);
     background: linear-gradient(
       to bottom,
       hsl(330, 3.13%, 25.1%) 0%,
@@ -67,11 +68,11 @@
   
 .cube-top {
     position: absolute;
-    width: 75px;
-    height: 75px;
+    width: 55px;
+    height: 55px;
     background: hsl(330, 3.13%, 25.1%) 0%;
-                        /* width 75px / 2 = 37.5px */
-    transform: rotateX(90deg) translateZ(37.5px);
+                        /* width 75px / 2 = 37.5px (default)*/
+    transform: rotateX(90deg) translateZ(27.5px);
     transform-style: preserve-3d;
   }
   
@@ -79,8 +80,8 @@
     content: '';
     position: absolute;
   /* u can choose any size */
-    width: 75px;
-    height: 75px;
+    width: 55px;
+    height: 55px;
     background: hsl(176.61, 42.28%, 40.7%) 19.6%;
     transform: translateZ(-90px);
     filter: blur(10px);

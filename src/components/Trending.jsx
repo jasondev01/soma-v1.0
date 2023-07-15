@@ -1,7 +1,8 @@
-import '../assets/css/trending.css'
+import '../styles/trending.css'
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useApiContext from '../context/ApiContext';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Trending = () => {
     const [ data, setData ] = useState([]);
@@ -16,7 +17,6 @@ const Trending = () => {
                 const highestRatedAnime = response.find(item => item.rating === highestRating);
                 setData(response);
                 sethighestRatedAnime(highestRatedAnime)
-                console.log("trending", response)
             } catch(error) {
                 console.log("trending", error.message)
                 setTimeout(() => {
@@ -39,7 +39,11 @@ const Trending = () => {
                     {
                         highestRatedAnime && (
                             <div className='highest__rating'>
-                                <img src={highestRatedAnime.image} alt={highestRatedAnime.title?.english} />
+                                <LazyLoadImage
+                                    ffect='blur'
+                                    src={highestRatedAnime.image} 
+                                    alt={highestRatedAnime.title?.english} 
+                                />
                                 <Link to={`/info/${highestRatedAnime.id}`} className='overlay'>
                                     <div className='highest__rating__info'>
                                         <h4>
@@ -75,13 +79,17 @@ const Trending = () => {
                                 <div key={index} className='trending__card__container'>
                                     <Link to={`/info/${item.id}`} className="trending__card">
                                         <div className='trending__card__image'>
-                                            <img src={item.image} alt={item.title?.english} className='image'/>
+                                            <LazyLoadImage
+                                                effect='blur' 
+                                                src={item.image} 
+                                                alt={item.title?.english} 
+                                                className='image'
+                                            />
                                         </div>
                                         <div className='trending__card__title'>
                                             <h4>
-                                                {item.title.english ? item.title.english : item.title.romaji}
+                                                {item?.title?.english || item?.title?.romaji}
                                             </h4>
-                                            
                                         </div>
                                         {
                                             item.rating >= 75 && ( 

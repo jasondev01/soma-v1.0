@@ -1,5 +1,5 @@
 import React from 'react'
-import '../assets/css/loaderbox.css'
+import '../styles/loaderbox.css'
 
 const LoaderBox = () => {
     return (

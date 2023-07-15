@@ -51,6 +51,11 @@
     text-overflow: ellipsis;
 }
 
+.hero__butons {
+    display: flex;
+    gap: 1.2rem;
+}
+
 .anime__hero__cover {
     height: 300px;
     width: 300px;
@@ -88,6 +93,7 @@
         background: var(--overlay-bg);
         z-index: 1;
         justify-content: end;
+        padding: 1.2rem;
     }
 
     .anime__hero__cover img {

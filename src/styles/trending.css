@@ -144,10 +144,6 @@
     width: 100%
 }
 
-.trending__card__image img {
-    transition: var(--transition);
-}
-
 .trending__card__title {
     bottom: 0px;
     left: 0px;
@@ -189,6 +185,7 @@
 @media screen and (max-width: 600px ){
     .container__trending {
         grid-template-columns: repeat(2, 1fr);
-        padding-bottom: 5.5rem;
+        gap: 1.2rem;
+        padding-bottom: 0rem;
     }
 }

@@ -6,17 +6,17 @@ import "swiper/css/free-mode";
 import 'swiper/swiper-bundle.min.css';
 import { Link } from "react-router-dom";
 import { breakpoints } from "../utilities/utility";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-const Recommendation = ({data}) => {
-
+const Relations = ({data}) => {
     return (
         <>
         {
-            data.recommendations.length > 0 &&
+            data.relations.length > 0 && 
             <section className='info__recommendation'>
-                <h2>You might also like</h2>
+                <h2>Anime, Manga, Novel Relations</h2>
                 {
-                    data.recommendations.length > 0 ? (
+                    data.relations.length > 0 ? (
                         <Swiper className='container container__recommendation'
                             slidesPerView={4}
                             breakpoints={breakpoints}
@@ -26,16 +26,20 @@ const Recommendation = ({data}) => {
                             modules={[FreeMode, Navigation]}
                         >
                         {
-                            data.recommendations.map((item, index) => {
+                            data.relations.map((item, index) => {
                                 return (
                                     <SwiperSlide key={index} className='recommendation'>
                                         <Link to={`/info/${item.id}`}>
                                             <div className='recommention__image'>
-                                                <img src={item.image} alt="" />
+                                                <LazyLoadImage
+                                                    effect="blur"
+                                                    src={item.image} 
+                                                    alt={item?.title?.romaji} 
+                                                />
                                             </div>
                                             <div className='recommendation__title'>
                                                 <h4>
-                                                    {item.title && item.title.english ? item.title.english : item.title.romaji}
+                                                    {item?.title?.english || item?.title?.romaji}
                                                 </h4>
                                             </div>
                                             {
@@ -52,13 +56,13 @@ const Recommendation = ({data}) => {
                                             }
                                             {
                                                 item.episodes &&
-                                                item.type === 'MOVIE' ? (
+                                                item.type === 'TV' ? (
                                                     <span className='recommendation__episodes'>
-                                                        Movie
+                                                        Episodes {item.episodes}
                                                     </span>
                                                 ) : (
                                                     <span className='recommendation__episodes'>
-                                                        Episodes {item.episodes}
+                                                        {item.type}
                                                     </span>
                                                 )
                                             }
@@ -75,9 +79,7 @@ const Recommendation = ({data}) => {
             </section>
         }
         </>
-        
     )
 }
 
-export default Recommendation
-
+export default Relations

@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react'
-import '../assets/css/watch.css'
+import '../styles/watch.css'
 import { Link, useParams } from 'react-router-dom';
-import LoaderBox from '../components/LoaderBox';
 import Episodes from '../components/Episodes';
-import { formatDate } from '../utilities/utility';
+import { formatDate, getNextEpisodeID, getPreviousEpisodeID } from '../utilities/utility';
 import useApiContext from '../context/ApiContext';
 import { AiOutlineInfoCircle } from 'react-icons/ai'
+import VideoPlayer from '../components/VideoPlayer';
+import Pageloader from '../components/Pageloader'
 
 const Watch = () => {
     const [ data, setData ] = useState([]);
     const [ info, setInfo ] = useState([]);
     const [ episodeRange, setEpisodeRange  ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
+    const [ isEpisodeLoading, setIsEpisodeLoading ] = useState(false);
     const [ animeResult, setAnimeResult ] = useState([])
 
     const { id, episodeId } = useParams();
@@ -19,63 +21,55 @@ const Watch = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await fetchWatch(id);
+            const response = await fetchWatch(id);
+            // console.log("Watch Page", response);
+            if(response) {
+                setIsEpisodeLoading(true);
                 setAnimeResult(response);
                 const episodes = response.episodes;
                 setEpisodeRange(episodes);
                 const matchingEpisode = episodes.find(episode => episode.id === episodeId)
                 if (matchingEpisode) setInfo(matchingEpisode);
-            } catch(error) {
-                console.log("fetchWatch", error.message);
+            } else {
+                setIsEpisodeLoading(false);
                 setTimeout(() => {
                     fetchData();
-                }, 6000);
+                }, 6000)
             }
         }
         fetchData();
-    }, [id])
+        setIsEpisodeLoading(false);
+    }, [id, episodeId])
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetchEpisodeWatch(episodeId);
-                setPageLoad(true);
+                if(!response) {
+                    setPageLoad(false);
+                    setTimeout(() => {
+                        fetchData();
+                    }, 6000)
+                } else {
+                    setPageLoad(true);
+                }   
                 setData(response);
             } catch(error) {
                 console.log("fetchEpisode", error.message)
-                setTimeout(() => {
-                    fetchData();
-                }, 6000);
             }
         }
         setPageLoad(false);
         fetchData();
     }, [episodeId])
 
-    // formatted values date and number 
-    const formattedDate = formatDate(info);
-
-    // get the next and previous episodes
-    const getNextEpisodeID = (currentEpisodeNumber) => {
-        const nextEpisode = episodeRange.find((episode) => episode.number === currentEpisodeNumber + 1);
-        if (nextEpisode) {
-          return nextEpisode.number;
-        }
-        return null; // No next episode
-    };
-    const getPreviousEpisodeID = (currentEpisodeNumber) => {
-        const previousEpisode = episodeRange.find((episode) => episode.number === currentEpisodeNumber - 1);
-        if (previousEpisode) {
-          return previousEpisode.number;
-        }
-        return null; // No previous episode
-    };
-
     // Scroll to the top
     useEffect(() => {
         window.scrollTo({top: 0});
     }, [episodeId]);
+
+    if (!pageLoad || !isEpisodeLoading) {
+        return (<Pageloader />)
+    }
 
     return (
         <section id='episode' className='episode'>
@@ -83,39 +77,26 @@ const Watch = () => {
                
                 <div className='episode__video'>
                     
-                    <div className='iframe__container'>
-                        {
-                            !pageLoad ? (
-                                <LoaderBox />
-                            ) : (
-                                <iframe
-                                    rel='nofollow'
-                                    src={data.Referer}
-                                    title="Embedded Video"
-                                    allowFullScreen
-                                    width="100%" height="100%"
-                                />
-                            )
-                        }
+                    <div className='watch__container'>
+                        <VideoPlayer data={data} />
                     </div>
                     <div className='buttons'>
                         <Link to={`/pass/${id}/${info.number - 1}`} 
-                            className={`btn btn-primary ${getPreviousEpisodeID(info.number) ? '' : 'opacity'}`}
+                            className={`btn btn-primary ${getPreviousEpisodeID(info.number, episodeRange) ? '' : 'opacity'}`}
                         >
                             Prev EP
                         </Link>
                         {
                             info.number && 
                             <h3>Episode {info?.number} </h3>
-                            
                         }
                         <Link to={`/pass/${id}/${info?.number + 1}`} 
-                            className={`btn btn-primary ${getNextEpisodeID(info.number) ? '' : 'd-none'}`}
+                            className={`btn btn-primary ${getNextEpisodeID(info.number, episodeRange) ? '' : 'd-none'}`}
                         >
                             Next EP
                         </Link>
                         <Link to={`/info/${id}`} 
-                            className={`btn btn-primary ${getNextEpisodeID(info.number) ? 'd-none' : ''}`}
+                            className={`btn btn-primary ${getNextEpisodeID(info.number, episodeRange) ? 'd-none' : ''}`}
                         >
                             Info <AiOutlineInfoCircle className='info-icon'/>
                         </Link>
@@ -126,7 +107,7 @@ const Watch = () => {
                                 {info?.title}
                             </h3>
                             <span>
-                                {formattedDate}
+                                {formatDate(info)}
                             </span>
                         </div>
                         <p>
@@ -139,7 +120,7 @@ const Watch = () => {
             <div className='container more__episodes'> 
                 <h2>More Episodes</h2>
                 <div className="__episodes">
-                    <Episodes animeResult={animeResult} id={id}/>
+                    <Episodes animeResult={animeResult} episodeNumber={info?.number} id={id}/>
                 </div>
             </div>          
         </section>

@@ -1,0 +1,12 @@
+.footer {
+    background: var(--primary-bg);
+    color: var(--primary);
+}
+
+.container__footer {
+    padding: 2rem 0 2rem;
+}
+
+.container__footer span {
+    font-size: 13px;
+}

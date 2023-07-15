@@ -32,10 +32,6 @@
     width: 100%;
 }
 
-.latest__card__image img {
-    transition: var(--transition);
-}
-
 .latest__card__title {
     position: absolute;
     bottom: 0px;
@@ -101,7 +97,8 @@
 @media screen and (max-width: 600px ){
     .container__latest {
         grid-template-columns: repeat(2, 1fr);
-        padding-bottom: 7.5rem;
+        padding-bottom: 0rem;
+        gap: 1.2rem;
     }
 
     .latest__card__container {

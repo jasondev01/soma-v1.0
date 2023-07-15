@@ -2,11 +2,13 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1.2rem;
+    margin-bottom: 1%;
 }
 
 .latest__page__card {
     position: relative;
     height: 320px;
+    box-shadow: var(--box-shadow);
 }
 
 .latest__page__card__image,
@@ -39,14 +41,14 @@
     justify-content: flex-end;
 }
 
-/*************** MEDIAY QUERIES (1024) *************/
+/*************** MEDIAY QUERIES (1024px) *************/
 @media screen and (max-width: 1024px ){
     .latest__page__cards {
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
-/*************** MEDIAY QUERIES (768) *************/
+/*************** MEDIAY QUERIES (768px) *************/
 @media screen and (max-width: 768px ){
     .latest__page__cards {
         grid-template-columns: repeat(3, 1fr);
@@ -57,7 +59,7 @@
     }
 }
 
-/*************** MEDIAY QUERIES (600) *************/
+/*************** MEDIAY QUERIES (600px) *************/
 @media screen and (max-width: 600px ){
     .latest__page__cards {
         grid-template-columns: repeat(2, 1fr);

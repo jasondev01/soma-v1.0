@@ -1,0 +1,155 @@
+.episode {
+    margin-top: 0;
+
+}
+
+.container__episode {
+    padding-top: 2.5rem;
+    /* min-height: 650px; */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    place-content: center;
+}
+
+.episode__video {
+    padding-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.buttons,
+.episode__info,
+.watch__container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.watch__container {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.buttons .btn {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.info-icon {
+    font-size: 1.2rem;
+}
+
+.opacity {
+    opacity: 0;
+    user-select: none;
+    cursor: default!important;
+    pointer-events: none;
+}
+
+option span {
+    padding: 2rem;
+}
+
+.episode__info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 2.5rem;
+}
+
+.episode__title {
+    margin-bottom: 12px;
+}
+
+.episode__title h3 {
+    margin-bottom: 5px;
+}
+
+.episode__title span {
+    font-size: 12px;
+}
+
+.watch__container {
+    box-shadow: var(--box-shadow);
+    position: relative;
+    /* height: 650px; */
+}
+
+/**************** MORE EPISODES ***************/
+.more__episodes {
+    padding-top: 2rem;
+}
+
+.more__episodes h2 {
+    text-align: center;
+}       
+
+.__episodes {
+    padding: 20px 0;
+}
+
+.active__episode {
+    box-shadow: 0px 0px 10px 0px var(--secondary)!important;
+    border: 2px solid var(--secondary);
+}
+
+/******************* MEDIA QUERY (1200px) ******************/
+@media screen and (max-width: 1200px){
+    .buttons,
+    .episode__info,
+    /* .iframe__container */
+    .watch__container {
+        width: 100%;
+    }
+}
+
+/******************* MEDIA QUERY (1024px) ******************/
+@media screen and (max-width: 1024px){
+    .buttons,
+    .episode__info,
+    .watch__container {
+        width: 96%;
+    }
+}
+
+/******************* MEDIA QUERY (600px) ******************/
+@media screen and (max-width: 600px){
+    .container.container__episode {
+        width: 100%;
+    }
+
+    .container__episode {
+        min-height: 400px;
+    }
+
+    .buttons,
+    .episode__info {
+        width: 98%;
+    }
+
+    .buttons .btn {
+        font-size: 12px;
+        width: auto;
+        padding: 7px 10px;
+    }
+
+    .episode__info {
+        padding: 0 1.2rem
+    }
+
+    .watch__container {
+        border-radius: 0px;
+    }
+}

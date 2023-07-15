@@ -24,6 +24,11 @@
 .popular__anime__image {
     height: 100%;
     width: 100%;
+    overflow: hidden;
+}
+
+.popular__anime__image:hover img {
+    transform: scale(1.1);
 }
 
 .popular__anime__title {
@@ -84,5 +89,10 @@
 @media screen and (max-width: 600px ){
     .popular h2 {
         width: var(--container-sm);
+    }
+
+    .popular__anime {
+        width: 350px;
+        min-height: 330px;
     }
 }

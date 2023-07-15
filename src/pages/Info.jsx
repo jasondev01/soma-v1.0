@@ -1,28 +1,31 @@
 import { useEffect, useState } from 'react'
-import '../assets/css/info.css'
+import '../styles/info.css'
 import { Link, useParams } from 'react-router-dom';
 import Pageloader from '../components/Pageloader';
 import Recommendation from '../components/Recommendation';
 import InfoBanner from '../components/InfoBanner';
 import useApiContext from '../context/ApiContext';
+import Relations from '../components/Relations';
 
 const Info = () => {
     const [ data, setData ] = useState([])
     const [ displayedEpisodes, setDisplayedEpisodes ] = useState([]);
     const [ episodeRange, setEpisodeRange ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false)
+    const [ activeButton, setActiveButton ] = useState()
     const { id } = useParams();
     const { fetchInfo } = useApiContext();
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await fetchInfo(id);
+            const response = await fetchInfo(id);
+            // console.log('info response', response)
+            if(response) {
                 setData(response);
                 setEpisodeRange(response.episodes);
                 setPageLoad(true)
-            } catch(error) {
-                console.log("fetchInfo", error.message)
+            } else {
+                setPageLoad(false)
                 setTimeout(() => {
                     fetchData();
                 }, 6000)
@@ -51,11 +54,12 @@ const Info = () => {
     }
 
     // display the episodes according to the range
-    const handleRangeClick = (range) => {
+    const handleRangeClick = (range, rangeLabel) => {
         const start = totalEpisodes - range.end - 1;
         const end = totalEpisodes - range.start - 1;
         const episodesToShow = episodeRange.slice(start, end + 1);
         setDisplayedEpisodes(episodesToShow);
+        setActiveButton(rangeLabel)
     };
 
     return (
@@ -69,11 +73,15 @@ const Info = () => {
                         totalEpisodes > 200 && 
                         range.map((range, index) => (
                             <button 
-                                className="btn btn-primary"
+                                className={
+                                    activeButton === `${range.end + 1}-${range.start + 1}` 
+                                    ? "btn btn-primary active" 
+                                    : "btn btn-primary"
+                                }
                                 key={index} 
-                                onClick={() => handleRangeClick(range)}
+                                onClick={() => handleRangeClick(range, `${range.end + 1}-${range.start + 1}`)}
                             >
-                                EP {`${range.start + 1}-${range.end + 1}`}
+                                EP {`${range.end + 1}-${range.start + 1}`}
                             </button>
                         )) 
                     }
@@ -114,6 +122,7 @@ const Info = () => {
                 </div>
             </div>
         </section>
+        <Relations data={data}/>
         <Recommendation data={data}/>
         </>
     )

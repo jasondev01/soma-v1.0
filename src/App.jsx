@@ -6,6 +6,9 @@ import Info from "./pages/Info"
 import Watch from "./pages/Watch.jsx"
 import PassingData from "./components/PassingData"
 import LatestPage from "./pages/LatestPage"
+import TrendingPage from "./pages/TrendingPage"
+import PopularPage from "./pages/PopularPage"
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 function App() {
 
@@ -17,6 +20,8 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/latest" element={<LatestPage />} />
+                        <Route path="/trending" element={<TrendingPage />} />
+                        <Route path="/popular" element={<PopularPage />} />
                         <Route path="/info/:id" element={<Info />} />
                         <Route path="/watch/:id/:episodeId" element={<Watch />} />
                         <Route path="/pass/:id/:epNum" element={<PassingData />} />

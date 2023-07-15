@@ -1,33 +1,38 @@
-import '../assets/css/hero.css'
+import '../styles/hero.css'
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoaderBox from './LoaderBox';
 import useApiContext from '../context/ApiContext';
+import { LazyLoadComponent, LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Hero = () => {
     const [ data, setData ] = useState([]);
+    const [ episodeId, setEpisodeId ] = useState();
     const [ pageLoad, setPageLoad ] = useState(false);
     const { fetchHero } = useApiContext()
     
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await fetchHero();
+            const response = await fetchHero();
+            // console.log('Hero Section', response)
+            if(response) {
                 setData(response);
                 setPageLoad(true);
-            } catch(error) {
-                console.log("fetchHero: ", error.message)
-                // setTimeout(() => {
-                //     fetchData();
-                // }, 6000)
+                const getEpisodeId = response.episodes.find(num => num.number === Number(1))
+                setEpisodeId(getEpisodeId.id)
+            } else {
+                setPageLoad(false);
+                setTimeout(() => {
+                    fetchData();
+                }, 6000)
             }
         }
         fetchData();
         setPageLoad(false);
     }, [])
 
-
     return (
+        <LazyLoadComponent>
         <section id='hero' className='hero' style={{backgroundImage: `url(${data.cover})`}} >
                 {
                     !pageLoad ? (
@@ -51,28 +56,37 @@ const Hero = () => {
                                             }
                                         </li>
                                             {   
-                                                data.type = "MOVIE" 
-                                                ? ( "MOVIE" ) 
-                                                : data.currentEpisode 
-                                                ? ( `EP: ${ data.currentEpisode } `) 
-                                                : ("Coming Soon" )
+                                                data?.type === "TV" 
+                                                ? `EP: ${ data.currentEpisode } `
+                                                : data?.type
                                             }
                                     </ul>
                                 </div>
                                 <p>
                                     { data.description }
                                 </p>
-                                <Link to={`/info/${data.id}`} className='btn btn-primary'>
-                                    Read Info
-                                </Link>
+                                <div className='hero__butons'>
+                                    <Link to={`/watch/${data.id}/${episodeId}`} className='btn btn-primary'>
+                                        Watch Now
+                                    </Link>
+                                    <Link to={`/info/${data.id}`} className='btn'>
+                                        Read Info
+                                    </Link>
+                                </div>
+                                
                             </article>
                             <div className='anime__hero__cover'>
-                                <img src={data.image} alt=" cover image" />
+                                <LazyLoadImage
+                                    effect='blur' 
+                                    src={data.image} 
+                                    alt={data?.title?.romaji} 
+                                />
                             </div>
                         </div>
                     )
                 }
         </section>
+        </LazyLoadComponent>
     )
 }
 

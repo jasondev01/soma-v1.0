@@ -1,0 +1,35 @@
+.anime__episodes {
+    height: 320px;
+    position: relative;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 10px;
+}
+
+.anime__episode__image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.anime__episode__image:hover img {
+    transform: scale(1.1);
+}
+
+.anime__episode__title {
+    position: absolute;
+    bottom: 0;
+    padding: 7px;
+    width: 100%;
+    background: var(--overlay-bg);
+}
+
+.anime__episode__episode {
+    position: absolute;
+    top: 7px;
+    right: 5px;
+    background: var(--secondary);
+    color: var(--primary);
+    padding: 7px 10px;
+    box-shadow: var(--box-shadow);
+    font-size: 14px;
+}

@@ -1,4 +1,4 @@
-import '../assets/css/cards.css'
+import '../styles/cards.css'
 import axios from "axios"
 import { useEffect, useState, } from "react";
 

@@ -1,28 +1,29 @@
-import axios from "axios"
-import '../assets/css/latestpage.css'
+import '../styles/latestpage.css'
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react";
 import Pageloader from "../components/Pageloader";
 import PaginationButtons from "../components/PaginationButtons";
-
+import useApiContext from '../context/ApiContext';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const LatestPage = () => {
     const [ data, setData ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
     const [ pageNumber, setPageNumber ] = useState(1);
+    const { fetchLatestPage } = useApiContext()
  
-    const url = `https://api.consumet.org/meta/anilist/recent-episodes?page=${pageNumber}&perPage=20&provider=gogoanime`
-
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await axios.get(url);
-                const responseData = response.data.results;
-                console.log("latestPage",responseData);
-                setData(responseData);
+            const response = await fetchLatestPage(pageNumber);
+            // console.log("Latest Page", response)
+            if(response) {
+                setData(response);
                 setPageLoad(true)
-            } catch(error) {
-                console.log(error.message)
+            } else {
+                setPageLoad(false)
+                setTimeout(() => {
+                    fetchData();
+                }, 6000)
             }
         }
         fetchData();
@@ -47,13 +48,27 @@ const LatestPage = () => {
                     {
                         data && 
                         data.map((item, index) => {
+                            const decodedTitle = decodeURIComponent(item.title.romaji);
+                            const formattedTitle = decodedTitle.toLowerCase()
+                            .replace(/\s+/g, "-")
+                            .replace(/[\s\.\,\:\(\)]/g, "");;
                             return (
-                                <Link to={`/info/${item.id}`} 
+                                <Link to={
+                                    item.type === 'ONA' ? (
+                                        `/pass/${item.id}/${item.episodeNumber}`
+                                    ) : (
+                                        `/watch/${item.id}/${formattedTitle}-episode-${item.episodeNumber}`
+                                    )
+                                } 
                                     className="latest__page__card"
                                     key={index}
                                 >
                                     <div className='latest__page__card__image'>
-                                        <img src={item.image} alt={`${item.title?.english} cover image`} />
+                                        <LazyLoadImage
+                                            effect='blur' 
+                                            src={item.image} 
+                                            alt={item.title?.english} 
+                                        />
                                     </div>
                                     <div className='latest__card__title'>
                                         <h4>

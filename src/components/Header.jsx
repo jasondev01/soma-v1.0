@@ -1,12 +1,17 @@
-import '../assets/css/header.css'
-import{ SiZincsearch } from 'react-icons/si'
+import '../styles/header.css'
 import{ RxMoon } from 'react-icons/rx'
-import{ GiSun } from 'react-icons/gi'
+import{ BsFillSunFill, BsSearch } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import useThemeContext from '../context/ThemeContext'
+import { useState } from 'react'
 
 const Header = () => {
     const { theme, toggleTheme } = useThemeContext();
+    const [ activeNav, setActiveNav ] = useState();
+
+    const handleNav = (nav) => {
+        setActiveNav(nav)
+    }
 
     return (
         <header id='header'>
@@ -20,17 +25,35 @@ const Header = () => {
                         </Link>
                         <ul className='navbar__menu'>
                             <li>
-                                <Link to="/latest" className={`${theme ? 'light' : 'dark'}`}>
+                                <Link to="/latest" 
+                                    className={`
+                                        ${theme ? 'light' : 'dark'} 
+                                        ${activeNav === 'latest' ? 'active__nav' : ''}
+                                    `}
+                                    onClick={() => handleNav('latest')}
+                                >
                                     Latest
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className={`${theme ? 'light' : 'dark'}`}>
+                                <Link to="/trending" 
+                                    className={`
+                                        ${theme ? 'light' : 'dark'}
+                                        ${activeNav === 'trending' ? 'active__nav' : ''}
+                                    `}
+                                    onClick={() => handleNav('trending')}
+                                >
                                     Trending
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className={`${theme ? 'light' : 'dark'}`}>
+                                <Link to="/popular" 
+                                    className={`
+                                        ${theme ? 'light' : 'dark'}
+                                        ${activeNav === 'popular' ? 'active__nav' : ''}
+                                    `}
+                                    onClick={() => handleNav('popular')}
+                                >
                                     Popular
                                 </Link>
                             </li>
@@ -39,12 +62,12 @@ const Header = () => {
                     <div className='navbar__search__user'>
                         <form action="" className='search__form'>
                             <input type="text" placeholder='search' className={`search__icon ${theme ? 'light' : ''}`}/>
-                            <button type='submit'><SiZincsearch className={`search__icon ${theme ? 'light' : ''}`}/></button>
+                            <button type='submit'><BsSearch className={`search__icon ${theme ? 'light' : ''}`}/></button>
                         </form>
                         <button onClick={toggleTheme} className={`${theme ? 'light' : ''}`}>
                             {
                                 theme ? (
-                                    <GiSun className='profile__user'/>
+                                    <BsFillSunFill className='profile__user'/>
                                 ) : (
                                     <RxMoon className='profile__user'/>
                                 )

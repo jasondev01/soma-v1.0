@@ -30,4 +30,32 @@ export const formatDate = (info) => {
     }
     return formattedDate;
 }
-  
+
+// get the next and previous episodes
+export const getNextEpisodeID = (currentEpisode, episodeRange) => {
+    const nextEpisode = episodeRange.find((episode) => episode.number === currentEpisode + 1);
+    if (nextEpisode) {
+        return nextEpisode.number;
+    }
+    return null; // No next episode
+};
+
+export const getPreviousEpisodeID = (currentEpisode, episodeRange) => {
+    const previousEpisode = episodeRange.find((episode) => episode.number === currentEpisode - 1);
+    if (previousEpisode) {
+      return previousEpisode.number;
+    }
+    return null; // No previous episode
+};
+
+export const providers = [
+    'gogoanime', 
+    'bilibili', 
+    'crunchyroll', 
+    'zoro', 
+    'marin', 
+    'animepahe', 
+    '9anime', 
+    'enime', 
+    'animefox'
+];

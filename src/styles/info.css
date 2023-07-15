@@ -26,7 +26,7 @@
 .anime__info__info {
     display: inline-flex;
     flex-direction: column;
-    gap: .8rem;
+    gap: 8px;
     justify-content: center;
     position: relative;
 }
@@ -42,7 +42,8 @@
 
 .anime__info__info li,
 .anime__info__info p,
-.anime__info__ul li p {
+.anime__info__ul li p,
+.anime__info__info a {
     font-size: 13px;
     color: var(--primary);
 }
@@ -94,7 +95,7 @@
 }
 
 .info__recommendation {
-    margin-top: 7rem;
+    margin-top: 3rem;
 }
 
 .container__recommendation {
@@ -111,6 +112,11 @@
 .recommention__image {
     width: 100%;
     height: 100%;
+    overflow: hidden;
+}
+
+.recommention__image:hover img {
+    transform: scale(1.1);
 }
 
 .recommendation__rating,

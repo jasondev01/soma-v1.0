@@ -6,42 +6,53 @@ import "swiper/css/free-mode";
 import 'swiper/swiper-bundle.min.css';
 import { Link } from "react-router-dom";
 import { breakpoints } from "../utilities/utility";
+import "../styles/episodes.css"
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-
-const Episodes = ({animeResult, id}) => {
+const Episodes = ({animeResult, episodeNumber, id}) => {
     
-    console.log("animeResult",animeResult)
+    console.log("Episodes", episodeNumber)
     return (
         <>
         <Swiper className='container__episodes'
-            slidesPerView={4}
+            slidesPerView={5}
             breakpoints={breakpoints}
             spaceBetween={25}
             navigation={true}
             freeMode={true}
             modules={[FreeMode, Navigation]}
         >
-            {/* to={`/pass/${id}/${episodeRange.number}`} */}
             {
                 animeResult.episodes &&
                 animeResult.episodes.map((item, index) => {
+                    const currentEpisode = episodeNumber === item.number ? true : false;
+                    console.log("currentEpisode", currentEpisode)
                     return (
-                        <SwiperSlide key={index} className='popular__anime'>
-                            <Link to={`/pass/${id}/${item.number}`} >
-                                <div className='popular__anime__image'>
-                                    <img src={animeResult?.image} alt={`${item.title} cover image`} />
+                        <SwiperSlide 
+                            key={index} 
+                            className={`anime__episodes ${currentEpisode ? 'active__episode' : ''}`}
+                        >
+                            <Link to={`/watch/${id}/${item.id}`} >
+                                <div className='anime__episode__image'>
+                                    <LazyLoadImage
+                                        effect="blur"
+                                        src={animeResult?.image} 
+                                        alt={item?.title}
+                                    />
                                 </div>
-                                <div className='popular__anime__title'>
-                                    <h4>
-                                        {item.title}
-                                    </h4>
-                                </div>
-                                <span className='latest__page__episode'>
+                                {
+                                    item.title &&
+                                    <div className='anime__episode__title'>
+                                        <h4>{item.title}</h4>
+                                    </div>
+                                }
+                                <span 
+                                    className={`anime__episode__episode ${currentEpisode ? 'active' : ''}`}
+                                >
                                     Episode {item.number}
                                 </span>
                             </Link >
                         </SwiperSlide>
-                       
                     )
                 })
             }

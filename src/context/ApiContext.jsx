@@ -1,12 +1,11 @@
 import { useContext, createContext, useEffect, useState } from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
+import { baseUrl } from "../utilities/service";
 
 const ApiContext = createContext();
 
 export const ApiProvider = ({ children }) => {
-
-    const baseUrl = `https://api.consumet.org/meta/anilist`;
 
     const fetchHero = async () => {
         try {
@@ -17,9 +16,7 @@ export const ApiProvider = ({ children }) => {
             return cleanData;
         } catch(error) {
             console.log("Hero Context", error.message);
-            setTimeout(() => {
-                return fetchHero();
-            }, 6000)
+            return false;
         }
     }
 
@@ -30,6 +27,7 @@ export const ApiProvider = ({ children }) => {
             return responseData;
         } catch(error) {
             console.log("Latest Context", error.message);
+            return false;
         }
     }
 
@@ -44,6 +42,7 @@ export const ApiProvider = ({ children }) => {
             return cleanData;
         } catch(error) {
             console.log("Trending Context", error.message);
+            return false;
         }
     }
 
@@ -51,9 +50,14 @@ export const ApiProvider = ({ children }) => {
         try {
             const response = await axios.get(`${baseUrl}/popular?page=1&perPage=20`);
             const responseData = response.data.results;
-            return responseData;
+            const cleanData = responseData.map(item => ({
+                ...item,
+                description: removeHtmlTags(item.description)
+            }))
+            return cleanData;
         } catch(error) {
             console.log("Popular Context", error.message);
+            return false;
         }
     }
 
@@ -66,6 +70,7 @@ export const ApiProvider = ({ children }) => {
             return cleanData;
         } catch(error) {
             console.log("Info Context", error.message);
+            return false;
         }
     }
 
@@ -75,17 +80,61 @@ export const ApiProvider = ({ children }) => {
             const responseData = response.data;
             return responseData;
         } catch(error) {
-            console.log("Watch Context", error.message);
+            console.log("Watch Info Context", error.message);
+            return false;
         }
     }
 
     const fetchEpisodeWatch = async (episodeId) => {
+        const id = episodeId;
         try {
-            const response = await axios.get(`${baseUrl}/watch/${episodeId}`)
-            const responseData = response.data.headers;
+            const response = await axios.get(`${baseUrl}/watch/${id}`)
+            const responseData = response.data;
             return responseData;
         } catch {error} {
             console.log("Episode Watch Context", error.message);
+            return false;
+        }
+    }
+
+    const fetchLatestPage = async (pageNumber) => {
+        try {
+            const response = await axios.get(`${baseUrl}/recent-episodes?page=${pageNumber}&perPage=30&provider=gogoanime`)
+            const responseData = response.data.results;
+            return responseData;
+        } catch(error) {
+            console.log("Latest Page Context", error.message);
+            return false;
+        }
+    }
+
+    const fetchTrendingPage = async (pageNumber) => {
+        try {
+            const response = await axios.get(`${baseUrl}/trending?page=${pageNumber}&perPage=12`)
+            const responseData = response.data.results;
+            const cleanData = responseData.map(item => ({
+                ...item,
+                description: removeHtmlTags(item.description)
+            }))
+            return cleanData; 
+        } catch(error) {
+            console.log("Trending Page Context", error.message);
+            return false;
+        }
+    }
+
+    const fetchPopularPage = async (pageNumber) => {
+        try {
+            const response = await axios.get(`${baseUrl}/popular?page=${pageNumber}&perPage=20`);
+            const responseData = response.data.results;
+            const cleanData = responseData.map(item => ({
+                ...item,
+                description: removeHtmlTags(item.description)
+            }))
+            return cleanData;
+        } catch(error) {
+            console.log("Popular Context", error.message);
+            return false;
         }
     }
 
@@ -98,6 +147,9 @@ export const ApiProvider = ({ children }) => {
             fetchInfo,
             fetchWatch,
             fetchEpisodeWatch,
+            fetchLatestPage,
+            fetchTrendingPage,
+            fetchPopularPage
         }}>
             {children}
         </ApiContext.Provider>);
