@@ -1,9 +1,4 @@
-.popular h2 {
-    width: var(--container-lg);
-    margin: 0 auto;
-}
-
-.popular h2 span {
+.section__header h2 span {
     font-size: 12px;
 }
 

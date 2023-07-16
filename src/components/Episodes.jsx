@@ -11,7 +11,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Episodes = ({animeResult, episodeNumber, id}) => {
     
-    console.log("Episodes", episodeNumber)
+    // console.log("Episodes", episodeNumber)
+    // console.log("currentEpisode", currentEpisode)
     return (
         <>
         <Swiper className='container__episodes'
@@ -26,7 +27,6 @@ const Episodes = ({animeResult, episodeNumber, id}) => {
                 animeResult.episodes &&
                 animeResult.episodes.map((item, index) => {
                     const currentEpisode = episodeNumber === item.number ? true : false;
-                    console.log("currentEpisode", currentEpisode)
                     return (
                         <SwiperSlide 
                             key={index} 

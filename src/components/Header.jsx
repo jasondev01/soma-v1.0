@@ -1,16 +1,24 @@
 import '../styles/header.css'
 import{ RxMoon } from 'react-icons/rx'
 import{ BsFillSunFill, BsSearch } from 'react-icons/bs'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useThemeContext from '../context/ThemeContext'
 import { useState } from 'react'
 
 const Header = () => {
     const { theme, toggleTheme } = useThemeContext();
     const [ activeNav, setActiveNav ] = useState();
+    const [ query, setQuery ] = useState('');
+    const navigate = useNavigate();
 
     const handleNav = (nav) => {
         setActiveNav(nav)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate(`/search/${query}`)
+        setQuery('')
     }
 
     return (
@@ -60,9 +68,19 @@ const Header = () => {
                         </ul>
                     </div>
                     <div className='navbar__search__user'>
-                        <form action="" className='search__form'>
-                            <input type="text" placeholder='search' className={`search__icon ${theme ? 'light' : ''}`}/>
-                            <button type='submit'><BsSearch className={`search__icon ${theme ? 'light' : ''}`}/></button>
+                        <form onSubmit={handleSubmit}
+                            className='search__form'
+                        >
+                            <input 
+                                type="text"
+                                placeholder='search' 
+                                className={`search__icon ${theme ? 'light' : ''}`}
+                                value={query}
+                                onChange={e => setQuery(e.target.value)}
+                            />
+                            <button type='submit'>
+                                <BsSearch className={`search__icon ${theme ? 'light' : ''}`}/>
+                            </button>
                         </form>
                         <button onClick={toggleTheme} className={`${theme ? 'light' : ''}`}>
                             {

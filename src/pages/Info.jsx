@@ -25,7 +25,6 @@ const Info = () => {
                 setEpisodeRange(response.episodes);
                 setPageLoad(true)
             } else {
-                setPageLoad(false)
                 setTimeout(() => {
                     fetchData();
                 }, 6000)
@@ -60,11 +59,21 @@ const Info = () => {
         const episodesToShow = episodeRange.slice(start, end + 1);
         setDisplayedEpisodes(episodesToShow);
         setActiveButton(rangeLabel)
+        console.log('start', start)
     };
+
+    const substraction = (a, b) => {
+        return a - b;
+    }
+
+    const firstEpisode = substraction(data.episodes.length, data.episodes.length) + 1;
+    const currentEpisode = data.currentEpisode;
+    // console.log("firstEpisode", firstEpisode);
+    // console.log("currentEpisode", currentEpisode);
 
     return (
         <>
-        <InfoBanner data={data}/>
+        <InfoBanner data={data} firstEpisode={firstEpisode} currentEpisode={currentEpisode} />
         <section className='info__episodes'>
             <h2>Episodes</h2>
             <div className='container container__episodes'>
@@ -74,14 +83,14 @@ const Info = () => {
                         range.map((range, index) => (
                             <button 
                                 className={
-                                    activeButton === `${range.end + 1}-${range.start + 1}` 
+                                    activeButton === `${range.start + 1}-${range.end + 1}` 
                                     ? "btn btn-primary active" 
                                     : "btn btn-primary"
                                 }
                                 key={index} 
-                                onClick={() => handleRangeClick(range, `${range.end + 1}-${range.start + 1}`)}
+                                onClick={() => handleRangeClick(range, `${range.start + 1}-${range.end + 1}`)}
                             >
-                                EP {`${range.end + 1}-${range.start + 1}`}
+                                {`${range.start + 1}-${range.end + 1}`}
                             </button>
                         )) 
                     }

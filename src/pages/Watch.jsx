@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import '../styles/watch.css'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Episodes from '../components/Episodes';
 import { formatDate, getNextEpisodeID, getPreviousEpisodeID } from '../utilities/utility';
 import useApiContext from '../context/ApiContext';
@@ -15,9 +15,13 @@ const Watch = () => {
     const [ pageLoad, setPageLoad ] = useState(false);
     const [ isEpisodeLoading, setIsEpisodeLoading ] = useState(false);
     const [ animeResult, setAnimeResult ] = useState([])
+    const [ nextEpisode, setNextEpisode ] = useState();
+    const [ prevEpisode, setPrevEpisode] = useState();
 
     const { id, episodeId } = useParams();
     const { fetchWatch, fetchEpisodeWatch } = useApiContext();
+    const navigate = useNavigate();
+    console.log("Watch Info", episodeId);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,9 +33,20 @@ const Watch = () => {
                 const episodes = response.episodes;
                 setEpisodeRange(episodes);
                 const matchingEpisode = episodes.find(episode => episode.id === episodeId)
-                if (matchingEpisode) setInfo(matchingEpisode);
+                if (matchingEpisode) {
+                    setInfo(matchingEpisode);
+                    const currentEpisodeNumber = matchingEpisode.number;
+                    const nextEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber + 1);
+                    const prevEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber - 1);
+                    const nextEpisodeId = nextEpisode ? nextEpisode.id : null;
+                    const prevEpisodeId = prevEpisode ? nextEpisode.id : null;
+                    // Use nextEpisodeId as needed
+                    console.log('Next Episode ID:', nextEpisodeId);
+                    console.log('Prev Episode ID:', nextEpisodeId);
+                    setNextEpisode(nextEpisodeId);
+                    setPrevEpisode(prevEpisodeId);
+                }
             } else {
-                setIsEpisodeLoading(false);
                 setTimeout(() => {
                     fetchData();
                 }, 6000)
@@ -43,24 +58,33 @@ const Watch = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await fetchEpisodeWatch(episodeId);
-                if(!response) {
-                    setPageLoad(false);
-                    setTimeout(() => {
-                        fetchData();
-                    }, 6000)
-                } else {
-                    setPageLoad(true);
-                }   
-                setData(response);
-            } catch(error) {
-                console.log("fetchEpisode", error.message)
+            if(episodeId === `undefined`) {
+                navigate(`/info/${id}`)
             }
+            const response = await fetchEpisodeWatch(episodeId);
+            if(response) {
+                setData(response);
+                setPageLoad(true);
+            } else {
+                setTimeout(() => {
+                    fetchData();
+                }, 6000)
+            }   
         }
-        setPageLoad(false);
         fetchData();
+        setPageLoad(false);
     }, [episodeId])
+
+
+    const handleVideoEnd = () => {
+        console.log('ended');
+        // Perform actions when the video ends
+        if(getNextEpisodeID(info.number, episodeRange)) {
+            navigate(`/watch/${id}/${nextEpisode}`)
+        } else {
+            navigate(`/info/${id}`)
+        }
+    };
 
     // Scroll to the top
     useEffect(() => {
@@ -78,10 +102,14 @@ const Watch = () => {
                 <div className='episode__video'>
                     
                     <div className='watch__container'>
-                        <VideoPlayer data={data} />
+                        <VideoPlayer 
+                            data={data} 
+                            id={id} 
+                            onVideoEnd={handleVideoEnd}
+                        />
                     </div>
                     <div className='buttons'>
-                        <Link to={`/pass/${id}/${info.number - 1}`} 
+                        <Link to={`/watch/${id}/${prevEpisode}`} 
                             className={`btn btn-primary ${getPreviousEpisodeID(info.number, episodeRange) ? '' : 'opacity'}`}
                         >
                             Prev EP
@@ -90,7 +118,7 @@ const Watch = () => {
                             info.number && 
                             <h3>Episode {info?.number} </h3>
                         }
-                        <Link to={`/pass/${id}/${info?.number + 1}`} 
+                        <Link to={`/watch/${id}/${nextEpisode}`} 
                             className={`btn btn-primary ${getNextEpisodeID(info.number, episodeRange) ? '' : 'd-none'}`}
                         >
                             Next EP

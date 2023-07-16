@@ -1,8 +1,3 @@
-.trending__page h2 {
-    width: var(--container-lg);
-    margin: 0 auto;
-}
-
 .container__trending__page {
     display: flex;
     flex-direction: column;
@@ -21,12 +16,11 @@
     border-radius: 30px;
     box-shadow: var(--box-shadow);
     background: var(--overlay-bg-secondary);
-    backdrop-filter: var(--backdrop-filter);
     position: relative;
     overflow: hidden;
     color: var(--primary);
     transition: var(--transition);
-    border: 1px solid transparent;
+    border: 1px solid var(--primary-bg);
 }
 
 .trending__item:hover {
@@ -40,6 +34,7 @@
     border-radius: 15px;
     overflow: hidden;
     position: relative;
+    z-index: 999;
 }
 
 .trending__item__article {
@@ -48,13 +43,25 @@
     flex-direction: column;
     justify-content: center;
     gap: 4px;
-    z-index: 1;
+    z-index: 2;
+    position: relative;
     min-height: 320px;
 }
 
 .trending__item__iframe {
     flex-basis: 27%;
     border-radius: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.trending__item__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--overlay-bg);
+    left: 0;
+    z-index: 1;
 }
 
 /*********** TRENDING CONTENT  ************/
@@ -128,6 +135,7 @@
 
     .trending__item {
         padding: 0;
+        background-image: none;
     }
 
     .trending__item__image {

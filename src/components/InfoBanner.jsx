@@ -1,12 +1,15 @@
 import { LazyLoadComponent, LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 
-const InfoBanner = ({data}) => {
+const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
     
     const title = data.title ? (data.title.english || data.title.romaji) : 'N/A';
-    // console.log('info banner', data);
+    console.log('info banner', data);
 
     const baseUrl = "https://www.youtube.com/watch?v="
+
+    console.log("currentEpisode", currentEpisode)
+    console.log("firstEpisode", firstEpisode)
 
     return (
         <LazyLoadComponent>
@@ -165,7 +168,7 @@ const InfoBanner = ({data}) => {
                         </div>
                     }
                     {
-                        data?.trailer &&
+                        data?.trailer?.id &&
                         <div className='anime__info'>
                                 <span>Trailer:</span>
                                 <a href={`${baseUrl}${data?.trailer?.id}`} 
@@ -182,6 +185,17 @@ const InfoBanner = ({data}) => {
                             {data.description}
                         </p>
                     </div>
+                    {
+                        data.episodes.length > 0 &&
+                        <div className='anime__info__buttons'>
+                            <Link to={`/pass/${data.id}/${currentEpisode}`} className="btn btn-primary">
+                                Watch EP {currentEpisode}
+                            </Link>
+                            <Link to={`/pass/${data.id}/${firstEpisode}`} className="btn btn">
+                                Watch EP 0{firstEpisode}
+                            </Link>
+                        </div>
+                    }
                 </article>
             </div>
         </section>

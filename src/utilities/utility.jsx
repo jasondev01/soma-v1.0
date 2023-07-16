@@ -6,6 +6,10 @@ export const removeHtmlTags = (htmlString) => {
 };
 
 export const breakpoints = {
+    1440: {
+        slidesPerView: 5,
+        spaceBetween: 25,
+    },
     1200: {
         slidesPerView: 4,
         spaceBetween: 25,

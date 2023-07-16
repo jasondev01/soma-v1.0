@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import MainLayout from './layouts/MainLayout'
 import Home from "./pages/Home"
-import About from "./pages/About"
+import Search from "./pages/Search"
 import Info from "./pages/Info"
 import Watch from "./pages/Watch.jsx"
 import PassingData from "./components/PassingData"
@@ -18,7 +18,7 @@ function App() {
                 <Routes>
                     <Route element={<MainLayout />} > 
                         <Route path="/" element={<Home />} />
-                        <Route path="/about" element={<About />} />
+                        <Route path="/search/:query" element={<Search />} />
                         <Route path="/latest" element={<LatestPage />} />
                         <Route path="/trending" element={<TrendingPage />} />
                         <Route path="/popular" element={<PopularPage />} />

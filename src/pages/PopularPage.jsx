@@ -21,7 +21,6 @@ const PopularPage = () => {
                 setData(response)
                 setPageLoad(true);
             } else {
-                setPageLoad(false);
                 setTimeout(() => {
                     fetchData();
                 }, 6000)
@@ -46,9 +45,11 @@ const PopularPage = () => {
 
     return (
         <section className="popular__page">
-            <h2>
-                Popular Anime
-            </h2>
+            <div className="section__header">
+                <h2>
+                    Popular Anime
+                </h2>
+            </div>
             <div className="container container__popular__page">
                 {
                     data?.map((item, index) => {

@@ -18,7 +18,7 @@ const Popular = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchPopular();
-            console.log("Popular Section", response);
+            // console.log("Popular Section", response);
             if(response) {
                 setData(response)
             } else {
@@ -32,12 +32,17 @@ const Popular = () => {
 
     return (
         <section id='popular' className='popular'>
-            <h2>Popular 
-                <br />
-                <span>
-                    (swipe to navigate)
-                </span>
-            </h2>
+            <div className='section__header'>
+                <h2>Popular 
+                    <br />
+                    <span>
+                        (swipe to navigate)
+                    </span>
+                </h2>
+                <Link to="/popular">
+                    view more
+                </Link>
+            </div>
             <Swiper className='container container__popular'
                 slidesPerView={4}
                 breakpoints={breakpoints}

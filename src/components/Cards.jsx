@@ -41,8 +41,6 @@ const Cards = () => {
         }
     };
 
-   
-
     return (
         <section id='cards'>
             

@@ -18,10 +18,10 @@ const Hero = () => {
             if(response) {
                 setData(response);
                 setPageLoad(true);
-                const getEpisodeId = response.episodes.find(num => num.number === Number(1))
+                const getEpisodeId = response.episodes.find(num => num.number === 1)
                 setEpisodeId(getEpisodeId.id)
+                // console.log('getEpisodeId', getEpisodeId)
             } else {
-                setPageLoad(false);
                 setTimeout(() => {
                     fetchData();
                 }, 6000)
@@ -33,7 +33,7 @@ const Hero = () => {
 
     return (
         <LazyLoadComponent>
-        <section id='hero' className='hero' style={{backgroundImage: `url(${data.cover})`}} >
+        <section id='hero' className='hero' style={{backgroundImage: `url(${data?.cover})`}} >
                 {
                     !pageLoad ? (
                         <LoaderBox />
@@ -42,11 +42,11 @@ const Hero = () => {
                             <article className='anime__hero__info'>
                                 <div className='anime__hero__title'>
                                     <h3>
-                                        {data.title?.english ?? data.title?.romaji}
+                                        {data?.title?.english || data?.title?.romaji}
                                     </h3>
                                     <ul className='anime__status__episodes'>
                                         <li>
-                                            { data.startDate?.year }
+                                            { data?.startDate?.year }
                                         </li>
                                         <li>
                                             { 

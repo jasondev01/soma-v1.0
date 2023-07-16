@@ -1,19 +1,21 @@
 .pageload {
     height: 100vh;
-    position: fixed;
     background: var(--primary-bg);
     width: 100%;
-    margin-top: -80px;
+    /* margin-top: -80px; */
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 999;
 }
 
 /********** TEXT **********/
 .loading {
-    font-size: 12px;
-    animation: loading 3s ease-in-out infinite;
+    font-size: 11px;
+    animation: loading 2s ease-in-out infinite;
     user-select: none;
 }
 
@@ -25,8 +27,8 @@
 
 /********** CIRCLES **********/
 .effect {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border: 0px solid var(--primary-bg);
     border-radius: 50%;
     position: absolute;
@@ -49,7 +51,7 @@
 
 .effect:nth-child(2) {
     border-right-width: 2px;
-    border-color: rgb(42, 254, 243);
+    border-color: rgb(42, 254, 243, 58.04%);
     animation: rotate2 2s linear infinite;
 }
 

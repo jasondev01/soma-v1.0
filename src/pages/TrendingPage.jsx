@@ -21,7 +21,6 @@ const TrendingPage = () => {
                 setData(response);
             } else {
                 setTimeout(() => {
-                    setPageLoad(false);
                     fetchData();
                 }, 6000)
             }
@@ -40,7 +39,11 @@ const TrendingPage = () => {
 
     return (
         <section className="trending__page">
-            <h2>Trending Anime</h2>
+            <div className="section__header">
+                <h2>
+                    Trending Anime
+                </h2>
+            </div>
             <div className="container container__trending__page">
                 {
                     data &&
@@ -48,7 +51,11 @@ const TrendingPage = () => {
                         const embed = "https://www.youtube.com/embed"
                         const baseUrl = "https://www.youtube.com/watch?v="
                         return (
-                            <div key={index} className="trending__item">
+                            <div 
+                                key={index} 
+                                className="trending__item"
+                                style={{backgroundImage: `url(${item?.cover})`}}
+                            >
                                 <div className="trending__item__image">
                                     <LazyLoadImage 
                                         effect='blur' 
@@ -59,6 +66,7 @@ const TrendingPage = () => {
                                     />
                                 </div>
                                 <TrendingContent item={item} baseUrl={baseUrl}/> 
+                                <span className="trending__item__overlay"></span>
                                 <div 
                                     className="trending__item__trailer"
                                 >
@@ -78,7 +86,6 @@ const TrendingPage = () => {
                     <PaginationButtons handlePageClick={handlePageClick} pageNumber={pageNumber}/>
                 </div>
             </div>
-            
         </section>
     )
 }

@@ -3,17 +3,20 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useApiContext from '../context/ApiContext'
 import { LazyLoadComponent, LazyLoadImage } from 'react-lazy-load-image-component';
+import Pageloader from './Pageloader';
 
 const Latest = () => {
     const { fetchLatest } = useApiContext()
     const [ data, setData ] = useState();
+    const [ pageLoad, setPageLoad ] = useState(false);
    
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchLatest();
-            console.log("Latest: ", response)
+            // console.log("Latest: ", response)
             if(response) {
                 setData(response);
+                setPageLoad(true)
             } else {
                 setTimeout(() => {
                     fetchData();
@@ -21,12 +24,22 @@ const Latest = () => {
             }
         };
         fetchData();
+        setPageLoad(false)
     }, []);
+
+    if(!pageLoad) {
+        return <Pageloader />
+    }
 
     return (
         <LazyLoadComponent>
         <section id='latest' className='latest'>
-            <h2>Latest Release</h2>
+            <div className='section__header'>
+                <h2>Latest Release</h2>
+                <Link to='/latest'>
+                    view more
+                </Link>
+            </div>
             <div className='container container__latest'>
                 {
                     data?.map( (item, index) => {

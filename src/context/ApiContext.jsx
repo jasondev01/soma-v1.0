@@ -9,7 +9,12 @@ export const ApiProvider = ({ children }) => {
 
     const fetchHero = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/random-anime?provider=gogoanime`)
+            const response = await axios.get(`${baseUrl}/random-anime?provider=gogoanime`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
             const responseData = response.data;
             const cleanedDescription = removeHtmlTags(responseData.description);
             const cleanData = {...responseData, description: cleanedDescription };
@@ -22,7 +27,12 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatest = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/recent-episodes?page=1&perPage=10&provider=gogoanime`)
+            const response = await axios.get(`${baseUrl}/recent-episodes?page=1&perPage=10&provider=gogoanime`,  {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
             const responseData = response?.data?.results;
             return responseData;
         } catch(error) {
@@ -33,7 +43,12 @@ export const ApiProvider = ({ children }) => {
 
     const fetchTrending = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/trending?page=1&perPage=12`)
+            const response = await axios.get(`${baseUrl}/trending?page=1&perPage=12`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
             const responseData = response.data.results;
             const cleanData = responseData.map(item => ({
                 ...item,
@@ -48,7 +63,12 @@ export const ApiProvider = ({ children }) => {
 
     const fetchPopular = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/popular?page=1&perPage=20`);
+            const response = await axios.get(`${baseUrl}/popular?page=1&perPage=20`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
             const responseData = response.data.results;
             const cleanData = responseData.map(item => ({
                 ...item,
@@ -63,7 +83,12 @@ export const ApiProvider = ({ children }) => {
 
     const fetchInfo = async (id) => {
         try {
-            const response = await axios.get(`${baseUrl}/info/${id}?provider=gogoanime`)
+            const response = await axios.get(`${baseUrl}/info/${id}?provider=gogoanime`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
             const responseData = response.data;
             const cleanedDescription = removeHtmlTags(responseData.description);
             const cleanData = { ...responseData, description: cleanedDescription };
@@ -76,7 +101,12 @@ export const ApiProvider = ({ children }) => {
 
     const fetchWatch = async (id) => {
         try {
-            const response = await axios.get(`${baseUrl}/info/${id}?provider=gogoanime`);
+            const response = await axios.get(`${baseUrl}/info/${id}?provider=gogoanime`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
             const responseData = response.data;
             return responseData;
         } catch(error) {
@@ -88,7 +118,12 @@ export const ApiProvider = ({ children }) => {
     const fetchEpisodeWatch = async (episodeId) => {
         const id = episodeId;
         try {
-            const response = await axios.get(`${baseUrl}/watch/${id}`)
+            const response = await axios.get(`${baseUrl}/watch/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
             const responseData = response.data;
             return responseData;
         } catch {error} {
@@ -99,7 +134,12 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatestPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`${baseUrl}/recent-episodes?page=${pageNumber}&perPage=30&provider=gogoanime`)
+            const response = await axios.get(`${baseUrl}/recent-episodes?page=${pageNumber}&perPage=30&provider=gogoanime`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
             const responseData = response.data.results;
             return responseData;
         } catch(error) {
@@ -110,7 +150,12 @@ export const ApiProvider = ({ children }) => {
 
     const fetchTrendingPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`${baseUrl}/trending?page=${pageNumber}&perPage=12`)
+            const response = await axios.get(`${baseUrl}/trending?page=${pageNumber}&perPage=20`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
             const responseData = response.data.results;
             const cleanData = responseData.map(item => ({
                 ...item,
@@ -125,7 +170,32 @@ export const ApiProvider = ({ children }) => {
 
     const fetchPopularPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`${baseUrl}/popular?page=${pageNumber}&perPage=20`);
+            const response = await axios.get(`${baseUrl}/popular?page=${pageNumber}&perPage=20`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
+            const responseData = response.data.results;
+            const cleanData = responseData.map(item => ({
+                ...item,
+                description: removeHtmlTags(item.description)
+            }))
+            return cleanData;
+        } catch(error) {
+            console.log("Popular Context", error.message);
+            return false;
+        }
+    }
+
+    const fetchSearch = async (query, pageNumber) => {
+        try {
+            const response = await axios.get(`${baseUrl}/${query}?page=${pageNumber}&perPage=20`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
             const responseData = response.data.results;
             const cleanData = responseData.map(item => ({
                 ...item,
@@ -149,7 +219,8 @@ export const ApiProvider = ({ children }) => {
             fetchEpisodeWatch,
             fetchLatestPage,
             fetchTrendingPage,
-            fetchPopularPage
+            fetchPopularPage,
+            fetchSearch
         }}>
             {children}
         </ApiContext.Provider>);

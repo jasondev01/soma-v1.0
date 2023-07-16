@@ -90,7 +90,7 @@ const PopularPageContent = ({item, baseUrl}) => {
                 <p className="summary">
                     {item?.description}
                 </p>
-                <Link to='/'>Read More</Link>
+                <Link to={`/info/${item.id}`}>Read More</Link>
             </div>
         </article>
     )

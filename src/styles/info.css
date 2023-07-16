@@ -1,4 +1,3 @@
-
 .info {
     min-height: 250px;;
     background: (--primary-bg);
@@ -64,6 +63,16 @@
     font-size: 2rem;
 }
 
+.anime__info__buttons {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 10px;
+}
+
+.anime__info__buttons .btn{
+    font-size: 14px;
+}
+
 
 /***************** EPISODES *****************/
 .info__episodes h2,
@@ -83,15 +92,24 @@
 .episodes .btn {
     width: 100%;
     text-align: center;
+    padding: 0.65rem 1rem;
 }
 
 .__range__info {
-    display: flex;
-    flex-direction: row-reverse;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
     gap: 1.2rem;
     justify-content: flex-end;
-    margin-bottom: 1.2rem;
+    margin: 1.2rem 0;
     flex-wrap: wrap;
+}
+
+.__range__info .btn {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    height: 42px;
+    font-size: 14px;
 }
 
 .info__recommendation {
@@ -157,7 +175,8 @@
 
 /***************** MEDIA QUERIES (1440) *****************/
 @media screen and (max-width: 1440px) {
-    .episodes {
+    .episodes,
+    .__range__info {
         grid-template-columns: repeat(7, 1fr);
     }
 }
@@ -174,10 +193,10 @@
         width: var(--container-md);
     }
 
-    .__range__info {
+    /* .__range__info {
         flex-direction: row;
         justify-content: flex-start;
-    }
+    } */
 
 }
 
@@ -193,6 +212,9 @@
 
     .episodes {
         grid-template-columns: repeat(6, 1fr);
+    }
+    .__range__info {
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
@@ -227,7 +249,8 @@
         width: var(--container-sm);
     }
 
-    .episodes {
+    .episodes,
+    .__range__info {
         grid-template-columns: repeat(3, 1fr);
     }
 

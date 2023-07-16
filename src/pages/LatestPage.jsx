@@ -40,10 +40,12 @@ const LatestPage = () => {
 
     return (
         <section className="latest__page" >
-            <div className="container container__latest__page">
+            <div className="section__header">
                 <h2>
-                    Latest Release
+                    Latest Anime Release
                 </h2>
+            </div>
+            <div className="container container__latest__page">
                 <div className="latest__page__cards">
                     {
                         data && 

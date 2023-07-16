@@ -1,8 +1,3 @@
-.trending h2 {
-    width: var(--container-lg);
-    margin: 0 auto;
-}
-
 .container__trending {
     display: grid;
     grid-template-columns: repeat(5, 1fr);

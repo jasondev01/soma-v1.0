@@ -13,7 +13,7 @@
 }
 
 .episode__video {
-    padding-top: 1.2rem;
+    padding-top: 2.2rem;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -24,11 +24,6 @@
 .watch__container {
     width: 80%;
     margin: 0 auto;
-}
-
-.watch__container {
-    border-radius: 10px;
-    overflow: hidden;
 }
 
 .buttons {
@@ -84,7 +79,78 @@ option span {
 .watch__container {
     box-shadow: var(--box-shadow);
     position: relative;
-    /* height: 650px; */
+}
+
+/**************** VIDEO PLAYER QUALITY OPTION STYLE ***************/
+.quality {
+    margin: auto 7px;
+    margin-right: -3px;
+    position: relative;
+}
+
+.quality__button__icon {
+    font-size: 1rem;
+    color: #f1f1f1;
+    transition: var(--transition);
+}
+
+.quality__button span {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0px 0px 7px 1px rgba(255, 255, 255, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    margin-top: -1px;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.quality__button:hover span {
+    opacity: 1;
+}
+
+.quality__options {
+    position: absolute;
+    bottom: 130%;
+    right: 0%;
+    transform-origin: bottom;
+    margin-top: 125px;
+    z-index: 2;
+    font-family: 'Outfit', sans-serif!important;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: rgba(43, 51, 63, 0.7);
+    text-shadow:    0px 0px 15px #fff, 
+                    0px 0px 8px #fff;
+}
+
+.quality__options li {
+    cursor: pointer;
+    padding: 8px;
+    transition: var(--transition);
+}
+
+.quality__options li:hover,
+    .current {
+    background: var(--primary);
+    color: var(--primary-bg);
+}
+
+.fullscreen-toggle {
+    position: absolute;
+    color: #f1f1f1;
+    right: 0;
+    top: -35px;
+    padding: 5px;
+    background: var(--secondary);
+    box-shadow: var(--box-shadow);
+    font-family: 'Outfit', sans-serif!important;
 }
 
 /**************** MORE EPISODES ***************/
@@ -107,9 +173,12 @@ option span {
 
 /******************* MEDIA QUERY (1200px) ******************/
 @media screen and (max-width: 1200px){
+    .container.container__episode {
+        overflow: auto!important;
+    }
+
     .buttons,
     .episode__info,
-    /* .iframe__container */
     .watch__container {
         width: 100%;
     }
@@ -126,7 +195,8 @@ option span {
 
 /******************* MEDIA QUERY (600px) ******************/
 @media screen and (max-width: 600px){
-    .container.container__episode {
+    .container.container__episode,
+    .watch__container  {
         width: 100%;
     }
 
