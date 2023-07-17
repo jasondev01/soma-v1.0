@@ -26,7 +26,7 @@ const Watch = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchWatch(id);
-            // console.log("Watch Page", response);
+            console.log("Watch Page", response);
             if(response) {
                 setIsEpisodeLoading(true);
                 setAnimeResult(response);
@@ -35,7 +35,7 @@ const Watch = () => {
                 const matchingEpisode = episodes.find(episode => episode.id === episodeId)
                 if (matchingEpisode) {
                     setInfo(matchingEpisode);
-                    const currentEpisodeNumber = Number(matchingEpisode.number);
+                    const currentEpisodeNumber = matchingEpisode.number;
                     const nextEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber + 1);
                     const prevEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber - 1);
                     const nextEpisodeId = nextEpisode ? nextEpisode.id : null;

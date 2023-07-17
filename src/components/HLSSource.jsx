@@ -14,7 +14,7 @@ const HLSSource = ({ src, video }) => {
                 video.play();
             });
             // } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-            } else if (video.canPlayType("application/x-mpegURL")) {
+            } else if (video && video.canPlayType && video.canPlayType("application/x-mpegURL")) {
                 video.src = src;
                 video.addEventListener("loadedmetadata", () => {
                 video.play();
