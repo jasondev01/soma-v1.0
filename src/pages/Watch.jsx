@@ -21,7 +21,7 @@ const Watch = () => {
     const { id, episodeId } = useParams();
     const { fetchWatch, fetchEpisodeWatch } = useApiContext();
     const navigate = useNavigate();
-    console.log("Watch Info", episodeId);
+    // console.log("Watch Info", episodeId);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,14 +35,13 @@ const Watch = () => {
                 const matchingEpisode = episodes.find(episode => episode.id === episodeId)
                 if (matchingEpisode) {
                     setInfo(matchingEpisode);
-                    const currentEpisodeNumber = matchingEpisode.number;
+                    const currentEpisodeNumber = Number(matchingEpisode.number);
                     const nextEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber + 1);
                     const prevEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber - 1);
                     const nextEpisodeId = nextEpisode ? nextEpisode.id : null;
-                    const prevEpisodeId = prevEpisode ? nextEpisode.id : null;
-                    // Use nextEpisodeId as needed
-                    console.log('Next Episode ID:', nextEpisodeId);
-                    console.log('Prev Episode ID:', nextEpisodeId);
+                    const prevEpisodeId = prevEpisode ? prevEpisode.id : null; // Fix: Use prevEpisode.id
+                    // console.log('Next Episode ID:', nextEpisodeId);
+                    // console.log('Prev Episode ID:', prevEpisodeId);
                     setNextEpisode(nextEpisodeId);
                     setPrevEpisode(prevEpisodeId);
                 }
@@ -78,8 +77,8 @@ const Watch = () => {
 
     const handleVideoEnd = () => {
         console.log('ended');
-        // Perform actions when the video ends
-        if(getNextEpisodeID(info.number, episodeRange)) {
+        // actions when the video ends
+        if(nextEpisode) {
             navigate(`/watch/${id}/${nextEpisode}`)
         } else {
             navigate(`/info/${id}`)
@@ -106,6 +105,7 @@ const Watch = () => {
                             data={data} 
                             id={id} 
                             onVideoEnd={handleVideoEnd}
+                            classNam="123"
                         />
                     </div>
                     <div className='buttons'>

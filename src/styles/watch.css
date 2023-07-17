@@ -145,12 +145,25 @@ option span {
 .fullscreen-toggle {
     position: absolute;
     color: #f1f1f1;
-    right: 0;
+    right: 3px;
     top: -35px;
     padding: 5px;
     background: var(--secondary);
     box-shadow: var(--box-shadow);
     font-family: 'Outfit', sans-serif!important;
+}
+
+.video-react-icon-forward-90 {
+    display: block!;
+    visibility: visible;
+    font-family: "video-react" !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+}
+
+.video-react-icon-forward-96:before {
+    content: "";
 }
 
 /**************** MORE EPISODES ***************/

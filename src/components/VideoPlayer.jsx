@@ -63,6 +63,7 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
     // console.log("quality:", currentQuality);
 
     const videoRef = useRef(null);
+    const containerRef = useRef(null);
     const [ currentTime, setCurrentTime ] = useState(0);
     const [ totalTime, setTotalTime ] = useState(0);
 
@@ -71,7 +72,7 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
         const handleTimeUpdate = () => {
             setCurrentTime(videoElement.currentTime);
 
-            if (videoElement.currentTime >= videoElement.duration) {
+            if ( videoElement.currentTime >= videoElement.duration) {
                 // Video has reached the end
                 if (onVideoEnd) {
                     onVideoEnd();
@@ -93,46 +94,46 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
         };
     }, [onVideoEnd]);
 
-    const [ isFullScreen, setIsFullScreen ] = useState(()=>{
-        const storedSreenState = localStorage.getItem('fullscreen');
-        return storedSreenState !== null ? storedSreenState === 'true' : true;
+    const [ isFullScreen, setIsFullScreen ] = useState(() => {
+        const storedScreenState = localStorage.getItem('fullscreen');
+        return storedScreenState !== null ? storedScreenState === 'true' : false;
     });
 
+    const handleFullScreenToggle = () => {
+        setIsFullScreen(prevScreenState => {
+            const newScreenState = !prevScreenState;
+            localStorage.setItem('fullscreen', newScreenState.toString());
+            return newScreenState;
+        });
+    }
+
     useEffect(() => {
-        const storedSreenState = localStorage.getItem('fullscreen');
-        if (storedSreenState !== null) {
-            setIsFullScreen(storedSreenState === 'true');
+        const storedScreenState = localStorage.getItem('fullscreen');
+        if (storedScreenState !== null) {
+            setIsFullScreen(storedScreenState === 'true');
         }
     }, []);
 
-    const handleFullScreenToggle = () => {
-        setIsFullScreen((prevScreenState) => !prevScreenState);
-    };
-
     useEffect(() => {
-        const videoElement = videoRef.current.video.video;
+        const videoReact = document.querySelector('.video-react-controls-enabled')
         localStorage.setItem('fullscreen', JSON.stringify(isFullScreen));
-        console.log('isFullScreen', isFullScreen)
-        const handleFullScreen = () => {
-            if (isFullScreen && screenfull.isEnabled) {
-                screenfull.request(videoElement);
-            } else {
-                screenfull.exit();
-                setIsFullScreen(false)
-            }
-        };
-        handleFullScreen();
-    
-        // return () => {
-        //     screenfull.exit();
-        // };
-    }, [isFullScreen]);
 
+        const enterFullscreen = () => {
+            if (isFullScreen) {
+                videoReact.requestFullscreen();
+            } 
+        };
+        
+        if (isFullScreen) {
+            enterFullscreen();
+        } 
+
+    }, [isFullScreen]);
 
     return (
         <>
-            <Player ref={videoRef} autoPlay={false}>
-                <HLSSource src={videoSource} />
+            <Player ref={videoRef} autoPlay={false} >
+                <HLSSource src={videoSource} className="123123" />
                 
                 <BigPlayButton position="center" />
                 <LoadingSpinner />
@@ -142,7 +143,7 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
                     <PlaybackRateMenuButton rates={[2, 1.5, 1, 0.5, 0.1]}/>
                     <ReplayControl seconds={5} order={2.1} />
                     <VolumeMenuButton vertical />
-                    <ForwardControl seconds={5} order={3.1} />
+                    <ForwardControl seconds={96} order={3.1} />
                     <QualityButton 
                         order={7}
                         options={data.sources} 
@@ -151,13 +152,12 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
                     />
                 </ControlBar>
             </Player>
-            
             <button 
-                title="Auto Fullscreen" 
+                title={`Auto Fullscreen is Currently ${isFullScreen ? 'On' : 'Off'}`}
                 className={`fullscreen-toggle ${isFullScreen ? 'active' : ''}`} 
                 onClick={handleFullScreenToggle}
             >
-                {isFullScreen ? 'Off' : 'On'}
+                Toggle Auto Fullscreen {isFullScreen ? 'Off' : 'On'}
             </button>
         </>
         
