@@ -3,6 +3,7 @@ import "../styles/searchpage.css"
 import useApiContext from "../context/ApiContext";
 import { Link, useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import Pageloader from "../components/Pageloader";
 
 const About = () => {
     const [ data, setData ] = useState([]);
@@ -10,15 +11,14 @@ const About = () => {
     const [ pageNumber, setPageNumber ] = useState(1);
     const { fetchSearch } = useApiContext();
     const { query } = useParams();
-    // const [ query, setQuery ] = useState(itemQuery);
-
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchSearch(query, pageNumber);
-            console.log("Search Page: ", response)
+            // console.log("Search Page: ", response)
             if(response) {
                 setData(response)
+                setPageLoad(true)
             } else {
                 setTimeout(() => {
                     fetchData();
@@ -26,8 +26,12 @@ const About = () => {
             }
         }
         fetchData();
+        setPageLoad(false)
     }, [query, pageNumber])
 
+    if (!pageLoad) {
+        return (<Pageloader />)
+    }
 
     return (
         <section className="search__page">

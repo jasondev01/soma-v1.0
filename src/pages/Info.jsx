@@ -59,7 +59,6 @@ const Info = () => {
         const episodesToShow = episodeRange.slice(start, end + 1);
         setDisplayedEpisodes(episodesToShow);
         setActiveButton(rangeLabel)
-        console.log('start', start)
     };
 
     const substraction = (a, b) => {
@@ -68,8 +67,6 @@ const Info = () => {
 
     const firstEpisode = substraction(data.episodes.length, data.episodes.length) + 1;
     const currentEpisode = data.currentEpisode;
-    // console.log("firstEpisode", firstEpisode);
-    // console.log("currentEpisode", currentEpisode);
 
     return (
         <>

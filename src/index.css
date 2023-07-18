@@ -74,8 +74,10 @@ section {
 
 .section__header a {
     font-size: 14px;
+    font-weight: 500;
     position: relative;
     padding-bottom: 2px;
+    text-shadow: var(--text-shadow);
 }
 
 .section__header a::before {
@@ -116,12 +118,14 @@ a:hover {
     letter-spacing: 1px;
     font-size: 14px;
     box-shadow: var(--box-shadow);
+    transition: var(--transition);
 }
 
 .btn:hover {
     background: var(--secondary-variant);
     border-color: var(--secondary);
     color: var(--primary);
+    box-shadow: 0px 0px 5px 1px var(--secondary);
 }
 
 .btn-primary {
@@ -132,6 +136,11 @@ a:hover {
 
 .btn-primary:hover {
     background: var(--secondary-variant);
+}
+
+button {
+    background: transparent;
+    cursor: pointer;
 }
 
 img {
@@ -159,6 +168,7 @@ span, p, h1, h2, h3, h4, h5 {
 
 .active {
     background-color: var(--secondary-variant)!important;
+    box-shadow: 0px 0px 5px 1px var(--secondary);
 }
 
 .d-none {
@@ -185,6 +195,17 @@ span, p, h1, h2, h3, h4, h5 {
 @media screen and (max-width: 800px) {
     ::-webkit-scrollbar {
         display: none;
+    }
+
+    .fullscreen-toggle {
+        display: none;
+    }
+
+    .latest__page .section__header h2,
+    .search__page .section__header h2,
+    .trending__page .section__header h2,
+    .info__recommendation .section__header h2 {
+        flex-basis: 100%;
     }
 }
 

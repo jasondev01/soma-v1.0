@@ -146,8 +146,9 @@ option span {
     position: absolute;
     color: #f1f1f1;
     right: 3px;
-    top: -35px;
+    top: -38px;
     padding: 5px;
+    margin-top: 5px;
     background: var(--secondary);
     box-shadow: var(--box-shadow);
     font-family: 'Outfit', sans-serif!important;

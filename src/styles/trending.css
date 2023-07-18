@@ -12,8 +12,14 @@
     height: 520px;
     position: relative;
     overflow: hidden;
+    border: 1px solid var(--primary-bg);
     transition: var(--transition);
     box-shadow: var(--box-shadow);
+}
+
+.highest__rating:hover {
+    border-color: var(--secondary);
+    box-shadow: 0px 0px 10px 1px var(--secondary);
 }
 
 .overlay {
@@ -126,7 +132,15 @@
     margin-bottom: .5rem;
     flex-wrap: wrap;
     box-shadow: var(--box-shadow);
+    border: 1px solid var(--primary-bg);
+    transition: var(--transition);
 }
+
+.trending__card:hover {
+    border-color: var(--secondary);
+    box-shadow: 0px 0px 10px 1px var(--secondary)
+}
+
 
 .trending__card__image,
 .trending__card__title,

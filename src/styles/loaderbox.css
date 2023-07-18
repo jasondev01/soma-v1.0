@@ -75,6 +75,13 @@
     transform: rotateX(90deg) translateZ(27.5px);
     transform-style: preserve-3d;
   }
+
+.loading {
+  position: absolute;
+  text-align: center;
+  font-size: 10px;
+  width: 100%;
+}
   
 .cube-top::before {
     content: '';

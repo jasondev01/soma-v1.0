@@ -43,7 +43,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 4px;
-    z-index: 2;
+    z-index: 10;
     position: relative;
     min-height: 320px;
 }
@@ -142,6 +142,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
+        z-index: 1;
     }
 
     .trending__item__article {

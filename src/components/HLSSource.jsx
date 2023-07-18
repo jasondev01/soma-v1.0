@@ -30,7 +30,7 @@ const HLSSource = ({ src, video }) => {
         };
     }, [src, video]);
 
-  return null;
+    return null;
 };
 
 export default HLSSource;

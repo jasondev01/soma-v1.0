@@ -3,17 +3,36 @@ import{ RxMoon } from 'react-icons/rx'
 import{ BsFillSunFill, BsSearch } from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router-dom'
 import useThemeContext from '../context/ThemeContext'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const Header = () => {
     const { theme, toggleTheme } = useThemeContext();
     const [ activeNav, setActiveNav ] = useState();
     const [ query, setQuery ] = useState('');
+    const [ isMenuOpen, setIsMenuOpen ] = useState(false);
+    const [ prevScrollPos, setPrevScrollPos ] = useState(0);
     const navigate = useNavigate();
+    const menuRef = useRef(null);
+    const toggleRef = useRef(null);
 
     const handleNav = (nav) => {
         setActiveNav(nav)
+        setIsMenuOpen(false);
     }
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.scrollY;
+            if (currentScrollPos > prevScrollPos) {
+                setIsMenuOpen(false);
+            } 
+            setPrevScrollPos(currentScrollPos);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [prevScrollPos]);
+
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,17 +40,55 @@ const Header = () => {
         setQuery('')
     }
 
+    const toggleMenu = () => {
+        setIsMenuOpen(prevIsMenuOpen => !prevIsMenuOpen)
+    }
+
+    useEffect(() => {
+        function handleClick(event) {
+            if (toggleRef.current && toggleRef.current.contains(event.target)) {
+                setIsMenuOpen(prevIsMenuOpen => !prevIsMenuOpen);
+            } else if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClick);
+        return () => {
+            document.removeEventListener('mousedown', handleClick);
+        };
+    }, []);
+
     return (
         <header id='header'>
-            <nav className='navbar'>
-                <div className='container container__navbar'>
+            <nav className='navbar' >
+                <div className='container container__navbar' >
                     <div className="navbar__home">
+                        <div className={`hamburger ${isMenuOpen ? 'show' : ''}`} 
+                            ref={toggleRef}
+                        >
+                            <span style={{
+                                background: theme ?  'var(--primary)' : 'var(--primary-bg)'
+                            }}></span>
+                            <span style={{
+                                background: theme ?  'var(--primary)' : 'var(--primary-bg)'
+                            }}></span>
+                            <span style={{
+                                background: theme ?  'var(--primary)' : 'var(--primary-bg)'
+                            }}></span>
+                        </div>
                         <Link to='/'>
                             <h1 className={`logo ${theme ? 'light' : 'dark'}`}>
                                 soma
                             </h1>
                         </Link>
-                        <ul className='navbar__menu'>
+                        <ul style={{ 
+                                background: theme ? 'var(--primary-bg)' : '#e4e4e4',
+                                transition: 'var(--transition)'
+                            }}
+                            className={`navbar__menu ${isMenuOpen ? 'show' : ''}` }
+                            ref={menuRef}
+                        >
                             <li>
                                 <Link to="/latest" 
                                     className={`
@@ -67,27 +124,28 @@ const Header = () => {
                             </li>
                         </ul>
                     </div>
-                    <div className='navbar__search__user'>
+                    <div className='navbar__search'>
                         <form onSubmit={handleSubmit}
                             className='search__form'
                         >
                             <input 
                                 type="text"
-                                placeholder='search' 
-                                className={`search__icon ${theme ? 'light' : ''}`}
+                                placeholder='search anime' 
+                                className={`${theme ? 'light' : ''}`}
                                 value={query}
                                 onChange={e => setQuery(e.target.value)}
                             />
-                            <button type='submit'>
+                            <button type='submit' className='button__submit'>
                                 <BsSearch className={`search__icon ${theme ? 'light' : ''}`}/>
                             </button>
+                           
                         </form>
                         <button onClick={toggleTheme} className={`${theme ? 'light' : ''}`}>
                             {
                                 theme ? (
-                                    <BsFillSunFill className='profile__user'/>
+                                    <BsFillSunFill className='theme__icon'/>
                                 ) : (
-                                    <RxMoon className='profile__user'/>
+                                    <RxMoon className='theme__icon'/>
                                 )
                             }
                         </button>

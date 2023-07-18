@@ -14,7 +14,9 @@ const Recommendation = ({data}) => {
         {
             data.recommendations.length > 0 &&
             <section className='info__recommendation'>
-                <h2>You might also like</h2>
+                <div className="section__header">
+                    <h2>You might also like</h2>
+                </div>
                 {
                     data.recommendations.length > 0 ? (
                         <Swiper className='container container__recommendation'
@@ -30,7 +32,7 @@ const Recommendation = ({data}) => {
                                 return (
                                     <SwiperSlide key={index} className='recommendation'>
                                         <Link to={`/info/${item.id}`}>
-                                            <div className='recommention__image'>
+                                            <div className='recommendation__image'>
                                                 <img src={item.image} alt="" />
                                             </div>
                                             <div className='recommendation__title'>

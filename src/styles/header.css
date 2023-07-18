@@ -1,14 +1,20 @@
+.navbar {
+    position: relative;
+    z-index:999;
+}
+
 .container__navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 80px;
+    z-index:999;
 }
 
 .navbar__home {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.2rem;
 }
 
 .navbar__menu {
@@ -16,13 +22,14 @@
     gap: 1.2rem;
     margin-top: 10px;
     font-weight: 600;
+    background: transparent;
 }
 
 .logo {
     font-size: 2.5rem;
 }
 
-.navbar__search__user {
+.navbar__search {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,37 +43,119 @@
     align-items: center;
     border: 2px solid var(--primary-bg);
     box-shadow: 0px 0px 10px 1px rgba(255, 255, 255, 0.3);
+    position: relative;
 }
 
 .search__form input {
     height: 100%;
     background: transparent;
     padding: 7px 10px;
+    width: 85%;
 }
 
-button {
-    background: transparent;
-    cursor: pointer;
-}
-
-.search__form button {
+.button__submit {
     height: 100%;
     width: 30px;
+    position: absolute;
+    right: 0;
+    background: transparent;
+    transition: var(--transition);
+}
+
+.button__submit:hover {
+    background: var(--secondary);
+    color: var(--primary);
 }
 
 .search__icon {
     display: flex;
     align-items: center;
     margin: 0 auto;
+    text-shadow: var(--text-shadow);
 }
 
-.profile__user {
+.theme__icon {
     font-size: 1.2rem;
+    transition: var(--transition);
+    margin-left: auto;
 }
 
-/*************** MEDIAY QUERIES (768) *************/
+.theme__icon:hover {
+    color: var(--secondary);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.hamburger span {
+    display: block;
+    height: 2px;
+    margin: 2px auto;
+    transition: var(--transition);
+    width: 15px;
+}
+
+/*************** MEDIAY QUERIES (768px) *************/
 @media screen and (max-width: 768px ){
     .navbar__menu {
         display: none;
+    }
+
+    .navbar__menu {
+        display: flex;
+        position: absolute;
+        margin-top: -10px;
+        top: 90px;
+        left: -50%;
+        z-index: -1;
+        width: 160px;
+        height: 150px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: var(--transition);
+    }
+
+    .navbar__menu.show {
+        left: 0%;
+    }
+
+    .navbar__search {
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .search__form {
+        width: 80%;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+    
+    .hamburger.show span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.show span:nth-child(1) {
+        transform: translateY(6px) rotate(55deg);
+    }
+
+    .hamburger.show span:nth-child(3) {
+        transform: translateY(-6px) rotate(-55deg);
+    }
+}
+
+
+/*************** MEDIAY QUERIES (600px) *************/
+@media screen and (max-width: 600px ){
+    .navbar__home {
+        gap: 10px;
     }
 }

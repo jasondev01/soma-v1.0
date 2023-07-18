@@ -1,18 +1,15 @@
-import { LazyLoadComponent, LazyLoadImage } from "react-lazy-load-image-component";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 
 const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
     
-    const title = data.title ? (data.title.english || data.title.romaji) : 'N/A';
-    console.log('info banner', data);
-
+    // const title = data.title ? (data.title.english || data.title.romaji) : 'N/A';
     const baseUrl = "https://www.youtube.com/watch?v="
 
-    console.log("currentEpisode", currentEpisode)
-    console.log("firstEpisode", firstEpisode)
+    // console.log("currentEpisode", currentEpisode)
+    // console.log("firstEpisode", firstEpisode)
 
     return (
-        <LazyLoadComponent>
         <section id='info' className='info' style={{backgroundImage: `url(${data.cover})`}} >
             <div className="container container__info" >
                 <div className='anime__info__cover'>
@@ -21,17 +18,17 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         <LazyLoadImage
                             effect="blur" 
                             src={data.image} 
-                            alt={title} 
+                            alt={data?.title?.romaji} 
                         />
                     }
                 </div>
                 <article className='anime__info__info'>
                     {
-                        title &&
+                        data?.title &&
                         <div className='anime__info'>
                             <span>Title:</span>
                             <h3>
-                                {title}
+                                {data?.title?.english || data?.title?.romaji}
                             </h3>
                         </div>
                     }
@@ -199,7 +196,6 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                 </article>
             </div>
         </section>
-        </LazyLoadComponent>
     )
 }
 export default InfoBanner

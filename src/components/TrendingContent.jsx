@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 const TrendingContent = ({item, baseUrl}) => {
 
-    console.log("trending content", item)
+    // console.log("trending content", item)
     return (
         <>
             {

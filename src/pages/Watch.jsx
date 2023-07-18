@@ -26,7 +26,7 @@ const Watch = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchWatch(id);
-            console.log("Watch Page", response);
+            // console.log("Watch Page", response);
             if(response) {
                 setIsEpisodeLoading(true);
                 setAnimeResult(response);
@@ -105,7 +105,6 @@ const Watch = () => {
                             data={data} 
                             id={id} 
                             onVideoEnd={handleVideoEnd}
-                            classNam="123"
                         />
                     </div>
                     <div className='buttons'>

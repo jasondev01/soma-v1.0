@@ -14,14 +14,20 @@ import HLSSource from "./HLSSource";
 import QualityButton from "./QualityButton";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import screenfull from 'screenfull';
 
 const VideoPlayer = ({ data, id, onVideoEnd }) => {
     const [ videoSource, setVideoSource ] = useState(``)
     const [ currentQuality, setCurrentQuality ] = useState();
+    const [ currentTime, setCurrentTime ] = useState(0);
+    const [ totalTime, setTotalTime ] = useState(0);
+    const [ isFullScreen, setIsFullScreen ] = useState(() => {
+        const storedScreenState = localStorage.getItem('fullscreen');
+        return storedScreenState !== null ? storedScreenState === 'true' : false;
+    });
     const navigate = useNavigate();
+    const videoRef = useRef(null);
 
-
+    // checking the video sources if they have the quality if not, navigate to info page
     useEffect(() => {
         const sortedSources = data.sources.sort((a, b) => {
             if (a.quality === '1080p') {
@@ -59,21 +65,13 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
         setCurrentQuality(option.quality)
     };
 
-    // console.log("Data:", data);
-    // console.log("quality:", currentQuality);
-
-    const videoRef = useRef(null);
-    const containerRef = useRef(null);
-    const [ currentTime, setCurrentTime ] = useState(0);
-    const [ totalTime, setTotalTime ] = useState(0);
-
+    // handle video end
     useEffect(() => {
         const videoElement = videoRef.current.video.video;
         const handleTimeUpdate = () => {
             setCurrentTime(videoElement.currentTime);
 
             if ( videoElement.currentTime >= videoElement.duration) {
-                // Video has reached the end
                 if (onVideoEnd) {
                     onVideoEnd();
                 }
@@ -94,11 +92,7 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
         };
     }, [onVideoEnd]);
 
-    const [ isFullScreen, setIsFullScreen ] = useState(() => {
-        const storedScreenState = localStorage.getItem('fullscreen');
-        return storedScreenState !== null ? storedScreenState === 'true' : false;
-    });
-
+    // handle toggle full screen
     const handleFullScreenToggle = () => {
         setIsFullScreen(prevScreenState => {
             const newScreenState = !prevScreenState;
@@ -107,6 +101,7 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
         });
     }
 
+    // stores a state of fullscreen
     useEffect(() => {
         const storedScreenState = localStorage.getItem('fullscreen');
         if (storedScreenState !== null) {
@@ -114,25 +109,38 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
         }
     }, []);
 
+    // get the fullscreen json from the localstorage
     useEffect(() => {
         const videoReact = document.querySelector('.video-react-controls-enabled')
         localStorage.setItem('fullscreen', JSON.stringify(isFullScreen));
 
+        // if state is true
         const enterFullscreen = () => {
-            if (isFullScreen) {
-                videoReact.requestFullscreen();
-            } 
+            try {
+                if (isFullScreen) {
+                    videoReact.requestFullscreen();
+                } 
+            } catch(error) {
+                console.error('error', error)
+            }
+           
         };
         
         if (isFullScreen) {
-            enterFullscreen();
+            setTimeout(() => {
+                enterFullscreen();
+            }, 500)
         } 
 
     }, [isFullScreen]);
 
     return (
         <>
-            <Player ref={videoRef} autoPlay={false} >
+            <Player 
+                ref={videoRef} 
+                autoPlay={false} 
+                playsInline
+            >
                 <HLSSource src={videoSource} className="123123" />
                 
                 <BigPlayButton position="center" />

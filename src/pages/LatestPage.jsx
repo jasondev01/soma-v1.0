@@ -97,7 +97,7 @@ const LatestPage = () => {
                     }
                 </div>
                 <div className="pagination">
-                    <PaginationButtons handlePageClick={handlePageClick} pageNumber={pageNumber}/>
+                    <PaginationButtons handlePageClick={handlePageClick} pageNumber={pageNumber} />
                 </div>
             </div>
         </section>

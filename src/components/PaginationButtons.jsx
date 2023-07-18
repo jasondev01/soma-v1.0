@@ -1,7 +1,7 @@
-const PaginationButtons = ({handlePageClick, pageNumber}) => {
+const PaginationButtons = ({handlePageClick, pageNumber, data}) => {
     return (
     <>
-      <button 
+        <button 
             className={`btn btn-primary ${pageNumber === 1 ? 'active' : ''}`} 
             onClick={() => handlePageClick(1)}
         >
