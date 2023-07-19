@@ -1,5 +1,6 @@
 import React from 'react'
 import '../styles/loaderbox.css'
+import Rin from '../assets/logo.png'
 
 const LoaderBox = () => {
     return (
@@ -12,25 +13,25 @@ const LoaderBox = () => {
                             <span className='loading'>
                                 Loading
                             </span>
-                            <img src="https://i.pinimg.com/originals/0e/50/39/0e503918829c61bd24803ce064546cee.jpg" alt="ren" />
+                            <img src={Rin} alt="This is one of the artwork of https://www.instagram.com/animeglowart/" />
                         </span>
                         <span style={{ '--i': 1 }} className="cube-span">
                             <span className='loading'>
                                 Loading
                             </span>
-                            <img src="https://i.pinimg.com/originals/0e/50/39/0e503918829c61bd24803ce064546cee.jpg" alt="ren" />
+                            <img src={Rin} alt="This is one of the artwork of https://www.instagram.com/animeglowart/" />
                         </span>
                         <span style={{ '--i': 2 }} className="cube-span">
                             <span className='loading'>
                                 Loading
                             </span>
-                            <img src="https://i.pinimg.com/originals/0e/50/39/0e503918829c61bd24803ce064546cee.jpg" alt="ren" />
+                            <img src={Rin} alt="This is one of the artwork of https://www.instagram.com/animeglowart/" />
                         </span>
                         <span style={{ '--i': 3 }} className="cube-span">
                             <span className='loading'>
                                 Loading
                             </span>
-                            <img src="https://i.pinimg.com/originals/0e/50/39/0e503918829c61bd24803ce064546cee.jpg" alt="ren" />
+                            <img src={Rin} alt="This is one of the artwork of https://www.instagram.com/animeglowart/" />
                         </span>
                     </div>
                 </div>

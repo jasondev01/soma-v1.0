@@ -18,8 +18,6 @@ import { useNavigate } from "react-router-dom";
 const VideoPlayer = ({ data, id, onVideoEnd }) => {
     const [ videoSource, setVideoSource ] = useState(``)
     const [ currentQuality, setCurrentQuality ] = useState();
-    const [ currentTime, setCurrentTime ] = useState(0);
-    const [ totalTime, setTotalTime ] = useState(0);
     const [ isFullScreen, setIsFullScreen ] = useState(() => {
         const storedScreenState = localStorage.getItem('fullscreen');
         return storedScreenState !== null ? storedScreenState === 'true' : false;
@@ -69,26 +67,18 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
     useEffect(() => {
         const videoElement = videoRef.current.video.video;
         const handleTimeUpdate = () => {
-            setCurrentTime(videoElement.currentTime);
-
             if ( videoElement.currentTime >= videoElement.duration) {
                 if (onVideoEnd) {
+                    setIsFullScreen(false);
                     onVideoEnd();
                 }
             }
         };
 
-        // get the total time
-        const handleLoadedMetadata = () => {
-            setTotalTime(videoElement.duration);
-        };
-
         videoElement.addEventListener("timeupdate", handleTimeUpdate);
-        videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
 
         return () => {
             videoElement.removeEventListener("timeupdate", handleTimeUpdate);
-            videoElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
         };
     }, [onVideoEnd]);
 
@@ -116,14 +106,9 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
 
         // if state is true
         const enterFullscreen = () => {
-            try {
-                if (isFullScreen) {
-                    videoReact.requestFullscreen();
-                } 
-            } catch(error) {
-                console.error('error', error)
-            }
-           
+            if (isFullScreen) {
+                videoReact.requestFullscreen();
+            } 
         };
         
         if (isFullScreen) {
