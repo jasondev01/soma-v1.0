@@ -40,6 +40,9 @@ const Hero = () => {
                     ) : (
                         <div className="container container__hero" >
                             <article className='anime__hero__info'>
+                                <span className='random__tag'>
+                                    Random
+                                </span>
                                 <div className='anime__hero__title'>
                                     <h3>
                                         {data?.title?.english || data?.title?.romaji}

@@ -11,7 +11,7 @@ const Footer = () => {
                     </h1>
                 </Link>
                 <p>
-                    &copy; designed and built by jason r. | <span>2023</span>
+                    &copy; designed and built by jsn. | <span>2023</span>
                 </p>
             </div>
         </section>

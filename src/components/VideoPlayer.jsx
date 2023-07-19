@@ -13,17 +13,21 @@ import "video-react/dist/video-react.css";
 import HLSSource from "./HLSSource";
 import QualityButton from "./QualityButton";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useThemeContext from '../context/ThemeContext'
 
-const VideoPlayer = ({ data, id, onVideoEnd }) => {
+const VideoPlayer = ({ data, id, onVideoEnd, animeResult }) => {
     const [ videoSource, setVideoSource ] = useState(``)
     const [ currentQuality, setCurrentQuality ] = useState();
     const [ isFullScreen, setIsFullScreen ] = useState(() => {
         const storedScreenState = localStorage.getItem('fullscreen');
         return storedScreenState !== null ? storedScreenState === 'true' : false;
     });
+    const { theme } = useThemeContext()
     const navigate = useNavigate();
     const videoRef = useRef(null);
+
+    // console.log( "VideoPlayer", animeResult)
 
     // checking the video sources if they have the quality if not, navigate to info page
     useEffect(() => {
@@ -145,13 +149,31 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
                     />
                 </ControlBar>
             </Player>
-            <button 
-                title={`Auto Fullscreen is Currently ${isFullScreen ? 'On' : 'Off'}`}
-                className={`fullscreen-toggle ${isFullScreen ? 'active' : ''}`} 
-                onClick={handleFullScreenToggle}
-            >
-                Toggle Auto Fullscreen {isFullScreen ? 'Off' : 'On'}
-            </button>
+            <div className="stream__header">
+                <ul className="breadcrumbs">
+                    <li>
+                        <Link to="/" className={theme ? 'light' : 'dark'}>
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        |
+                    </li>
+                    <li>
+                        <Link to={`/info/${id}`} className={theme ? 'light' : 'dark'}>
+                            {animeResult?.title?.english || animeResult?.title?.romaji}
+                        </Link>
+                    </li>
+                </ul>
+                <button 
+                    title={`Auto Fullscreen is Currently ${isFullScreen ? 'On' : 'Off'}`}
+                    className={`fullscreen-toggle ${isFullScreen ? 'active' : ''}`} 
+                    onClick={handleFullScreenToggle}
+                >
+                    Toggle Auto Fullscreen {isFullScreen ? 'Off' : 'On'}
+                </button>
+            </div>
+            
         </>
         
     )

@@ -21,7 +21,7 @@ const Watch = () => {
     const { id, episodeId } = useParams();
     const { fetchWatch, fetchEpisodeWatch } = useApiContext();
     const navigate = useNavigate();
-    // console.log("Watch Info", episodeId);
+    // console.log("Watch Info", animeResult);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -105,6 +105,7 @@ const Watch = () => {
                             data={data} 
                             id={id} 
                             onVideoEnd={handleVideoEnd}
+                            animeResult={animeResult}
                         />
                     </div>
                     <div className='buttons'>

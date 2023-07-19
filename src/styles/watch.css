@@ -142,16 +142,40 @@ option span {
     color: var(--primary-bg);
 }
 
-.fullscreen-toggle {
-    position: absolute;
-    color: #f1f1f1;
-    right: 3px;
-    top: -38px;
-    padding: 5px;
+.stream__header {
     margin-top: 5px;
+    position: absolute;
+    top: -38px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.breadcrumbs {
+    display: flex;
+    gap: 5px;
+    padding: 2px 5px;
+}
+
+.breadcrumbs li a {
+    font-size: 14px;
+}
+
+.fullscreen-toggle {
+    padding: 5px 7px;
+    color: inherit;
+    margin-inline-end: 2px;
     background: var(--secondary);
     box-shadow: var(--box-shadow);
+    border: 1px solid var(--primary-bg);
     font-family: 'Outfit', sans-serif!important;
+    transition: var(--transition);
+}
+
+.fullscreen-toggle:hover {
+    background: var(--secondary-variant);
+    border: 1px solid var(--secondary);
 }
 
 .video-react-icon-forward-90 {

@@ -24,11 +24,18 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 1.2rem;
     width: 70%;
     color: var(--primary);
-    height: 100%;
+    min-height: 300px;
+}
+
+.random__tag {
+    background: var(--secondary-variant);
+    width: max-content;
+    padding: 5px 7px;
+    font-size: 12px;
 }
 
 .anime__hero__title h3 {
@@ -92,7 +99,7 @@
         width: 100%;
         background: var(--overlay-bg);
         z-index: 1;
-        justify-content: end;
+        justify-content: center;
         padding: 1.2rem;
     }
 

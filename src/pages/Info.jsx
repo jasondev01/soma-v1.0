@@ -93,7 +93,7 @@ const Info = () => {
                     }
                 </div>
                    
-                <div className='episodes'>
+                <div className='episodes' style={{minHeight: data.episodes.length === 0 ? '140px' : ''}}>
                     {
                         totalEpisodes > 200 ? (
                             displayedEpisodes.map((item, index) => {
