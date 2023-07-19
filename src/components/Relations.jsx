@@ -50,6 +50,10 @@ const Relations = ({data}) => {
                                                     <span className='recommendation__rating'>
                                                         HOT
                                                     </span>
+                                                ) : !item.rating ? (
+                                                    <span className='recommendation__rating green d-none'>
+                                                        {item.rating}%
+                                                    </span>
                                                 ) : (
                                                     <span className='recommendation__rating green'>
                                                         {item.rating}%

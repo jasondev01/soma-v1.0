@@ -27,7 +27,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatest = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/recent-episodes?page=1&perPage=10&provider=gogoanime`,  {
+            const response = await axios.get(`${baseUrl}/recent-episodes?page=1&perPage=10`,  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -43,7 +43,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchTrending = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/trending?page=1&perPage=12`, {
+            const response = await axios.get(`${baseUrl}/trending?page=1&perPage=12&`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -54,6 +54,7 @@ export const ApiProvider = ({ children }) => {
                 ...item,
                 description: removeHtmlTags(item.description)
             }))
+            console.log("Trending Context", responseData);
             return cleanData;
         } catch(error) {
             console.log("Trending Context", error.message);
