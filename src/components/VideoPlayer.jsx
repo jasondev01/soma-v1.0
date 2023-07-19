@@ -69,7 +69,7 @@ const VideoPlayer = ({ data, id, onVideoEnd }) => {
         const handleTimeUpdate = () => {
             if ( videoElement.currentTime >= videoElement.duration) {
                 if (onVideoEnd) {
-                    setIsFullScreen(false);
+                    // setIsFullScreen(false);
                     onVideoEnd();
                 }
             }
