@@ -29,6 +29,7 @@
     width: 70%;
     color: var(--primary);
     min-height: 300px;
+    overflow: hidden;
 }
 
 .random__tag {
@@ -83,7 +84,6 @@
 @media screen and (max-width: 600px ){
     .container.container__hero {
         width: 98%;
-        height: 300px;
     }
 
     .anime__hero__cover {

@@ -46,6 +46,7 @@ const Hero = () => {
                                 <div className='anime__hero__title'>
                                     <h3>
                                         {data?.title?.english || data?.title?.romaji}
+                                
                                     </h3>
                                     <ul className='anime__status__episodes'>
                                         <li>
