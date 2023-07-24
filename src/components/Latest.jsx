@@ -2,8 +2,7 @@ import '../styles/latest.css'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useApiContext from '../context/ApiContext'
-import { LazyLoadComponent, LazyLoadImage } from 'react-lazy-load-image-component';
-import Pageloader from './Pageloader';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingSkeleton from './LoadingSkeleton';
 import useThemeContext from '../context/ThemeContext'
 
@@ -16,7 +15,7 @@ const Latest = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchLatest();
-            // console.log("Latest: ", response)
+            console.log("Latest: ", response)
             if(response) {
                 setData(response);
                 setPageLoad(true)
@@ -29,10 +28,6 @@ const Latest = () => {
         fetchData();
         setPageLoad(false)
     }, []);
-
-    // if(!pageLoad) {
-    //     return <Pageloader />
-    // }
 
     return (
         <section id='latest' className='latest'>
