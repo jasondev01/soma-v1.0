@@ -8,6 +8,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
 
     // console.log("currentEpisode", currentEpisode)
     // console.log("firstEpisode", firstEpisode)
+    console.log("anime data: ", data)
 
     return (
         <section id='info' className='info' style={{backgroundImage: `url(${data.cover})`}} >

@@ -8,7 +8,7 @@ import useThemeContext from '../context/ThemeContext'
 
 const Latest = () => {
     const { fetchLatest } = useApiContext()
-    const [ data, setData ] = useState();
+    const [ data, setData ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
     const { theme } = useThemeContext()
    

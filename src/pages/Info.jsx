@@ -61,11 +61,11 @@ const Info = () => {
         setActiveButton(rangeLabel)
     };
 
-    const substraction = (a, b) => {
+    const subtraction = (a, b) => {
         return a - b;
     }
 
-    const firstEpisode = substraction(data.episodes.length, data.episodes.length) + 1;
+    const firstEpisode = subtraction(data.episodes.length, data.episodes.length) + 1;
     const currentEpisode = data.currentEpisode;
 
     return (
