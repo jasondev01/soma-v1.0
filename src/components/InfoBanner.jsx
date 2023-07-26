@@ -193,7 +193,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                     {
                         data.episodes.length > 0 &&
                         <div className='anime__info__buttons'>
-                            <Link to={`/watch/${data.id}/${findCurrentEpisode.id}`} 
+                            <Link to={`/watch/${data.id}/${findCurrentEpisode?.id}`} 
                                 className="btn btn-primary"
                             >
                                 {
@@ -203,7 +203,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                                 }
                                 
                             </Link>
-                            <Link to={`/watch/${data.id}/${findFirstEpisode.id}`} 
+                            <Link to={`/watch/${data.id}/${findFirstEpisode?.id}`} 
                                 className="btn btn"
                             >
                                 Watch EP 0{firstEpisode}
