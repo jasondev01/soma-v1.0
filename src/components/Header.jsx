@@ -122,6 +122,17 @@ const Header = () => {
                                     Popular
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/ongoing" 
+                                    className={`
+                                        ${theme ? 'light' : 'dark'}
+                                        ${activeNav === 'ongoing' ? 'active__nav' : ''}
+                                    `}
+                                    onClick={() => handleNav('ongoing')}
+                                >
+                                    Current Season
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                     <div className='navbar__search'>

@@ -208,6 +208,40 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
+    const fetchLatestOngoing = async () => {
+        try {
+            const response = await axios.get(`${baseUrl}/recent-episodes?page=1&perPage=100`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
+            const responseData = response.data.results;
+            return responseData;
+        } catch(error) {
+            console.log("Latest Ongoing", error.message);
+            return false;
+        }
+    }
+
+    const fetchInfoOngoing = async (id) => {
+        try {
+            const response = await axios.get(`${baseUrl}/info/${id}?provider=gogoanime`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
+            const responseData = response.data;
+            const cleanedDescription = removeHtmlTags(responseData.description);
+            const cleanData = { ...responseData, description: cleanedDescription };
+            return cleanData;
+        } catch(error) {
+            console.log("Latest Info Ongoing", error.message);
+            return false;
+        }
+    }
+
     return (
         <ApiContext.Provider value={{ 
             fetchHero,
@@ -220,7 +254,9 @@ export const ApiProvider = ({ children }) => {
             fetchLatestPage,
             fetchTrendingPage,
             fetchPopularPage,
-            fetchSearch
+            fetchSearch,
+            fetchLatestOngoing,
+            fetchInfoOngoing
         }}>
             {children}
         </ApiContext.Provider>);

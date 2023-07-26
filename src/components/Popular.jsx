@@ -80,7 +80,7 @@ const Popular = () => {
                                                 </h4>
                                             </div>
                                             {
-                                                item.rating >= 75 ? (
+                                                item.rating >= 70 ? (
                                                     <span className='popular__anime__rating'>
                                                         HOT
                                                     </span>

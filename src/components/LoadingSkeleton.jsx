@@ -19,21 +19,6 @@ const LoadingSkeleton = () => {
             <div className='skeleton__box'>
                 <LoaderBox />
             </div>
-            <div className='skeleton__box'>
-                <LoaderBox />
-            </div>
-            <div className='skeleton__box'>
-                <LoaderBox />
-            </div>
-            <div className='skeleton__box'>
-                <LoaderBox />
-            </div>
-            <div className='skeleton__box'>
-                <LoaderBox />
-            </div>
-            <div className='skeleton__box'>
-                <LoaderBox />
-            </div>
         </div>
     )
 }

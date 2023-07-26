@@ -78,7 +78,7 @@ const LatestPage = () => {
                                         </h4>
                                     </div>
                                     {
-                                        item.rating > 75 && (
+                                        item.rating > 70 && (
                                             <span className='latest__card__rating'>
                                                 HOT
                                             </span>

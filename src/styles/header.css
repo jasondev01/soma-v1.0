@@ -14,7 +14,7 @@
 .navbar__home {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 1rem;
 }
 
 .navbar__menu {
@@ -91,6 +91,7 @@
     align-items: center;
     cursor: pointer;
     margin-top: 10px;
+    padding: 0px 7px;
 }
 
 .hamburger span {
@@ -115,11 +116,12 @@
         left: -50%;
         z-index: -1;
         width: 160px;
-        height: 150px;
+        min-height: 150px;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         transition: var(--transition);
+        padding: 15px 0;
     }
 
     .navbar__menu.show {
@@ -156,6 +158,6 @@
 /*************** MEDIAY QUERIES (600px) *************/
 @media screen and (max-width: 600px ){
     .navbar__home {
-        gap: 10px;
+        gap: 5px;
     }
 }

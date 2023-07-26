@@ -147,24 +147,18 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                             }
                         </div>
                     }
-                    {
-                        data.currentEpisode &&
-                        <div className='anime__info'>
-                            <span>Total Episodes:</span>
-                            <p>
-                                {data.currentEpisode}
-                            </p>
-                        </div>
-                    }
-                    {
-                        data.popularity && 
-                        <div className='anime__info'>
-                            <span>Popularity:</span>
-                            <p>
-                                {data.popularity}
-                            </p>
-                        </div>
-                    }
+                    <div className={`anime__info ${data.currentEpisode === 0 ? 'd-none' : ''}`}>
+                        <span>Total Episodes:</span>
+                        <p>
+                            {data.currentEpisode}
+                        </p>
+                    </div>
+                    <div className={`anime__info ${data.popularity === 0 ? 'd-none' : ''}`}>
+                        <span>Popularity:</span>
+                        <p>
+                            {data.popularity}
+                        </p>
+                    </div>
                     {
                         data?.trailer?.id &&
                         <div className='anime__info'>
