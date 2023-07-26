@@ -93,7 +93,7 @@ const OngoingPage = () => {
                                                     </span>
                                                 </div>
                                                 {   
-                                                    item.rating > 70 ? (
+                                                    item.rating >= 70 ? (
                                                         <span className='ongoing__rating'>
                                                             {item.rating}%
                                                         </span>

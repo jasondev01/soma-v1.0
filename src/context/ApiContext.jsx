@@ -54,7 +54,6 @@ export const ApiProvider = ({ children }) => {
                 ...item,
                 description: removeHtmlTags(item.description)
             }))
-            console.log("Trending Context", responseData);
             return cleanData;
         } catch(error) {
             console.log("Trending Context", error.message);
