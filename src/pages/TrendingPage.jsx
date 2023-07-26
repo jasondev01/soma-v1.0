@@ -5,6 +5,7 @@ import "../styles/trendingpage.css"
 import Pageloader from "../components/Pageloader"
 import PaginationButtons from "../components/PaginationButtons"
 import { LazyLoadImage } from "react-lazy-load-image-component"
+import { Helmet } from "react-helmet"
 
 const TrendingPage = () => {
     const [ data, setData ] = useState();
@@ -39,6 +40,13 @@ const TrendingPage = () => {
 
     return (
         <section className="trending__page">
+            <Helmet>
+                <title>soma - Trending Anime </title>
+                <meta 
+                    name='description' 
+                    content="Find out the latest trending anime today!"
+                />
+            </Helmet>
             <div className="section__header">
                 <h2>
                     Trending Anime

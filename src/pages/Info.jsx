@@ -6,6 +6,7 @@ import Recommendation from '../components/Recommendation';
 import InfoBanner from '../components/InfoBanner';
 import useApiContext from '../context/ApiContext';
 import Relations from '../components/Relations';
+import { Helmet } from 'react-helmet';
 
 const Info = () => {
     const [ data, setData ] = useState([])
@@ -70,6 +71,13 @@ const Info = () => {
 
     return (
         <>
+        <Helmet>
+            <title>soma - {data.title.romaji || data.title.english} </title>
+            <meta 
+                name='description' 
+                content={`${data.title.romaji || data.title.english} details`}
+            />
+        </Helmet>
         <InfoBanner data={data} firstEpisode={firstEpisode} currentEpisode={currentEpisode} />
         <section className='info__episodes'>
             <h2>Episodes</h2>

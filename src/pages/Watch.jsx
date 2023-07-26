@@ -7,6 +7,7 @@ import useApiContext from '../context/ApiContext';
 import { AiOutlineInfoCircle } from 'react-icons/ai'
 import VideoPlayer from '../components/VideoPlayer';
 import Pageloader from '../components/Pageloader'
+import { Helmet } from 'react-helmet';
 
 const Watch = () => {
     const [ data, setData ] = useState([]);
@@ -96,10 +97,17 @@ const Watch = () => {
 
     return (
         <section id='episode' className='episode'>
+            <Helmet>
+                <title>
+                    soma - {`Watch ${animeResult?.title?.romaji || animeResult?.title?.english} Episode ${info?.number} - ${info?.title}`}
+                    </title>
+                <meta 
+                    name='description' 
+                    content={info?.description || animeResult?.title?.romaji}
+                />
+            </Helmet>
             <div className="container container__episode">
-               
                 <div className='episode__video'>
-                    
                     <div className='watch__container'>
                         <VideoPlayer 
                             data={data} 

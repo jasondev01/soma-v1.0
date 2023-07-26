@@ -5,6 +5,7 @@ import useApiContext from '../context/ApiContext';
 import Pageloader from '../components/Pageloader';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PaginationButtons from '../components/PaginationButtons';
+import { Helmet } from 'react-helmet';
 
 const PopularPage = () => {
     const [ data, setData ] = useState([]);
@@ -45,6 +46,13 @@ const PopularPage = () => {
 
     return (
         <section className="popular__page">
+            <Helmet>
+                <title>soma - Popular Anime </title>
+                <meta 
+                    name='description' 
+                    content="Find Popular Anime to watch or stream"
+                />
+            </Helmet>
             <div className="section__header">
                 <h2>
                     Popular Anime

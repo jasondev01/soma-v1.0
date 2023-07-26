@@ -4,6 +4,7 @@ import useApiContext from "../context/ApiContext";
 import { Link, useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Pageloader from "../components/Pageloader";
+import { Helmet } from "react-helmet";
 
 const About = () => {
     const [ data, setData ] = useState([]);
@@ -35,6 +36,13 @@ const About = () => {
 
     return (
         <section className="search__page">
+            <Helmet>
+                <title>soma - Search Results {`for ${query}`} </title>
+                <meta 
+                    name='description' 
+                    content="Search for an anime or movie to watch or stream"
+                />
+            </Helmet>
             <div className='section__header'>
                 <h2>
                     Search Results &nbsp;

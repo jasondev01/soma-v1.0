@@ -5,6 +5,7 @@ import Pageloader from "../components/Pageloader";
 import PaginationButtons from "../components/PaginationButtons";
 import useApiContext from '../context/ApiContext';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Helmet } from 'react-helmet';
 
 const LatestPage = () => {
     const [ data, setData ] = useState([]);
@@ -40,6 +41,13 @@ const LatestPage = () => {
 
     return (
         <section className="latest__page" >
+            <Helmet>
+                <title>soma - Latest Anime Release </title>
+                <meta 
+                    name='description' 
+                    content="Find the latest episodes of your favorite anime"
+                />
+            </Helmet>
             <div className="section__header">
                 <h2>
                     Latest Anime Release

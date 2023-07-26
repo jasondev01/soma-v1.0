@@ -6,6 +6,7 @@ import { getCurrentSeason, convertTime, removeDuplicates } from '../utilities/ut
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PageLoader from '../components/Pageloader'
+import { Helmet } from 'react-helmet';
 
 const OngoingPage = () => {
     const [ latestOngoing, setLatestOngoing ] = useState([]);
@@ -37,7 +38,7 @@ const OngoingPage = () => {
             if (latestOngoing.length === 0) return
             for (const item of latestOngoing) {
                 const response = await fetchInfoOngoing(item.id);
-                if (response.countryOfOrigin !== 'CN' && response.type !== 'ONA' && response.season === currentSeason) {
+                if (response.countryOfOrigin !== 'CN' && response.season === currentSeason) {
                     setData(prevData => removeDuplicates([...prevData, response]));
                 }
             }
@@ -45,10 +46,17 @@ const OngoingPage = () => {
         fetchData();
     }, [latestOngoing])
 
-    console.log("Data: ", data)
+    // console.log("Data: ", data)
 
     return (
         <section className='ongoing__page'>
+            <Helmet>
+                <title>soma - Ongoing Anime Series </title>
+                <meta 
+                    name='description' 
+                    content="Find the Ongoing Anime in the current season"
+                />
+            </Helmet>
             <div className="section__header">
                 <h2>
                     Ongoing Anime Series 
