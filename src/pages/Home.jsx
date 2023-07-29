@@ -13,10 +13,7 @@ const Home = () => {
                     name='description' 
                     content="Explore Anime Series and Movies"
                 />
-                <meta 
-                    property="og:image" 
-                    content="./public/webshare.png?1" 
-                />
+                <meta property="og:image" content="https://soma-chill.vercel.app/webshare.png" />
             </Helmet>
             <Hero />
             <Latest />
