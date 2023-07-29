@@ -32,16 +32,10 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [prevScrollPos]);
 
-    
-
     const handleSubmit = (e) => {
         e.preventDefault();
         navigate(`/search/${query}`)
         setQuery('')
-    }
-
-    const toggleMenu = () => {
-        setIsMenuOpen(prevIsMenuOpen => !prevIsMenuOpen)
     }
 
     useEffect(() => {
@@ -78,7 +72,9 @@ const Header = () => {
                             }}></span>
                         </div>
                         <Link to='/'>
-                            <h1 className={`logo ${theme ? 'light' : 'dark'}`}>
+                            <h1 className={`logo ${theme ? 'light' : 'dark'}`}
+                                onClick={() => handleNav('home')}
+                            >
                                 soma
                             </h1>
                         </Link>
@@ -137,7 +133,7 @@ const Header = () => {
                     </div>
                     <div className='navbar__search'>
                         <form onSubmit={handleSubmit}
-                            className='search__form'
+                            className={`search__form ${theme ? 'border-light' : ''}`}
                         >
                             <input 
                                 type="text"

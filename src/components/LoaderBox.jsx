@@ -1,6 +1,6 @@
 import React from 'react'
 import '../styles/loaderbox.css'
-import Rin from '../assets/logo.png'
+import Rin from '../assets/logo.webp'
 
 const LoaderBox = () => {
     return (
