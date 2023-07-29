@@ -15,7 +15,7 @@ const Info = () => {
     const [ pageLoad, setPageLoad ] = useState(false)
     const [ activeButton, setActiveButton ] = useState()
     const { id } = useParams();
-    const { fetchInfo } = useApiContext();
+    const { fetchInfo, fetchInfoManga } = useApiContext();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,6 +25,7 @@ const Info = () => {
                 setData(response);
                 setEpisodeRange(response.episodes);
                 setPageLoad(true)
+                console.log("anime data: ", response)
             } else {
                 setTimeout(() => {
                     fetchData();
@@ -41,7 +42,7 @@ const Info = () => {
     }
 
     // get total episodes and range
-    const totalEpisodes = episodeRange.length; 
+    const totalEpisodes = episodeRange.length;
     const rangeSize = 200; 
     const numRanges = Math.ceil(totalEpisodes / rangeSize);
 
@@ -78,13 +79,17 @@ const Info = () => {
                 content={`${data.title.romaji || data.title.english} details`}
             />
         </Helmet>
-        <InfoBanner data={data} firstEpisode={firstEpisode} currentEpisode={currentEpisode} />
+        <InfoBanner 
+            data={data} 
+            firstEpisode={firstEpisode} 
+            currentEpisode={currentEpisode}
+        />
         <section className='info__episodes'>
             <h2>Episodes</h2>
             <div className='container container__episodes'>
                 <div className='__range__info'>
-                    {
-                        totalEpisodes > 200 && 
+                {
+                    totalEpisodes > 200 && data.type !== 'MANGA' && (
                         range.map((range, index) => (
                             <button 
                                 className={
@@ -98,41 +103,44 @@ const Info = () => {
                                 {`${range.start + 1}-${range.end + 1}`}
                             </button>
                         )) 
-                    }
+                    )
+                }
                 </div>
                    
-                <div className='episodes' style={{minHeight: data.episodes.length === 0 ? '140px' : ''}}>
-                    {
-                        totalEpisodes > 200 ? (
-                            displayedEpisodes.map((item, index) => {
+                <div className='episodes' 
+                    style={{minHeight: data.episodes.length === 0 ? '140px' : ''}}
+                >
+                {
+                    totalEpisodes > 200 && data.type !== 'MANGA' ? (
+                        displayedEpisodes.map((item, index) => {
+                            return (
+                                <Link to={`/watch/${id}/${item.id}`} 
+                                    key={index} 
+                                    className='btn btn-primary'
+                                >
+                                    {
+                                        item.number < 10 ? `EP 0${item.number}` : `EP ${item.number}`
+                                    } 
+                                </Link> 
+                            )
+                        })
+                    ) : data.episodes && data.type !== 'MANGA' && data.episodes.length > 0 ? (
+                            episodeRange.map((item, index) => {
                                 return (
                                     <Link to={`/watch/${id}/${item.id}`} 
                                         key={index} 
                                         className='btn btn-primary'
                                     >
-                                        {
-                                            item.number < 10 ? `EP 0${item.number}` : `EP ${item.number}`
-                                        } 
+                                    {
+                                        item.number < 10 ? `EP 0${item.number}` : `EP ${item.number}`
+                                    } 
                                     </Link> 
                                 )
                             })
-                        ) : data.episodes && data.episodes.length > 0 ? (
-                                episodeRange.map((item, index) => {
-                                    return (
-                                        <Link to={`/watch/${id}/${item.id}`} 
-                                            key={index} 
-                                            className='btn btn-primary'
-                                        >
-                                        {
-                                            item.number < 10 ? `EP 0${item.number}` : `EP ${item.number}`
-                                        } 
-                                        </Link> 
-                                    )
-                                })
-                        ) : (
-                            <p>NO EPISODES</p>
-                        )
-                    }
+                    ) : (
+                        <p>NO EPISODES</p>
+                    )
+                }
                 </div>
             </div>
         </section>

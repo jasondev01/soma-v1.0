@@ -6,6 +6,7 @@ import "swiper/css/free-mode";
 import 'swiper/swiper-bundle.min.css';
 import { Link } from "react-router-dom";
 import { breakpoints } from "../utilities/utility";
+import { LazyLoadComponent, LazyLoadImage } from "react-lazy-load-image-component";
 // import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Relations = ({data}) => {
@@ -32,13 +33,12 @@ const Relations = ({data}) => {
                                 return (
                                     <SwiperSlide key={index} className='recommendation'>
                                         <Link to={`/info/${item.id}`}>
-                                            <div className='recommendation__image'>
+                                            <LazyLoadComponent className='recommendation__image'>
                                                 <img
-                                                    effect="blur"
                                                     src={item.image} 
                                                     alt={item?.title?.romaji} 
                                                 />
-                                            </div>
+                                            </LazyLoadComponent>
                                             <div className='recommendation__title'>
                                                 <h4>
                                                     {item?.title?.english || item?.title?.romaji}

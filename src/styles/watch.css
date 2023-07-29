@@ -147,7 +147,7 @@ option span {
     position: absolute;
     top: -38px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
 }
@@ -156,15 +156,20 @@ option span {
     display: flex;
     gap: 5px;
     padding: 2px 5px;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
 }
 
 .breadcrumbs li a {
-    font-size: 14px;
+    font-size: 1.2zrem;
+    font-weight: 600;
+    text-shadow: var(--text-shadow);
 }
 
 .fullscreen-toggle {
     padding: 5px 7px;
-    color: inherit;
+    color: var(--primary);
     margin-inline-end: 2px;
     background: var(--secondary);
     box-shadow: var(--box-shadow);
@@ -211,10 +216,6 @@ option span {
 
 /******************* MEDIA QUERY (1200px) ******************/
 @media screen and (max-width: 1200px){
-    .container.container__episode {
-        overflow: auto!important;
-    }
-
     .buttons,
     .episode__info,
     .watch__container {
@@ -228,6 +229,17 @@ option span {
     .episode__info,
     .watch__container {
         width: 96%;
+    }
+}
+
+/* ================== MEDIA QUERIES (800px) =============== */
+@media screen and (max-width: 800px) {
+    .fullscreen-toggle {
+        display: none;
+    }
+
+    .episode__video {
+        padding-top: 1rem;
     }
 }
 

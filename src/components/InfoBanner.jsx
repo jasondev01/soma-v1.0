@@ -3,16 +3,13 @@ import { Link } from "react-router-dom";
 
 const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
     
-    // const title = data.title ? (data.title.english || data.title.romaji) : 'N/A';
     const baseUrl = "https://www.youtube.com/watch?v="
 
     // console.log("currentEpisode", currentEpisode)
     // console.log("firstEpisode", firstEpisode)
-    console.log("anime data: ", data)
+    // console.log("anime data: ", data)
     const findCurrentEpisode = data.episodes.find(episode => episode.number === currentEpisode)
-    // console.log("findCurrentEpisode", findCurrentEpisode.id)
     const findFirstEpisode = data.episodes.find(episode => episode.number === firstEpisode)
-    // console.log('findFirstEpisode', findFirstEpisode.id)
 
     return (
         <section id='info' className='info' style={{backgroundImage: `url(${data.cover})`}} >
@@ -160,18 +157,24 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                             }
                         </div>
                     }
-                    <div className={`anime__info ${data.currentEpisode === 0 ? 'd-none' : ''}`}>
-                        <span>Total Episodes:</span>
-                        <p>
-                            {data.currentEpisode}
-                        </p>
-                    </div>
-                    <div className={`anime__info ${data.popularity === 0 ? 'd-none' : ''}`}>
-                        <span>Popularity:</span>
-                        <p>
-                            {data.popularity}
-                        </p>
-                    </div>
+                    {
+                        data.currentEpisode &&
+                        <div className={`anime__info ${data.currentEpisode === 0 ? 'd-none' : ''}`}>
+                            <span>Total Episodes:</span>
+                            <p>
+                                {data.currentEpisode} episodes
+                            </p>
+                        </div>
+                    }
+                    {
+                        data.popularity &&
+                        <div className={`anime__info ${data.popularity === 0 ? 'd-none' : ''}`}>
+                            <span>Popularity:</span>
+                            <p>
+                                {data.popularity}
+                            </p>
+                        </div>
+                    }
                     {
                         data?.trailer?.id &&
                         <div className='anime__info'>
@@ -191,24 +194,28 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         </p>
                     </div>
                     {
-                        data.episodes.length > 0 &&
-                        <div className='anime__info__buttons'>
-                            <Link to={`/watch/${data.id}/${findCurrentEpisode?.id}`} 
-                                className="btn btn-primary"
-                            >
+                        data.episodes.length > 0 && data.type !== 'MANGA' ? (
+                            <div className='anime__info__buttons'>
+                                <Link 
+                                    to={`/watch/${data.id}/${findCurrentEpisode?.id}`} 
+                                    className="btn btn-primary"
+                                >
                                 {
                                     data.episodes.length <= 10
                                     ? `Watch EP 0${currentEpisode}`
                                     : `Watch EP ${currentEpisode}`
                                 }
-                                
-                            </Link>
-                            <Link to={`/watch/${data.id}/${findFirstEpisode?.id}`} 
-                                className="btn btn"
-                            >
-                                Watch EP 0{firstEpisode}
-                            </Link>
-                        </div>
+                                </Link>
+                                <Link 
+                                    to={`/watch/${data.id}/${findFirstEpisode?.id}`} 
+                                    className="btn"
+                                >
+                                    Watch EP 0{firstEpisode}
+                                </Link>
+                            </div>
+                        ) : (
+                            <div></div>
+                        )
                     }
                 </article>
             </div>

@@ -197,10 +197,6 @@ span, p, h1, h2, h3, h4, h5 {
         display: none;
     }
 
-    .fullscreen-toggle {
-        display: none;
-    }
-
     .latest__page .section__header h2,
     .search__page .section__header h2,
     .trending__page .section__header h2,

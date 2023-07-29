@@ -130,7 +130,7 @@ const VideoPlayer = ({ data, id, onVideoEnd, animeResult }) => {
                 autoPlay={false} 
                 playsInline
             >
-                <HLSSource src={videoSource} className="123123" />
+                <HLSSource src={videoSource}/>
                 
                 <BigPlayButton position="center" />
                 <LoadingSpinner />
@@ -150,21 +150,7 @@ const VideoPlayer = ({ data, id, onVideoEnd, animeResult }) => {
                 </ControlBar>
             </Player>
             <div className="stream__header">
-                <ul className="breadcrumbs">
-                    <li>
-                        <Link to="/" className={theme ? 'light' : 'dark'}>
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        |
-                    </li>
-                    <li>
-                        <Link to={`/info/${id}`} className={theme ? 'light' : 'dark'}>
-                            {animeResult?.title?.english || animeResult?.title?.romaji}
-                        </Link>
-                    </li>
-                </ul>
+                
                 <button 
                     title={`Auto Fullscreen is Currently ${isFullScreen ? 'On' : 'Off'}`}
                     className={`fullscreen-toggle ${isFullScreen ? 'active' : ''}`} 

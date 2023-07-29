@@ -6,6 +6,7 @@ import "swiper/css/free-mode";
 import 'swiper/swiper-bundle.min.css';
 import { Link } from "react-router-dom";
 import { breakpoints } from "../utilities/utility";
+import { LazyLoadComponent, LazyLoadImage } from "react-lazy-load-image-component";
 
 const Recommendation = ({data}) => {
 
@@ -32,9 +33,12 @@ const Recommendation = ({data}) => {
                                 return (
                                     <SwiperSlide key={index} className='recommendation'>
                                         <Link to={`/info/${item.id}`}>
-                                            <div className='recommendation__image'>
-                                                <img src={item.image} alt="" />
-                                            </div>
+                                            <LazyLoadComponent className='recommendation__image'>
+                                                <img
+                                                    src={item.image} 
+                                                    alt={item.title.romaji} 
+                                                />
+                                            </LazyLoadComponent>
                                             <div className='recommendation__title'>
                                                 <h4>
                                                     {item.title && item.title.english ? item.title.english : item.title.romaji}
@@ -61,6 +65,10 @@ const Recommendation = ({data}) => {
                                                 item.type === 'MOVIE' ? (
                                                     <span className='recommendation__episodes'>
                                                         Movie
+                                                    </span>
+                                                ) : item.type === 'MANGA' || item.type.type === 'span' ? (
+                                                    <span className='recommendation__episodes'>
+                                                        Manga
                                                     </span>
                                                 ) : (
                                                     <span className='recommendation__episodes'>

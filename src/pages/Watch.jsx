@@ -8,6 +8,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai'
 import VideoPlayer from '../components/VideoPlayer';
 import Pageloader from '../components/Pageloader'
 import { Helmet } from 'react-helmet';
+import useThemeContext from '../context/ThemeContext';
 
 const Watch = () => {
     const [ data, setData ] = useState([]);
@@ -21,6 +22,7 @@ const Watch = () => {
 
     const { id, episodeId } = useParams();
     const { fetchWatch, fetchEpisodeWatch } = useApiContext();
+    const { theme } = useThemeContext();
     const navigate = useNavigate();
     // console.log("Watch Info", animeResult);
 
@@ -40,9 +42,7 @@ const Watch = () => {
                     const nextEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber + 1);
                     const prevEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber - 1);
                     const nextEpisodeId = nextEpisode ? nextEpisode.id : null;
-                    const prevEpisodeId = prevEpisode ? prevEpisode.id : null; // Fix: Use prevEpisode.id
-                    // console.log('Next Episode ID:', nextEpisodeId);
-                    // console.log('Prev Episode ID:', prevEpisodeId);
+                    const prevEpisodeId = prevEpisode ? prevEpisode.id : null; 
                     setNextEpisode(nextEpisodeId);
                     setPrevEpisode(prevEpisodeId);
                 }
@@ -107,6 +107,21 @@ const Watch = () => {
                 />
             </Helmet>
             <div className="container container__episode">
+                <ul className="breadcrumbs">
+                    <li>
+                        <Link to="/" className={theme ? 'light' : 'dark'}>
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        |
+                    </li>
+                    <li>
+                        <Link to={`/info/${id}`} className={theme ? 'light' : 'dark'}>
+                            {animeResult?.title?.english || animeResult?.title?.romaji}
+                        </Link>
+                    </li>
+                </ul>
                 <div className='episode__video'>
                     <div className='watch__container'>
                         <VideoPlayer 

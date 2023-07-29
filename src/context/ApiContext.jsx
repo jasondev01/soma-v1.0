@@ -255,7 +255,7 @@ export const ApiProvider = ({ children }) => {
             fetchPopularPage,
             fetchSearch,
             fetchLatestOngoing,
-            fetchInfoOngoing
+            fetchInfoOngoing,
         }}>
             {children}
         </ApiContext.Provider>);
