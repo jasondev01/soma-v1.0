@@ -10,7 +10,7 @@ Disallow: /
 User-agent: Twitterbot
 Disallow:
 
-User-agent: FacebookBot
+User-agent: Facebookbot
 Disallow:
 
 User-agent: LinkedInBot
