@@ -13,6 +13,10 @@ const Home = () => {
                     name='description' 
                     content="Explore Anime Series and Movies"
                 />
+                <meta 
+                    property="og:image" 
+                    content="./public/webshare.png" 
+                />
             </Helmet>
             <Hero />
             <Latest />
