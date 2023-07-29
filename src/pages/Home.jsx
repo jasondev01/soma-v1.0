@@ -15,7 +15,7 @@ const Home = () => {
                 />
                 <meta 
                     property="og:image" 
-                    content="./public/webshare.png" 
+                    content="./public/webshare.png?1" 
                 />
             </Helmet>
             <Hero />
