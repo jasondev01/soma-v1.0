@@ -1,2 +1,22 @@
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: Slurp
+Disallow: /
+
+User-agent: Twitterbot
+Disallow:
+
+User-agent: FacebookBot
+Disallow:
+
+User-agent: LinkedInBot
+Disallow:
+
+# Add other social media bots here if needed
+
 User-agent: *
 Disallow: /
