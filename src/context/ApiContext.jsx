@@ -34,6 +34,7 @@ export const ApiProvider = ({ children }) => {
                 }
             })
             const responseData = response?.data?.results;
+            console.log("Latest Context", responseData)
             return responseData;
         } catch(error) {
             console.log("Latest Context", error.message);

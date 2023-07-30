@@ -15,7 +15,7 @@ const Info = () => {
     const [ pageLoad, setPageLoad ] = useState(false)
     const [ activeButton, setActiveButton ] = useState()
     const { id } = useParams();
-    const { fetchInfo, fetchInfoManga } = useApiContext();
+    const { fetchInfo } = useApiContext();
 
     useEffect(() => {
         const fetchData = async () => {

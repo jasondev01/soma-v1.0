@@ -15,7 +15,7 @@ const Latest = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchLatest();
-            console.log("Latest: ", response)
+            // console.log("Latest: ", response)
             if(response) {
                 setData(response);
                 setPageLoad(true)
@@ -90,6 +90,7 @@ const Latest = () => {
                     
                 )
             }
+            
         </section>
     )
 }
