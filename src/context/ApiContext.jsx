@@ -44,7 +44,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchTrending = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/trending?page=1&perPage=12&`, {
+            const response = await axios.get(`${baseUrl}/trending?page=1&perPage=12`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',

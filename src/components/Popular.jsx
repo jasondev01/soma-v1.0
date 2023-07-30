@@ -22,7 +22,7 @@ const Popular = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchPopular();
-            // console.log("Popular Section", response);
+            console.log("Popular Section", response);
             if(response) {
                 setData(response)
                 setPageLoad(true)
