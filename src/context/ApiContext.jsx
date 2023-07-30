@@ -84,7 +84,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchInfo = async (id) => {
         try {
-            const response = await axios.get(`${baseUrl}/info/${id}?provider=gogoanime`, {
+            const response = await axios.get(`${baseUrl}/info/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
