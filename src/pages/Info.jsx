@@ -72,13 +72,13 @@ const Info = () => {
 
     return (
         <>
-        <Helmet>
+        {/* <Helmet>
             <title>soma - {data.title.romaji || data.title.english} </title>
             <meta 
                 name='description' 
                 content={`${data.title.romaji || data.title.english} details`}
             />
-        </Helmet>
+        </Helmet> */}
         <InfoBanner 
             data={data} 
             firstEpisode={firstEpisode} 

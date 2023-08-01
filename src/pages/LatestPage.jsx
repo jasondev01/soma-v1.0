@@ -41,13 +41,13 @@ const LatestPage = () => {
 
     return (
         <section className="latest__page" >
-            <Helmet>
+            {/* <Helmet>
                 <title>soma - Latest Anime Release </title>
                 <meta 
                     name='description' 
                     content="Find the latest episodes of your favorite anime"
                 />
-            </Helmet>
+            </Helmet> */}
             <div className="section__header">
                 <h2>
                     Latest Anime Release

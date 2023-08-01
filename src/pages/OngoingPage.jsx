@@ -50,13 +50,13 @@ const OngoingPage = () => {
 
     return (
         <section className='ongoing__page'>
-            <Helmet>
+            {/* <Helmet>
                 <title>soma - Ongoing Anime Series </title>
                 <meta 
                     name='description' 
                     content="Find the Ongoing Anime in the current season"
                 />
-            </Helmet>
+            </Helmet> */}
             <div className="section__header">
                 <h2>
                     Ongoing Anime Series 

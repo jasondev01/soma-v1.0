@@ -7,13 +7,13 @@ import Trending from '../components/Trending'
 const Home = () => {
     return (
         <>
-            <Helmet>
+            {/* <Helmet>
                 <title>soma - Home</title>
                 <meta 
                     name='description' 
                     content="Explore Anime Series and Movies"
                 />
-            </Helmet>
+            </Helmet> */}
             <Hero />
             <Latest />
             <Trending />

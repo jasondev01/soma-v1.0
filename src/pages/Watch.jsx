@@ -97,7 +97,7 @@ const Watch = () => {
 
     return (
         <section id='episode' className='episode'>
-            <Helmet>
+            {/* <Helmet>
                 <title>
                     soma - {`Watch ${animeResult?.title?.romaji || animeResult?.title?.english} Episode ${info?.number} - ${info?.title}`}
                     </title>
@@ -105,7 +105,7 @@ const Watch = () => {
                     name='description' 
                     content={info?.description || animeResult?.title?.romaji}
                 />
-            </Helmet>
+            </Helmet> */}
             <div className="container container__episode">
                 <ul className="breadcrumbs">
                     <li>
