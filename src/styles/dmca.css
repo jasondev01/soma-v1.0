@@ -1,0 +1,36 @@
+.dmca,
+.terms {
+    min-height: 65vh;
+}
+
+.container__dmca h2,
+.container__dmca p,
+.container__dmca ul,
+.container__terms h2,
+.container__terms p,
+.container__terms ul {
+    margin-bottom: 1.2rem;
+}
+
+.container__dmca h2,
+.container__terms h2 {
+    font-size: 2rem;
+}
+
+.container__dmca ul li {
+    list-style: decimal!important;
+    margin-left: 1.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.container__dmca p a,
+.container__terms p a {
+    color: var(--secondary);
+    text-decoration: underline;
+    text-shadow: none;
+}
+
+.container__dmca p a:hover,
+.container__terms p a:hover {
+    color: var(--secondary-variant);
+}

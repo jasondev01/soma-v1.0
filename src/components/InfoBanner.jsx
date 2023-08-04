@@ -10,16 +10,17 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
     // console.log("anime data: ", data)
     const findCurrentEpisode = data.episodes.find(episode => episode.number === currentEpisode)
     const findFirstEpisode = data.episodes.find(episode => episode.number === firstEpisode)
+    // console.log('findCurrentEpisode', findCurrentEpisode)
 
     return (
-        <section id='info' className='info' style={{backgroundImage: `url(${data.cover})`}} >
+        <section id='info' className='info' style={{backgroundImage: `url(${data?.bannerImage})`}} >
             <div className="container container__info" >
                 <div className='anime__info__cover'>
                     {
-                        data.image &&
+                        data?.coverImage &&
                         <LazyLoadImage
                             effect="blur" 
-                            src={data.image} 
+                            src={data?.coverImage} 
                             alt={data?.title?.romaji} 
                         />
                     }
@@ -35,12 +36,12 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         </div>
                     }
                     {
-                        data.genres.length > 0 && 
+                        data?.genre?.length > 0 && 
                         <ul className='anime__info__ul'>
                             <span>Genres:</span>
                             {   
                                 (
-                                    data.genres.map((item, index) => {
+                                    data?.genre.map((item, index) => {
                                         return (
                                             <li key={index}>
                                                 {item}
@@ -52,29 +53,29 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         </ul>
                     }
                     {
-                        data.releaseDate &&
+                        data?.year &&
                         <div className='anime__info'>
                             <span>Released:</span>
                             <p>
-                                {data.releaseDate}
+                                {data?.year}
                             </p>
                         </div>
                     }
                     {
-                        data.season &&
+                        data?.season &&
                         <div className='anime__info'>
                             <span>Season:</span>
                             <p>
-                                {data.season}
+                                {data?.season}
                             </p>
                         </div>
                     }
                     {
-                        data.status &&
+                        data?.status &&
                         <div className='anime__info'>
                             <span>Status:</span>
                             <p>
-                                {data.status}
+                                {data?.status === 'RELEASING' ? 'Ongoing' : data?.status}
                             </p>
                         </div>
                     }
@@ -94,88 +95,54 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         </ul>
                     }
                     {
-                        data.relations.length > 0 &&
-                        <ul className='anime__info__ul'>
-                            <span>Relations:</span>
-                            <li> 
-                            { 
-                                data.relations.map((item, index) => {
-                                    if(index < 5) {
-                                        return (
-                                            <Link to={`/info/${item.id}`}
-                                                key={index}
-                                            > 
-                                                {item?.title?.english || item?.title?.romaji}, &nbsp;
-                                            </Link>
-                                        )
-                                    } else {
-                                        return null;
-                                    }
-                                })
-                            }
-                            </li>
-                        </ul>
-                    }
-                    {
-                        data.studios.length > 0 && 
-                        <ul className='anime__info__ul'>
-                            <span>Studios:</span>
-                            {
-                                data.studios.map((item, index)=> {
-                                    return (
-                                    <li key={index}>
-                                        {item}
-                                    </li>
-                                    )
-                                })
-                            }
-                        </ul>
-                    }
-                    {
-                        data.rating && 
+                        data?.averageScore && 
                         <div className='anime__info'>
                             <span>Rating:</span>
                             <p>
-                                {data.rating}%
+                                {data?.averageScore}%
                             </p>
                         </div>
                     }
                     {
-                        data.type &&
+                        data?.format &&
                         <div className='anime__info'>
                             <span>Category:</span>
                             {
-                                data.type === 'TV' ? (
+                                data?.format === 'TV' ? (
                                     <p>
-                                        {data.type} Series
+                                        {data?.format} Series
                                     </p>
                                 ) :  (
                                     <p>
-                                        {data.type}
+                                        {data?.format}
                                     </p>
                                 )
                             }
                         </div>
                     }
                     {
-                        data.currentEpisode &&
+                        data?.currentEpisode &&
                         <div className={`anime__info ${data.currentEpisode === 0 ? 'd-none' : ''}`}>
                             <span>Total Episodes:</span>
                             <p>
-                                {data.currentEpisode} episodes
+                                {
+                                    data?.currentEpisode > 1 
+                                    ? `${data?.currentEpisode} episodes` 
+                                    : `${data?.currentEpisode} episode`
+                                } 
                             </p>
                         </div>
                     }
                     {
-                        data.popularity &&
+                        data?.popularity &&
                         <div className={`anime__info ${data.popularity === 0 ? 'd-none' : ''}`}>
                             <span>Popularity:</span>
                             <p>
-                                {data.popularity}
+                                {data?.popularity}
                             </p>
                         </div>
                     }
-                    {
+                    {/* {
                         data?.trailer?.id &&
                         <div className='anime__info'>
                                 <span>Trailer:</span>
@@ -186,28 +153,28 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                                     Watch Trailer
                                 </a>
                         </div>
-                    }
+                    } */}
                     <div className='anime__info'>
                         <span>Summary:</span>
                         <p>
-                            {data.description}
+                            {data?.description}
                         </p>
                     </div>
                     {
-                        data.episodes.length > 0 && data.type !== 'MANGA' ? (
+                        data?.episodes.length > 0 && data?.type !== 'MANGA' ? (
                             <div className='anime__info__buttons'>
                                 <Link 
-                                    to={`/watch/${data.id}/${findCurrentEpisode?.id}`} 
+                                    to={`/watch/${data?.slug}/${findCurrentEpisode?.number}/${findCurrentEpisode?.id}`} 
                                     className="btn btn-primary"
                                 >
                                 {
                                     data.episodes.length <= 10
-                                    ? `Watch EP 0${currentEpisode}`
+                                    ? `Watch EP 0${data?.currentEpisode}`
                                     : `Watch EP ${currentEpisode}`
                                 }
                                 </Link>
                                 <Link 
-                                    to={`/watch/${data.id}/${findFirstEpisode?.id}`} 
+                                    to={`/watch/${data?.slug}/${findFirstEpisode?.number}/${findFirstEpisode?.id}`} 
                                     className="btn"
                                 >
                                     Watch EP 0{firstEpisode}

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AiFillSetting } from 'react-icons/ai'
 
-const QualityButton = ({ options, onChange, currentQuality }) => {
+const QualityButton = ({ options, onChange, currentQuality, fetchEnimeEpisode }) => {
     const [isOpen, setIsOpen] = useState(false);
     const qualityButtonRef = useRef(null);
 
@@ -39,11 +39,13 @@ const QualityButton = ({ options, onChange, currentQuality }) => {
         };
     }, []);
 
+    // console.log('options: ', options)
     // console.log("currentQuality", currentQuality)
 
     return (
         <div ref={qualityButtonRef}
-            className="quality" tabIndex={0}
+            className={`quality ${fetchEnimeEpisode ? 'd-none' : ''}`} 
+            tabIndex={0}
         >
             <button onClick={handleToggle} className="quality__button">
                 <AiFillSetting className="quality__button__icon"/>
@@ -58,7 +60,7 @@ const QualityButton = ({ options, onChange, currentQuality }) => {
                                 onClick={() => handleQualityChange(option)}
                                 className={currentQuality === option.quality ? 'current' : ''}
                             >
-                            {option.quality}
+                                {option.quality}
                             </li>
                         ))
                     }

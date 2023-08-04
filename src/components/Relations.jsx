@@ -16,7 +16,7 @@ const Relations = ({data}) => {
             data.relations.length > 0 && 
             <section className='info__recommendation'>
                 <div className="section__header">
-                    <h2>Anime, Manga, Novel Relations</h2>
+                    <h2>Relations: </h2>
                 </div>
                 {
                     data.relations.length > 0 ? (
@@ -32,43 +32,43 @@ const Relations = ({data}) => {
                             data.relations.map((item, index) => {
                                 return (
                                     <SwiperSlide key={index} className='recommendation'>
-                                        <Link to={`/info/${item.id}`}>
+                                        <Link to={`/info/${item?.anime?.slug}`}>
                                             <LazyLoadComponent className='recommendation__image'>
                                                 <img
-                                                    src={item.image} 
+                                                    src={item?.anime?.coverImage} 
                                                     alt={item?.title?.romaji} 
                                                 />
                                             </LazyLoadComponent>
                                             <div className='recommendation__title'>
                                                 <h4>
-                                                    {item?.title?.english || item?.title?.romaji}
+                                                    {item?.anime?.title?.english || item?.anime?.title?.romaji}
                                                 </h4>
                                             </div>
                                             {
-                                                item.rating &&
-                                                item.rating >= 75 ? (
+                                                
+                                                item?.anime?.averageScore >= 75 ? (
                                                     <span className='recommendation__rating'>
                                                         HOT
                                                     </span>
-                                                ) : !item.rating ? (
-                                                    <span className='recommendation__rating green d-none'>
-                                                        {item.rating}%
-                                                    </span>
-                                                ) : (
-                                                    <span className='recommendation__rating green'>
-                                                        {item.rating}%
+                                                ) : item?.anime?.averageScore && (
+                                                    <span className='recommendation__rating green '>
+                                                        {item?.anime.averageScore}%
                                                     </span>
                                                 )
                                             }
                                             {
-                                                item.episodes &&
-                                                item.type === 'TV' ? (
+                                                item?.anime?.currentEpisode &&
+                                                item?.anime?.format === 'TV' ? (
                                                     <span className='recommendation__episodes'>
-                                                        Episodes {item.episodes}
+                                                        {
+                                                            item?.anime?.currentEpisode && item?.anime?.currentEpisode > 0 
+                                                            ? `Episodes ${item?.anime?.currentEpisode}` 
+                                                            : `Episode ${item?.anime?.currentEpisode}`
+                                                        }
                                                     </span>
                                                 ) : (
                                                     <span className='recommendation__episodes'>
-                                                        {item.type}
+                                                        {item?.anime?.format}
                                                     </span>
                                                 )
                                             }

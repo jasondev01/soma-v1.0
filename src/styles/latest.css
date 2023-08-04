@@ -3,10 +3,11 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 2%;
     height: 100%;
+    padding-bottom: 1.7rem;
 }
 
 .latest__card__container {
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
 }
 
 .latest__card {

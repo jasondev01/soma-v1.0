@@ -25,7 +25,7 @@ const Info = () => {
                 setData(response);
                 setEpisodeRange(response.episodes);
                 setPageLoad(true)
-                console.log("anime data: ", response)
+                // console.log("anime data: ", response)
             } else {
                 setTimeout(() => {
                     fetchData();
@@ -54,31 +54,35 @@ const Info = () => {
         range.push({ start, end });
     }
 
-    // display the episodes according to the range
     const handleRangeClick = (range, rangeLabel) => {
-        const start = totalEpisodes - range.end - 1;
-        const end = totalEpisodes - range.start - 1;
+        const start = range.start;
+        const end = range.end;
         const episodesToShow = episodeRange.slice(start, end + 1);
         setDisplayedEpisodes(episodesToShow);
         setActiveButton(rangeLabel)
     };
 
-    const subtraction = (a, b) => {
+    const difference = (a, b) => {
         return a - b;
     }
 
-    const firstEpisode = subtraction(data.episodes.length, data.episodes.length) + 1;
-    const currentEpisode = data.currentEpisode;
+    const firstEpisode = difference(data?.episodes.length, data?.episodes.length) + 1;
+    const currentEpisode = data?.currentEpisode;
+
+    console.log(displayedEpisodes)
+    // console.log('episodeRange', episodeRange)
+    const reversedNumbers = episodeRange.slice().reverse().map(item => item);
+    // console.log('reversedNumbers', reversedNumbers);
 
     return (
         <>
-        {/* <Helmet>
-            <title>soma - {data.title.romaji || data.title.english} </title>
+        <Helmet>
+            <title>soma - {data?.title.romaji || data?.title?.english} </title>
             <meta 
                 name='description' 
-                content={`${data.title.romaji || data.title.english} details`}
+                content={`${data?.title.romaji || data?.title?.english} details`}
             />
-        </Helmet> */}
+        </Helmet>
         <InfoBanner 
             data={data} 
             firstEpisode={firstEpisode} 
@@ -89,32 +93,31 @@ const Info = () => {
             <div className='container container__episodes'>
                 <div className='__range__info'>
                 {
-                    totalEpisodes > 200 && data.type !== 'MANGA' && (
-                        range.map((range, index) => (
-                            <button 
-                                className={
-                                    activeButton === `${range.start + 1}-${range.end + 1}` 
-                                    ? "btn btn-primary active" 
-                                    : "btn btn-primary"
-                                }
-                                key={index} 
-                                onClick={() => handleRangeClick(range, `${range.start + 1}-${range.end + 1}`)}
-                            >
-                                {`${range.start + 1}-${range.end + 1}`}
-                            </button>
-                        )) 
-                    )
+                    totalEpisodes > 200 && 
+                    range.map((range, index) => (
+                        <button 
+                            className={
+                                activeButton === `${range.start + 1}-${range.end + 1}` 
+                                ? "btn btn-primary active" 
+                                : "btn btn-primary"
+                            }
+                            key={index} 
+                            onClick={() => handleRangeClick(range, `${range.start + 1}-${range.end + 1}`)}
+                        >
+                            {`${range.start + 1}-${range.end + 1}`}
+                        </button>
+                    )) 
                 }
                 </div>
                    
                 <div className='episodes' 
-                    style={{minHeight: data.episodes.length === 0 ? '140px' : ''}}
+                    style={{minHeight: data?.episodes?.length === 0 ? '140px' : ''}}
                 >
                 {
-                    totalEpisodes > 200 && data.type !== 'MANGA' ? (
-                        displayedEpisodes.map((item, index) => {
+                    totalEpisodes > 200 ? (
+                        displayedEpisodes.slice().reverse().map((item, index) => {
                             return (
-                                <Link to={`/watch/${id}/${item.id}`} 
+                                <Link to={`/watch/${id}/${item.number}/${item.id}`} 
                                     key={index} 
                                     className='btn btn-primary'
                                 >
@@ -124,10 +127,10 @@ const Info = () => {
                                 </Link> 
                             )
                         })
-                    ) : data.episodes && data.type !== 'MANGA' && data.episodes.length > 0 ? (
-                            episodeRange.map((item, index) => {
+                    ) : data.episodes && data.episodes.length > 0 ? (
+                            reversedNumbers.map((item, index) => {
                                 return (
-                                    <Link to={`/watch/${id}/${item.id}`} 
+                                    <Link to={`/watch/${id}/${item.number}/${item.id}`} 
                                         key={index} 
                                         className='btn btn-primary'
                                     >
@@ -145,7 +148,7 @@ const Info = () => {
             </div>
         </section>
         <Relations data={data}/>
-        <Recommendation data={data}/>
+        {/* <Recommendation data={data}/> */}
         </>
     )
 }

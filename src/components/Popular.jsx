@@ -1,20 +1,14 @@
-import { useEffect, useState } from 'react'
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/free-mode";
-import { FreeMode, Navigation } from "swiper";
-import '../styles/popular.css'
-import 'swiper/swiper-bundle.min.css';
+import '../styles/trending.css'
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { breakpoints } from '../utilities/utility';
 import useApiContext from '../context/ApiContext';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingSkeleton from './LoadingSkeleton';
 import useThemeContext from '../context/ThemeContext';
 
-const Popular = () => {
+const Trending = () => {
     const [ data, setData ] = useState([]);
+    const [ highestRatedAnime, sethighestRatedAnime ] = useState(null);
     const [ pageLoad, setPageLoad ] = useState(false);
     const { fetchPopular } = useApiContext();
     const { theme } = useThemeContext();
@@ -24,28 +18,29 @@ const Popular = () => {
             const response = await fetchPopular();
             console.log("Popular Section", response);
             if(response) {
-                setData(response)
-                setPageLoad(true)
+                const highestRating = Math.max(...response.map(item => item.averageScore));
+                const highestRatedAnime = response.find(item => item.averageScore === highestRating);
+                console.log("highestRatedAnime", highestRatedAnime);
+                setData(response);
+                sethighestRatedAnime(highestRatedAnime)
+                setPageLoad(true);
             } else {
                 setTimeout(() => {
                     fetchData();
                 }, 6000)
             }
-        }
+        };
+        setPageLoad(false);
         fetchData();
-        setPageLoad(false)
-    }, [])
+    }, []);
+
+    const filteredData = data.filter(item => item !== highestRatedAnime);
 
     return (
-        <section id='popular' className='popular'>
+        <section id='trending' className='trending'>
             <div className='section__header'>
-                <h2>Popular 
-                    <br />
-                    <span>
-                        (swipe to navigate)
-                    </span>
-                </h2>
-                <Link to="/popular" className={theme ? 'light' : 'dark'}>
+                <h2>Popular Anime</h2>
+                <Link to='/popular' className={theme ? 'light' : 'dark'}>
                     view more
                 </Link>
             </div>
@@ -53,64 +48,98 @@ const Popular = () => {
                 !pageLoad ? (
                     <LoadingSkeleton />
                 ) : (
-                    <Swiper className='container container__popular'
-                        slidesPerView={4}
-                        breakpoints={breakpoints}
-                        spaceBetween={25}
-                        navigation={true}
-                        freeMode={true}
-                        // loop={true}
-                        modules={[FreeMode, Navigation]}
-                    >   
-                        {   
-                            data?.map( (item, index) => {
-                                return (
-                                    <SwiperSlide key={index} className='popular__anime'>
-                                        <Link to={`/info/${item.id}`}>
-                                            <div className='popular__anime__image'>
-                                                <LazyLoadImage
-                                                    effect='blur' 
-                                                    src={item.image} 
-                                                    alt={item?.title?.romaji} 
-                                                />
-                                            </div>
-                                            <div className='popular__anime__title'>
-                                                <h4>
-                                                    {item?.title?.english || item?.title?.romaji}
-                                                </h4>
-                                            </div>
+                    <div className='container container__trending'>
+                    {
+                        highestRatedAnime && (
+                            <div className='highest__rating'>
+                                <LazyLoadImage
+                                    ffect='blur'
+                                    src={highestRatedAnime?.coverImage} 
+                                    alt={highestRatedAnime?.title?.english} 
+                                />
+                                <Link to={`/info/${highestRatedAnime.slug}`} className='overlay'>
+                                    <div className='highest__rating__info'>
+                                        <h4>
+                                            {highestRatedAnime.title.english ? highestRatedAnime.title.english : highestRatedAnime.title.romaji}
+                                        </h4>
+                                        <p className='highest__rating__description'>
                                             {
-                                                item.rating >= 70 ? (
-                                                    <span className='popular__anime__rating'>
-                                                        HOT
-                                                    </span>
-                                                ) : (
-                                                    <span className='popular__anime__rating green'>
-                                                        {item.rating}%
-                                                    </span>
-                                                )
+                                                highestRatedAnime.description
                                             }
-                                            {   
-                                                item.type === 'MOVIE' ? (
-                                                    <span className='popular__anime__episodes'>
-                                                        Movie
-                                                    </span>
-                                                ) : (
-                                                    <span className='popular__anime__episodes'>
-                                                        Episodes {item?.totalEpisodes}
-                                                    </span>
-                                                ) 
-                                            }
-                                        </Link >
-                                    </SwiperSlide>
-                                )
-                            })
-                        }
-                    </Swiper>
+                                        </p>
+                                        <div className='highest__rating__buttons'>
+                                            <button className='btn btn-primary'>Read Info</button>
+                                        </div>
+                                    </div>
+                                </Link>
+                                <div className='highest__rating__info-active'>
+                                    <h4>
+                                        {highestRatedAnime?.title?.english || highestRatedAnime?.title?.romaji} 
+                                    </h4>
+                                </div>
+                                <span className='highest__rating__rate'>
+                                    HOT
+                                </span>
+                                <span className='highest__rating__rate__episodes'>
+                                    Episodes {highestRatedAnime.currentEpisode}
+                                </span>
+                            </div>
+                        )
+                    }
+                    {
+                        filteredData.map( (item, index) => {
+                            return (
+                                <div key={index} className='trending__card__container'>
+                                    <Link to={`/info/${item?.slug}`} className="trending__card">
+                                        <div className='trending__card__image'>
+                                            <LazyLoadImage
+                                                effect='blur' 
+                                                src={item?.coverImage} 
+                                                alt={item?.title?.english} 
+                                                className='image'
+                                            />
+                                        </div>
+                                        <div className='trending__card__title'>
+                                            <h4>
+                                                {item?.title?.english || item?.title?.romaji}
+                                            </h4>
+                                        </div>
+                                        {
+                                            item?.averageScore >= 70 ? ( 
+                                                <span className='trending__card__rating'>
+                                                    HOT
+                                                </span>
+                                            ) : item?.averageScore && (
+                                                <span className='trending__card__rating green'>
+                                                    {item?.averageScore}%
+                                                </span>
+                                            )
+                                        }
+                                        {   
+                                            item?.format === 'MOVIE' ? (
+                                                <span className='trending__card__episodes'>
+                                                    Movie
+                                                </span>
+                                            ) : item?.currentEpisode ? ( 
+                                                <span className='trending__card__episodes'>
+                                                    {item?.currentEpisode > 1 ? 'Episodes' : 'Episode'} {item?.currentEpisode}
+                                                </span>
+                                            ) : (
+                                                <span className='trending__card__episodes'>
+                                                    Coming Soon
+                                                </span>
+                                            )
+                                        }
+                                    </Link>
+                                </div>
+                            )
+                        })
+                    }
+                    </div>
                 )
             }
         </section>
     )
 }
 
-export default Popular
+export default Trending

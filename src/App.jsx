@@ -6,10 +6,11 @@ import Info from "./pages/Info"
 import Watch from "./pages/Watch.jsx"
 import PassingData from "./components/PassingData"
 import LatestPage from "./pages/LatestPage"
-import TrendingPage from "./pages/TrendingPage"
 import PopularPage from "./pages/PopularPage"
-import OngoingPage from "./pages/OngoingPage"
+import NewSeason from "./pages/NewSeason"
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import DMCA from "./pages/DMCA"
+import Terms from "./pages/Terms"
 
 function App() {
 
@@ -19,13 +20,14 @@ function App() {
                 <Routes>
                     <Route element={<MainLayout />} > 
                         <Route path="/" element={<Home />} />
+                        <Route path="/dmca" element={<DMCA />} />
+                        <Route path="/terms" element={<Terms />} />
                         <Route path="/search/:query" element={<Search />} />
                         <Route path="/latest" element={<LatestPage />} />
-                        <Route path="/trending" element={<TrendingPage />} />
                         <Route path="/popular" element={<PopularPage />} />
-                        <Route path="/ongoing" element={<OngoingPage />} />
+                        <Route path="/new-season" element={<NewSeason />} />
                         <Route path="/info/:id" element={<Info />} />
-                        <Route path="/watch/:id/:episodeId" element={<Watch />} />
+                        <Route path="/watch/:id/:episode/:episodeId" element={<Watch />} />
                         <Route path="/pass/:id/:epNum" element={<PassingData />} />
                         <Route path='*' element={<Navigate to='/' />} />
                     </Route>

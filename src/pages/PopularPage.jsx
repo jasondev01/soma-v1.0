@@ -17,7 +17,7 @@ const PopularPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchPopularPage(pageNumber);
-            // console.log("Popular Page", response)
+            console.log("Popular Page", response)
             if(response) {
                 setData(response)
                 setPageLoad(true);
@@ -46,13 +46,13 @@ const PopularPage = () => {
 
     return (
         <section className="popular__page">
-            {/* <Helmet>
+            <Helmet>
                 <title>soma - Popular Anime </title>
                 <meta 
                     name='description' 
                     content="Find Popular Anime to watch or stream"
                 />
-            </Helmet> */}
+            </Helmet>
             <div className="section__header">
                 <h2>
                     Popular Anime
@@ -61,22 +61,21 @@ const PopularPage = () => {
             <div className="container container__popular__page">
                 {
                     data?.map((item, index) => {
-                        const baseUrl = "https://www.youtube.com/watch?v="
                         const rank = (pageNumber - 1) * itemsPerPage + index + 1;
                         return (
                             <div 
                                 key={index} 
                                 className="popular__item" 
-                                style={{backgroundImage: `url(${item?.cover})`}}
+                                style={{backgroundImage: `url(${item?.bannerImage})`}}
                             >
                                 <div className="popular__item__image">
                                     <LazyLoadImage
                                         effect='blur' 
-                                        src={item?.image}
+                                        src={item?.coverImage}
                                         alt={item?.title?.romaji} 
                                     />
                                 </div>
-                                <PopularPageContent item={item}  baseUrl={baseUrl}/>
+                                <PopularPageContent item={item} />
                                 <div className='popular__item__overlay'></div>
                                 <span className='popular__item__rank'>
                                     {rank}

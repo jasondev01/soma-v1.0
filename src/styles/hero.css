@@ -1,39 +1,47 @@
 .hero {
-    padding: 2rem 1.2rem;
-    min-height: 350px;;
     background: rgba(0, 153, 255, 0.116);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: bottom center;
     margin-top: 0;
     position: relative;
+    min-height: 460px;
+}
+
+.swiper-pagination-bullet-active-next,
+.swiper-pagination-bullet-active-next-next,
+.swiper-pagination-bullet-active-prev-prev,
+.swiper-pagination-bullet-active-prev {
+    background: #fff!important;
+}
+
+.swiper-pagination-bullet-active.swiper-pagination-bullet-active-main {
+    background: var(--secondary)!important;
 }
 
 .container.container__hero {
-    width: 62%;
-    min-height: 300px;
+    width: 66%!important;
+    min-height: 460px;
     display: flex;
     align-items: flex-end;
-    background: var(--overlay-bg);
-    backdrop-filter: var(--backdrop-filter);
     position: relative;
     justify-content: space-between;
+    background: var(--overlay-bg);
+    backdrop-filter: var(--backdrop-filter);
+    margin: 2rem auto;
 }
 
 .anime__hero__info {
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 1.2rem;
-    width: 70%;
+    flex-basis: 70%;
     color: var(--primary);
-    min-height: 300px;
+    min-height: 460px;
     overflow: hidden;
 }
 
 .random__tag {
-    background: var(--secondary-variant);
+    background: var(--rating);
     width: max-content;
     padding: 5px 7px;
     font-size: 12px;
@@ -53,7 +61,7 @@
 .anime__hero__info p {
     font-size: 14px;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -65,8 +73,8 @@
 }
 
 .anime__hero__cover {
-    height: 300px;
-    width: 300px;
+    height: 460px;
+    flex-basis: 30%;
 }
 
 .anime__hero__cover img{
@@ -76,16 +84,41 @@
 /*************** MEDIAY QUERIES (1024) *************/
 @media screen and (max-width: 1024px ){
     .container.container__hero {
-        width: var(--container-md);
+        width: var(--container-md)!important;
+    }
+}
+
+/*************** MEDIAY QUERIES (800px) *************/
+@media screen and (max-width: 800px ){
+    .container.container__hero,
+    .anime__hero__info {
+        min-height: 499px;
+    }
+
+    .anime__hero__info {
+        flex-basis: 60%;
+    }
+
+    .anime__hero__cover {
+        flex-basis: 40%;
+    }
+
+    .anime__hero__cover img{
+        padding-left: 1rem;
     }
 }
 
 /*************** MEDIAY QUERIES (600) *************/
 @media screen and (max-width: 600px ){
     .container.container__hero {
-        width: 98%;
+        width: 92%!important;
     }
 
+    .container.container__hero,
+    .anime__hero__info {
+        min-height: 475px;
+    }
+    
     .anime__hero__cover {
         position: absolute;
         width: 100%;
@@ -96,7 +129,7 @@
 
     .anime__hero__info { 
         height: 100%;
-        width: 100%;
+        flex-basis: 100%;
         background: var(--overlay-bg);
         z-index: 1;
         justify-content: center;

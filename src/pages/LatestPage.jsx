@@ -16,9 +16,10 @@ const LatestPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchLatestPage(pageNumber);
-            // console.log("Latest Page", response)
+            console.log("Latest Page", response)
             if(response) {
-                setData(response);
+                const filterdResponse = response.filter(item => item?.anime?.countryOfOrigin !== 'CN')
+                setData(filterdResponse);
                 setPageLoad(true)
             } else {
                 setPageLoad(false)
@@ -41,13 +42,13 @@ const LatestPage = () => {
 
     return (
         <section className="latest__page" >
-            {/* <Helmet>
+            <Helmet>
                 <title>soma - Latest Anime Release </title>
                 <meta 
                     name='description' 
                     content="Find the latest episodes of your favorite anime"
                 />
-            </Helmet> */}
+            </Helmet>
             <div className="section__header">
                 <h2>
                     Latest Anime Release
@@ -58,17 +59,13 @@ const LatestPage = () => {
                     {
                         data && 
                         data.map((item, index) => {
-                            const decodedTitle = decodeURIComponent(item.title.romaji);
+                            const decodedTitle = decodeURIComponent(item?.title?.romaji);
                             const formattedTitle = decodedTitle.toLowerCase()
                             .replace(/\s+/g, "-")
                             .replace(/[\s\.\,\:\(\)]/g, "");;
                             return (
                                 <Link to={
-                                    item.type === 'ONA' ? (
-                                        `/pass/${item.id}/${item.episodeNumber}`
-                                    ) : (
-                                        `/watch/${item.id}/${formattedTitle}-episode-${item.episodeNumber}`
-                                    )
+                                    `/watch/${item?.anime?.slug}/${item?.number}/${item?.id}`
                                 } 
                                     className="latest__page__card"
                                     key={index}
@@ -76,13 +73,13 @@ const LatestPage = () => {
                                     <div className='latest__page__card__image'>
                                         <LazyLoadImage
                                             effect='blur' 
-                                            src={item.image} 
-                                            alt={item.title?.english} 
+                                            src={item?.anime?.coverImage} 
+                                            alt={item?.anime?.title?.romaji} 
                                         />
                                     </div>
                                     <div className='latest__card__title'>
                                         <h4>
-                                            {item.title.english ? item.title.english : item.title.romaji }
+                                            {item?.anime?.title?.english || item?.anime?.title?.romaji }
                                         </h4>
                                     </div>
                                     {
@@ -93,9 +90,9 @@ const LatestPage = () => {
                                         ) 
                                     }
                                     {
-                                        item.episodeNumber && 
+                                        item?.number && 
                                         <span className="latest__page__episode">
-                                            Episode {item.episodeNumber}
+                                            Episode {item?.number}
                                         </span>
                                     }
                                     

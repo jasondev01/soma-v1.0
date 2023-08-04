@@ -2,21 +2,21 @@ import { Helmet } from 'react-helmet'
 import Hero from '../components/Hero'
 import Latest from '../components/Latest'
 import Popular from '../components/Popular'
-import Trending from '../components/Trending'
+import LastWatched from '../components/LastWatched'
 
 const Home = () => {
     return (
         <>
-            {/* <Helmet>
+            <Helmet>
                 <title>soma - Home</title>
                 <meta 
                     name='description' 
                     content="Explore Anime Series and Movies"
                 />
-            </Helmet> */}
+            </Helmet>
             <Hero />
+            <LastWatched />
             <Latest />
-            <Trending />
             <Popular />
         </>
     )

@@ -39,6 +39,7 @@
     background-color: var(--secondary);
     color: var(--primary);
     padding: 7px;
+    box-shadow: var(--box-shadow);
 }
 
 .pagination {

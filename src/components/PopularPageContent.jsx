@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const PopularPageContent = ({item, baseUrl}) => {
+const PopularPageContent = ({item}) => {
 
     // console.log("PopularPageContent", item)
     return (
         <article className='popular__article'>
             <div className="popular__title">
                 <span>Title:</span>
-                <Link to='/'>
+                <Link to={`/info/${item.slug}`}>
                     <h3>
                         {item?.title?.english || item?.title?.romaji}
                     </h3>
@@ -18,8 +18,8 @@ const PopularPageContent = ({item, baseUrl}) => {
                 <span>Genres:</span>
                 <ul>
                     {
-                        item?.genres &&
-                        item?.genres.map((item, index) => {
+                        item?.genre &&
+                        item?.genre.map((item, index) => {
                             return (
                                 <li key={index}>
                                     {item}
@@ -33,38 +33,38 @@ const PopularPageContent = ({item, baseUrl}) => {
             <div className="popular__info">
                 <span>Released:</span>
                 {
-                    item?.releaseDate &&
-                    <p>{item?.releaseDate}</p>
+                    item?.year &&
+                    <p>{item?.year}</p>
                 }
             </div>
             <div className="popular__info">
                 <span>Status:</span>
                 {
                     item?.status && 
-                    <p>{item?.status}</p>
+                    <p>{item?.status === 'RELEASING' ? 'Ongoing' : item?.status}</p>
                 }
             </div>
             
             <div className="popular__info">
                 <span>Rating:</span>
                 {
-                    item?.rating &&
+                    item?.averageScore &&
                     <p>
-                        {item?.rating}%
+                        {item?.averageScore}%
                     </p>
                 }
             </div>
             <div className="popular__info">
                 <span>Category:</span>
                 {
-                    item?.type && 
-                    item?.type === "TV" ? (
+                    item?.format && 
+                    item?.format === "TV" ? (
                         <p>
-                            {item?.type} Series
+                            {item?.format} Series
                         </p>
                     ) : (
                         <p>
-                            {item?.type}
+                            {item?.format}
                         </p>
                     )
                 }
@@ -72,25 +72,25 @@ const PopularPageContent = ({item, baseUrl}) => {
             <div className="popular__info">
                 <span>Total Episodes:</span>
                 {
-                    item?.totalEpisodes &&
+                    item?.currentEpisode &&
                     <p>
-                        {item?.totalEpisodes}
+                        {item?.currentEpisode > 1 ? `${item?.currentEpisode} episodes` : `${item?.currentEpisode} episode`} 
                     </p>
                 }
             </div>
-            <div className="popular__info">
+            {/* <div className="popular__info">
                 <span>Trailer:</span>
                 {
                     item?.trailer &&
                     <a href={`${baseUrl}${item?.trailer?.id}`} target="_blank" rel="noreferrer">Watch Trailer</a>
                 }
-            </div>
+            </div> */}
             <div className="popular__info">
                 <span>Summary:</span>
                 <p className="summary">
                     {item?.description}
                 </p>
-                <Link to={`/info/${item.id}`}>Read More</Link>
+                <Link to={`/info/${item?.slug}`}>Read More</Link>
             </div>
         </article>
     )

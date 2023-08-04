@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 2%;
-    padding-bottom: 2.5rem;
+    padding-bottom: 4rem;
 }
 
 /********** HIGHEST RATING BOX *********/

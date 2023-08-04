@@ -15,8 +15,8 @@ const About = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchSearch(query, pageNumber);
-            // console.log("Search Page: ", response)
+            const response = await fetchSearch(query);
+            console.log("Search Page: ", response)
             if(response) {
                 setData(response)
                 setPageLoad(true)
@@ -56,20 +56,20 @@ const About = () => {
                 data.length > 0 ? (
                     data?.map((item, index) => {
                         return (
-                            <Link to={`/info/${item.id}`}
+                            <Link to={`/info/${item.slug}`}
                                 key={index} 
                                 className="search__page__item"
                             >
                                 <div className="search__image">
                                     <LazyLoadImage
                                         effect="blur" 
-                                        src={item?.image} 
-                                        alt="" 
+                                        src={item?.coverImage} 
+                                        alt={item?.title?.romaji} 
                                     />
                                     {
                                         item?.title &&
                                         <h4 className="search__title">
-                                            {item.title?.english || item?.title?.romaji}
+                                            {item?.title?.english || item?.title?.romaji}
                                         </h4>
                                     }
                                 </div>

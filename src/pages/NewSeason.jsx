@@ -22,6 +22,7 @@ const OngoingPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchLatestOngoing();
+            console.log('Latest Ongoing', response);
             if (response) {
                 setLatestOngoing(response);
             } else {
@@ -37,33 +38,37 @@ const OngoingPage = () => {
         const fetchData = async () => {
             if (latestOngoing.length === 0) return
             for (const item of latestOngoing) {
-                const response = await fetchInfoOngoing(item.id);
-                if (response.countryOfOrigin !== 'CN' && response.season === currentSeason) {
-                    setData(prevData => removeDuplicates([...prevData, response]));
+                const response = await fetchInfoOngoing(item?.anime?.slug);
+                if (
+                    response.countryOfOrigin !== 'CN' && 
+                    response.season === currentSeason && 
+                    response.status === "RELEASING"
+                ) 
+                    {setData(prevData => removeDuplicates([...prevData, response]));
                 }
             }
         }
         fetchData();
     }, [latestOngoing])
 
-    // console.log("Data: ", data)
+    console.log("Current Ongoing: ", data)
 
     return (
         <section className='ongoing__page'>
-            {/* <Helmet>
+            <Helmet>
                 <title>soma - Ongoing Anime Series </title>
                 <meta 
                     name='description' 
                     content="Find the Ongoing Anime in the current season"
                 />
-            </Helmet> */}
+            </Helmet>
             <div className="section__header">
                 <h2>
                     Ongoing Anime Series 
                 </h2>
             </div>
             {
-                data.length <= 4 ? (
+                data.length <= 3 ? (
                     <PageLoader />
                 ) : (
                     <div className="container container__ongoing">
@@ -73,14 +78,14 @@ const OngoingPage = () => {
                         <div className="ongoing__items">
                             {
                                 data.map((item, index) => {
-                                    const formattedTime = convertTime(item.nextAiringEpisode.timeUntilAiring);
+                                    const formattedTime = convertTime(item?.next);
                                     return (
                                         <div key={index} className="ongoing__item">
                                             <div className='ongoing__image'>
                                                 <LazyLoadImage 
                                                     effect='blur'
-                                                    src={item.image} 
-                                                    alt={item.title.romaji || item.title.english} 
+                                                    src={item?.coverImage} 
+                                                    alt={item?.title?.romaji || item?.title?.english} 
                                                 />
                                                 <div className='ongoing__title__studio'>
                                                     <h4>
@@ -88,36 +93,36 @@ const OngoingPage = () => {
                                                             {item.title.romaji || item.title.english}
                                                         </Link>
                                                     </h4>
-                                                    <span>
+                                                    {/* <span>
                                                         {item.studios[0]}
-                                                    </span>
+                                                    </span> */}
                                                 </div>
                                                 {   
-                                                    item.rating >= 70 ? (
+                                                    item.averageScore >= 70 ? (
                                                         <span className='ongoing__rating'>
-                                                            {item.rating}%
+                                                            {item.averageScore}%
                                                         </span>
                                                     ) : (
                                                         <span className={`ongoing__rating green ${!item.rating ? 'd-none' : ''}`}>
-                                                            {item.rating}%
+                                                            {item.averageScore}%
                                                         </span>
                                                     )
                                                 }
                                             </div>
                                             <article className='ongoing__article'>
                                                 <span className='ongoing__current__ep'>
-                                                    EP {item.nextAiringEpisode.episode} of {item.totalEpisodes} airing in
+                                                    EP {item?.currentEpisode + 1} airing in
                                                 </span>
                                                 <div className='ongoing__countdown'>
                                                     {formattedTime}
                                                 </div>
                                                 <div className='ongoing__description'>
                                                     <p className=''>
-                                                        {item.description}
+                                                        {item?.description}
                                                     </p>
                                                     <br />
                                                     <Link 
-                                                        to={`/info/${item.id}`}
+                                                        to={`/info/${item.slug}`}
                                                         className={theme ? 'ligh' : 'dark'}
                                                     >
                                                         Read More
@@ -125,7 +130,7 @@ const OngoingPage = () => {
                                                 </div>
                                                 <ul className='ongoing__genres'>
                                                     {
-                                                        item.genres.map((item, index) => {
+                                                        item.genre.map((item, index) => {
                                                             return (
                                                                 <li key={index}>
                                                                     {item}

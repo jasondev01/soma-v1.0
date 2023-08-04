@@ -1,7 +1,7 @@
 import { useContext, createContext, useEffect, useState } from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
-import { baseUrl } from "../utilities/service";
+import { baseUrl, animeUrl } from "../utilities/service";
 
 const ApiContext = createContext();
 
@@ -9,15 +9,17 @@ export const ApiProvider = ({ children }) => {
 
     const fetchHero = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/random-anime?provider=gogoanime`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=1&perPage=10`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             })
-            const responseData = response.data;
-            const cleanedDescription = removeHtmlTags(responseData.description);
-            const cleanData = {...responseData, description: cleanedDescription };
+            const responseData = response?.data?.data;
+            const cleanData = responseData.map(item => ({
+                ...item,
+                description: removeHtmlTags(item.description)
+            }))
             return cleanData;
         } catch(error) {
             console.log("Hero Context", error.message);
@@ -27,50 +29,31 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatest = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/recent-episodes?page=1&perPage=10`,  {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/recent?page=1&perPage=30`,  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             })
-            const responseData = response?.data?.results;
-            console.log("Latest Context", responseData)
-            return responseData;
+            const responseData = response?.data?.data;
+            // console.log("Latest Context", responseData)
+            const filteredData = responseData.filter(item => item?.anime?.countryOfOrigin !== 'CN')
+            return filteredData;
         } catch(error) {
             console.log("Latest Context", error.message);
             return false;
         }
     }
 
-    const fetchTrending = async () => {
-        try {
-            const response = await axios.get(`${baseUrl}/trending?page=1&perPage=12`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            })
-            const responseData = response.data.results;
-            const cleanData = responseData.map(item => ({
-                ...item,
-                description: removeHtmlTags(item.description)
-            }))
-            return cleanData;
-        } catch(error) {
-            console.log("Trending Context", error.message);
-            return false;
-        }
-    }
-
     const fetchPopular = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/popular?page=1&perPage=20`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=1&perPage=17`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             });
-            const responseData = response.data.results;
+            const responseData = response.data.data;
             const cleanData = responseData.map(item => ({
                 ...item,
                 description: removeHtmlTags(item.description)
@@ -84,7 +67,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchInfo = async (id) => {
         try {
-            const response = await axios.get(`${baseUrl}/info/${id}`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/anime/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -100,9 +83,9 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
-    const fetchWatch = async (id) => {
+    const fetchWatch = async (id, episode) => {
         try {
-            const response = await axios.get(`${baseUrl}/info/${id}?provider=gogoanime`, {
+            const response = await axios.get(`${animeUrl}/view/${id}/${episode}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -118,7 +101,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchEpisodeWatch = async (episodeId) => {
         try {
-            const response = await axios.get(`${baseUrl}/watch/${episodeId}`, {
+            const response = await axios.get(`https://cors.zimjs.com/https://api.consumet.org/anime/enime/watch?episodeId=${episodeId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -126,21 +109,21 @@ export const ApiProvider = ({ children }) => {
             })
             const responseData = response.data;
             return responseData;
-        } catch {error} {
+        } catch (error) {
             console.log("Episode Watch Context", error.message);
-            return false;
+            return error;
         }
     }
 
     const fetchLatestPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`${baseUrl}/recent-episodes?page=${pageNumber}&perPage=20&provider=gogoanime`, {
+            const response = await axios.get(`${animeUrl}/recent?page=${pageNumber}&perPage=20&provider=gogoanime`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             })
-            const responseData = response.data.results;
+            const responseData = response?.data?.data;
             return responseData;
         } catch(error) {
             console.log("Latest Page Context", error.message);
@@ -148,35 +131,15 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
-    const fetchTrendingPage = async (pageNumber) => {
-        try {
-            const response = await axios.get(`${baseUrl}/trending?page=${pageNumber}&perPage=20`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            })
-            const responseData = response.data.results;
-            const cleanData = responseData.map(item => ({
-                ...item,
-                description: removeHtmlTags(item.description)
-            }))
-            return cleanData; 
-        } catch(error) {
-            console.log("Trending Page Context", error.message);
-            return false;
-        }
-    }
-
     const fetchPopularPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`${baseUrl}/popular?page=${pageNumber}&perPage=20`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=${pageNumber}&perPage=20`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             });
-            const responseData = response.data.results;
+            const responseData = response?.data?.data;
             const cleanData = responseData.map(item => ({
                 ...item,
                 description: removeHtmlTags(item.description)
@@ -188,35 +151,35 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
-    const fetchSearch = async (query, pageNumber) => {
+    const fetchSearch = async (query) => {
         try {
-            const response = await axios.get(`${baseUrl}/${query}?page=${pageNumber}&perPage=100`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/search/${query}?page=1&perPage=100`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             });
-            const responseData = response.data.results;
+            const responseData = response?.data?.data;
             const cleanData = responseData.map(item => ({
                 ...item,
                 description: removeHtmlTags(item.description)
             }))
             return cleanData;
         } catch(error) {
-            console.log("Popular Context", error.message);
+            console.log("Search Context", error.message);
             return false;
         }
     }
 
     const fetchLatestOngoing = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/recent-episodes?page=1&perPage=100`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/recent?page=1&perPage=100`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             });
-            const responseData = response.data.results;
+            const responseData = response?.data?.data;
             return responseData;
         } catch(error) {
             console.log("Latest Ongoing", error.message);
@@ -226,7 +189,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchInfoOngoing = async (id) => {
         try {
-            const response = await axios.get(`${baseUrl}/info/${id}?provider=gogoanime`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/anime/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -246,13 +209,11 @@ export const ApiProvider = ({ children }) => {
         <ApiContext.Provider value={{ 
             fetchHero,
             fetchLatest,
-            fetchTrending,
             fetchPopular,
             fetchInfo,
             fetchWatch,
             fetchEpisodeWatch,
             fetchLatestPage,
-            fetchTrendingPage,
             fetchPopularPage,
             fetchSearch,
             fetchLatestOngoing,

@@ -75,7 +75,7 @@ const Header = () => {
                             <h1 className={`logo ${theme ? 'light' : 'dark'}`}
                                 onClick={() => handleNav('home')}
                             >
-                                soma
+                                soma.
                             </h1>
                         </Link>
                         <ul style={{ 
@@ -96,7 +96,7 @@ const Header = () => {
                                     Latest
                                 </Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link to="/trending" 
                                     className={`
                                         ${theme ? 'light' : 'dark'}
@@ -106,7 +106,7 @@ const Header = () => {
                                 >
                                     Trending
                                 </Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link to="/popular" 
                                     className={`
@@ -119,14 +119,14 @@ const Header = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/ongoing" 
+                                <Link to="/new-season" 
                                     className={`
                                         ${theme ? 'light' : 'dark'}
                                         ${activeNav === 'ongoing' ? 'active__nav' : ''}
                                     `}
                                     onClick={() => handleNav('ongoing')}
                                 >
-                                    Current Season
+                                    New Season
                                 </Link>
                             </li>
                         </ul>

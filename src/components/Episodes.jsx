@@ -11,7 +11,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Episodes = ({animeResult, episodeNumber, id}) => {
     
-    // console.log("Episodes", episodeNumber)
+    // console.log("Episodes Watch: ", animeResult)
     // console.log("currentEpisode", currentEpisode)
     return (
         <>
@@ -24,19 +24,19 @@ const Episodes = ({animeResult, episodeNumber, id}) => {
             modules={[FreeMode, Navigation]}
         >
             {
-                animeResult.episodes &&
-                animeResult.episodes.map((item, index) => {
+                animeResult?.anime?.episodes &&
+                animeResult?.anime?.episodes.slice().reverse().map((item, index) => {
                     const currentEpisode = episodeNumber === item.number ? true : false;
                     return (
                         <SwiperSlide 
                             key={index} 
                             className={`anime__episodes ${currentEpisode ? 'active__episode' : ''}`}
                         >
-                            <Link to={`/watch/${id}/${item.id}`} >
+                            <Link to={`/watch/${id}/${item?.number}/${item?.id}`} >
                                 <div className='anime__episode__image'>
                                     <LazyLoadImage
                                         effect="blur"
-                                        src={animeResult?.image} 
+                                        src={item?.image !== null ? `https://cors.zimjs.com/${item?.image}` : `https://cors.zimjs.com/${animeResult?.anime?.coverImage}`} 
                                         alt={item?.title}
                                     />
                                 </div>

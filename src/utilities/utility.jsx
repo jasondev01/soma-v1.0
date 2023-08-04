@@ -19,18 +19,43 @@ export const breakpoints = {
         spaceBetween: 25,
     },
     0: {
-    slidesPerView: 2,
-    spaceBetween: 10,
+        slidesPerView: 2,
+        spaceBetween: 10,
+    },
+}
+
+export const lastWatchedBreakPoints = {
+    1025: {
+        slidesPerView: 5,
+        spaceBetween: 25,
+    },
+    769: {
+        slidesPerView: 4,
+        spaceBetween: 25,
+    },
+    601: {
+        slidesPerView: 3,
+        spaceBetween: 10,
+    },
+    0: {
+        slidesPerView: 2,
+        spaceBetween: 10,
     },
 }
 
 export const formatDate = (info) => {
     let formattedDate = '';
-    if (info.airDate) {
-      const date = new Date(info.airDate);
-      formattedDate = date.toLocaleDateString("en-US", {
-        year: "numeric", month: "long", day: "numeric"
-      });
+    if (info.airedAt) {
+        const date = new Date(info.airedAt);
+        formattedDate = date.toLocaleDateString("en-US", {
+            year: "numeric", month: "long", day: "numeric"
+        });
+    }
+    if (info.next) {
+        const date = new Date(info.next);
+        formattedDate = date.toLocaleDateString("en-US", {
+            year: "numeric", month: "long", day: "numeric"
+        });
     }
     return formattedDate;
 }
@@ -52,19 +77,6 @@ export const getPreviousEpisodeID = (currentEpisode, episodeRange) => {
     return null; // No previous episode
 };
 
-export const providers = [
-    'gogoanime', 
-    'bilibili', 
-    'crunchyroll', 
-    'zoro', 
-    'marin', 
-    'animepahe', 
-    '9anime', 
-    'enime', 
-    'animefox'
-];
-
-
 // ongoing page utility
 const getSeason = (month) => {
     if (month >= 2 && month <= 4) {
@@ -83,15 +95,21 @@ export const getCurrentSeason = () => {
     return getSeason(currentMonth);
 };
 
-export const convertTime = (timeInSeconds) => {
+
+
+export const convertTime = (nextEpisodeSchedule) => {
+    const currentTimestamp = new Date().getTime();
+    const nextEpisodeTimestamp = new Date(nextEpisodeSchedule).getTime();
+    const timeInSeconds = Math.floor((nextEpisodeTimestamp - currentTimestamp) / 1000);
+  
     const days = Math.floor(timeInSeconds / (24 * 60 * 60));
     const hours = Math.floor((timeInSeconds % (24 * 60 * 60)) / (60 * 60));
     const minutes = Math.floor((timeInSeconds % (60 * 60)) / 60);
     const seconds = timeInSeconds % 60;
-    
+  
     let result = [];
     let unitsDisplayed = 0;
-
+  
     if (days > 0 && unitsDisplayed < 2) {
         result.push(`${days} day${days > 1 ? 's' : ''}`);
         unitsDisplayed++;
@@ -108,7 +126,7 @@ export const convertTime = (timeInSeconds) => {
         result.push(`${seconds} second${seconds > 1 ? 's' : ''}`);
         unitsDisplayed++;
     }
-
+  
     return result.join(", ");
 };
 

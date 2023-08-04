@@ -15,10 +15,11 @@ const Latest = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchLatest();
-            // console.log("Latest: ", response)
             if(response) {
-                setData(response);
                 setPageLoad(true)
+                const limitResponse = response.slice(0, 15)
+                console.log("Latest: ", limitResponse)
+                setData(limitResponse);
             } else {
                 setTimeout(() => {
                     fetchData();
@@ -44,44 +45,42 @@ const Latest = () => {
                     <div className='container container__latest'>
                     {
                         data?.map( (item, index) => {
-                            const decodedTitle = decodeURIComponent(item.title.romaji);
+                            const decodedTitle = decodeURIComponent(item?.anime?.title?.romaji);
                             const formattedTitle = decodedTitle.toLowerCase()
                             .replace(/[\s]+/g, "-")
                             .replace(/[\s\.\,\:\(\)]/g, "");
                             return (
                                 <div key={index} className='latest__card__container'>
-                                    <Link to={`/info/${item.id}`} className="latest__card">
+                                    <Link to={`/info/${item?.anime?.slug}`} className="latest__card">
                                         <div className='latest__card__image'>
                                             <LazyLoadImage 
                                                 effect='blur'
-                                                src={item.image} 
-                                                alt={item?.title?.romaji}
+                                                src={item?.anime?.coverImage} 
+                                                alt={item?.anime?.title?.romaji}
                                             />
                                         </div>
                                         <div className='latest__card__title'>
                                             <h4>
-                                                {item?.title && item?.title?.english || item?.title?.romaji}
+                                                {item?.anime.title?.english || item?.anime.title?.romaji}
                                             </h4>
                                         </div>
-                                        {
-                                            item.rating >= 75 && ( 
+                                        {   
+                                            
+                                            item?.anime?.averageScore >= 70 ? ( 
                                                 <span className='latest__card__rating'>
                                                     HOT
                                                 </span>
-                                            ) 
+                                            ) : item?.anime?.averageScore && (
+                                                <span className='latest__card__rating green'>
+                                                    {item?.anime?.averageScore}%
+                                                </span>
+                                            )
                                         }
                                     </Link>
-                                    {
-                                        item.type === "ONA" ? (
-                                            <Link to={`/pass/${item.id}/${item.episodeNumber}`} className='btn btn-primary'>
-                                                Episode {item.episodeNumber}
-                                            </Link>
-                                        ) : (
-                                            <Link to={`/watch/${item.id}/${formattedTitle}-episode-${item.episodeNumber}`} className='btn btn-primary'>
-                                                Episode {item.episodeNumber}
-                                            </Link>
-                                        )
-                                    }
+                                    
+                                    <Link to={`/watch/${item?.anime?.slug}/${item?.number}/${item?.id}`} className='btn btn-primary'>
+                                        Episode {item?.number}
+                                    </Link>
                                 </div>
                             )
                         })

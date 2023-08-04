@@ -13,53 +13,77 @@ import "video-react/dist/video-react.css";
 import HLSSource from "./HLSSource";
 import QualityButton from "./QualityButton";
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import useThemeContext from '../context/ThemeContext'
+import { useNavigate, useParams } from "react-router-dom";
+import useApiContext from "../context/ApiContext";
+import axios from 'axios'
 
-const VideoPlayer = ({ data, id, onVideoEnd, animeResult }) => {
+const VideoPlayer = ({ onVideoEnd, animeResult }) => {
     const [ videoSource, setVideoSource ] = useState(``)
     const [ currentQuality, setCurrentQuality ] = useState();
+    const [ quality, setQuality ] = useState([]);
+    const [ fetchEnimeEpisode, setFetchEnimeEpisode ] = useState(false)
     const [ isFullScreen, setIsFullScreen ] = useState(() => {
         const storedScreenState = localStorage.getItem('fullscreen');
         return storedScreenState !== null ? storedScreenState === 'true' : false;
     });
-    const { theme } = useThemeContext()
+    const { episodeId } = useParams();
+    const { fetchEpisodeWatch } = useApiContext();
     const navigate = useNavigate();
     const videoRef = useRef(null);
 
-    // console.log( "VideoPlayer", animeResult)
+    const fetchSource = async () => {
+        const response = await axios.get(`https://api.enime.moe/source/${animeResult.sources[0].id}`);
+        setVideoSource(response.data.url)
+    }
 
-    // checking the video sources if they have the quality if not, navigate to info page
     useEffect(() => {
-        const sortedSources = data.sources.sort((a, b) => {
-            if (a.quality === '1080p') {
-                return -1;
+        const fetchData = async () => {
+            const response = await fetchEpisodeWatch(episodeId);
+            if (response.status === 500) {
+                console.log('error', response.status)
+                setTimeout(() => {
+                    fetchData();
+                }, 6000);
+            } else if (response.status === 404) {
+                console.log('error', response.status)
+                fetchSource()
+                setFetchEnimeEpisode(true)
+            } else {
+                console.log("Setting Data", response);
+                setQuality(response);
+                // checking the video sources if they have at least one quality and if none, navigate to info page
+                const sortedSources = response.sources.sort((a, b) => {
+                    if (a.quality === '1080p') {
+                        return -1;
+                    }
+                    if (b.quality === '1080p') {
+                        return 1;
+                    }
+                    const qualityOrder = ['720p', '480p', '360p', 'backup', 'default'];
+                    const indexA = qualityOrder.indexOf(a.quality);
+                    const indexB = qualityOrder.indexOf(b.quality);
+                    return indexA - indexB;
+                });
+                const findQuality = sortedSources.find(
+                    (source) =>
+                        source.quality === '1080p'  ||
+                        source.quality === '720p'   ||
+                        source.quality === '480p'   ||
+                        source.quality === '360p'   ||
+                        source.quality === 'backup' ||
+                        source.quality === 'default' 
+                );
+                if (findQuality) {
+                    setVideoSource(findQuality.url);
+                    setCurrentQuality(findQuality.quality);
+                } else {
+                    console.log('Quality not found');
+                    navigate(`/info/${id}`)
+                }
             }
-            if (b.quality === '1080p') {
-                return 1;
-            }
-            const qualityOrder = ['720p', '480p', '360p', 'backup', 'default'];
-            const indexA = qualityOrder.indexOf(a.quality);
-            const indexB = qualityOrder.indexOf(b.quality);
-            return indexA - indexB;
-        });
-        const findQuality = sortedSources.find(
-            (source) =>
-                source.quality === '1080p' ||
-                source.quality === '720p' ||
-                source.quality === '480p' ||
-                source.quality === '360p' ||
-                source.quality === 'backup' ||
-                source.quality === 'default' 
-        );
-        if (findQuality) {
-            setVideoSource(findQuality.url);
-            setCurrentQuality(findQuality.quality);
-        } else {
-            console.log('Quality not found');
-            navigate(`/info/${id}`)
-        }
-    }, [data.sources])
+        };
+        fetchData();
+    }, [episodeId]);
 
     const handleQualityChange = (option) => {
         console.log("Selected quality:", option);
@@ -116,9 +140,7 @@ const VideoPlayer = ({ data, id, onVideoEnd, animeResult }) => {
         };
         
         if (isFullScreen) {
-            setTimeout(() => {
-                enterFullscreen();
-            }, 500)
+            enterFullscreen();
         } 
 
     }, [isFullScreen]);
@@ -143,9 +165,10 @@ const VideoPlayer = ({ data, id, onVideoEnd, animeResult }) => {
                     <ForwardControl seconds={96} order={3.1} />
                     <QualityButton 
                         order={7}
-                        options={data.sources} 
+                        options={quality.sources} 
                         onChange={handleQualityChange}
                         currentQuality={currentQuality}
+                        fetchEnimeEpisode={fetchEnimeEpisode}
                     />
                 </ControlBar>
             </Player>
@@ -161,7 +184,6 @@ const VideoPlayer = ({ data, id, onVideoEnd, animeResult }) => {
             </div>
             
         </>
-        
     )
 }
 
