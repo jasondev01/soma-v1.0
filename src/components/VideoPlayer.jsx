@@ -49,7 +49,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
                 fetchSource()
                 setFetchEnimeEpisode(true)
             } else {
-                console.log("Setting Data", response);
+                // console.log("Setting Data", response);
                 setQuality(response);
                 // checking the video sources if they have at least one quality and if none, navigate to info page
                 const sortedSources = response.sources.sort((a, b) => {

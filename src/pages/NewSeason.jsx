@@ -16,13 +16,11 @@ const OngoingPage = () => {
 
     const currentSeason = getCurrentSeason();
     const currentYear = new Date().getFullYear()
-    // console.log('currentSeason', currentSeason);
-    // console.log('currentYear', currentYear);
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchLatestOngoing();
-            console.log('Latest Ongoing', response);
+            // console.log('Latest Ongoing', response);
             if (response) {
                 setLatestOngoing(response);
             } else {
@@ -51,7 +49,7 @@ const OngoingPage = () => {
         fetchData();
     }, [latestOngoing])
 
-    console.log("Current Ongoing: ", data)
+    // console.log("Current Ongoing: ", data)
 
     return (
         <section className='ongoing__page'>

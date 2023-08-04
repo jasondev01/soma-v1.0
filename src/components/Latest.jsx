@@ -18,7 +18,7 @@ const Latest = () => {
             if(response) {
                 setPageLoad(true)
                 const limitResponse = response.slice(0, 15)
-                console.log("Latest: ", limitResponse)
+                // console.log("Latest: ", limitResponse)
                 setData(limitResponse);
             } else {
                 setTimeout(() => {

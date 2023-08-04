@@ -16,6 +16,7 @@
     display: flex;
     gap: 1.8rem;
     font-size: 13px;
+    align-items: center;
 }
 
 .container__footer ul li {
@@ -31,7 +32,7 @@
     text-align: center;
 }
 
-.copyright {
+.github-icon {
     display: flex;
     align-items: center;
     gap: 5px;

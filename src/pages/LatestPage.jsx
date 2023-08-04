@@ -16,7 +16,7 @@ const LatestPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchLatestPage(pageNumber);
-            console.log("Latest Page", response)
+            // console.log("Latest Page", response)
             if(response) {
                 const filterdResponse = response.filter(item => item?.anime?.countryOfOrigin !== 'CN')
                 setData(filterdResponse);
@@ -59,10 +59,6 @@ const LatestPage = () => {
                     {
                         data && 
                         data.map((item, index) => {
-                            const decodedTitle = decodeURIComponent(item?.title?.romaji);
-                            const formattedTitle = decodedTitle.toLowerCase()
-                            .replace(/\s+/g, "-")
-                            .replace(/[\s\.\,\:\(\)]/g, "");;
                             return (
                                 <Link to={
                                     `/watch/${item?.anime?.slug}/${item?.number}/${item?.id}`

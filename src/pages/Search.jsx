@@ -9,14 +9,13 @@ import { Helmet } from "react-helmet";
 const About = () => {
     const [ data, setData ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
-    const [ pageNumber, setPageNumber ] = useState(1);
     const { fetchSearch } = useApiContext();
     const { query } = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchSearch(query);
-            console.log("Search Page: ", response)
+            // console.log("Search Page: ", response)
             if(response) {
                 setData(response)
                 setPageLoad(true)
@@ -28,7 +27,7 @@ const About = () => {
         }
         fetchData();
         setPageLoad(false)
-    }, [query, pageNumber])
+    }, [query])
 
     if (!pageLoad) {
         return (<Pageloader />)

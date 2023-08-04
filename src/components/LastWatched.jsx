@@ -18,7 +18,7 @@ const LastWatched = () => {
     useEffect(() => {
         const data = getSomaWatched()
         setWatchedData(data)
-        console.log('Last Watched: ', data)
+        // console.log('Last Watched: ', data)
     }, [])
 
 

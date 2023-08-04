@@ -16,11 +16,11 @@ const Trending = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchPopular();
-            console.log("Popular Section", response);
+            // console.log("Popular Section", response);
             if(response) {
                 const highestRating = Math.max(...response.map(item => item.averageScore));
                 const highestRatedAnime = response.find(item => item.averageScore === highestRating);
-                console.log("highestRatedAnime", highestRatedAnime);
+                // console.log("highestRatedAnime", highestRatedAnime);
                 setData(response);
                 sethighestRatedAnime(highestRatedAnime)
                 setPageLoad(true);
@@ -35,7 +35,6 @@ const Trending = () => {
     }, []);
 
     const filteredData = data.filter(item => item !== highestRatedAnime);
-
     return (
         <section id='trending' className='trending'>
             <div className='section__header'>

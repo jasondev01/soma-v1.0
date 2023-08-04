@@ -17,7 +17,7 @@ const PopularPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchPopularPage(pageNumber);
-            console.log("Popular Page", response)
+            // console.log("Popular Page", response)
             if(response) {
                 setData(response)
                 setPageLoad(true);

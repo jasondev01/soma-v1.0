@@ -69,11 +69,6 @@ const Info = () => {
     const firstEpisode = difference(data?.episodes.length, data?.episodes.length) + 1;
     const currentEpisode = data?.currentEpisode;
 
-    console.log(displayedEpisodes)
-    // console.log('episodeRange', episodeRange)
-    const reversedNumbers = episodeRange.slice().reverse().map(item => item);
-    // console.log('reversedNumbers', reversedNumbers);
-
     return (
         <>
         <Helmet>
@@ -94,7 +89,7 @@ const Info = () => {
                 <div className='__range__info'>
                 {
                     totalEpisodes > 200 && 
-                    range.map((range, index) => (
+                    range.slice().reverse().map((range, index) => (
                         <button 
                             className={
                                 activeButton === `${range.start + 1}-${range.end + 1}` 
@@ -128,7 +123,7 @@ const Info = () => {
                             )
                         })
                     ) : data.episodes && data.episodes.length > 0 ? (
-                            reversedNumbers.map((item, index) => {
+                            episodeRange.slice().reverse().map((item, index) => {
                                 return (
                                     <Link to={`/watch/${id}/${item.number}/${item.id}`} 
                                         key={index} 

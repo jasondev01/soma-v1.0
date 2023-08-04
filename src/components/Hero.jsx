@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LoaderBox from './LoaderBox';
 import useApiContext from '../context/ApiContext';
@@ -17,11 +17,18 @@ const Hero = () => {
     const [ info, setInfo ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
     const { fetchHero, fetchInfo } = useApiContext()
+
+    const progressCircle = useRef(null);
+    const progressContent = useRef(null);
+    const onAutoplayTimeLeft = (s, time, progress) => {
+        progressCircle.current.style.setProperty('--progress', 1 - progress);
+        progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+    };
     
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchHero();
-            console.log('Hero Section', response)
+            // console.log('Hero Section', response)
             if(response) {
                 setPageLoad(true);
                 setData(response);
@@ -46,9 +53,6 @@ const Hero = () => {
         fetchData();
     }, [data])
 
-    console.log("Info Hero: ", info)
-    console.log("Info Single", info?.episodes?.id)
-
     return (
         <>
             <section id='hero' className='hero'>
@@ -58,7 +62,7 @@ const Hero = () => {
                 ) : (
                     <Swiper
                         autoplay={{
-                            delay: 5500,
+                            delay: 10000,
                             disableOnInteraction: false,
                         }}
                         effect={'fade'}
@@ -66,14 +70,13 @@ const Hero = () => {
                             dynamicBullets: true,
                         }}
                         modules={[Autoplay, Pagination, EffectFade]}
+                        onAutoplayTimeLeft={onAutoplayTimeLeft}
                     >
                         {
                             Object.values(data)?.map((item, index) => {
                                 const matchEpisode = info?.find(info => info.slug === item?.slug)
                                 const matchEpisodeId = matchEpisode?.episodes?.find(match => match.number === item?.currentEpisode)
-                                // console.log('matchEpisode', matchEpisodeId)
                                 const episodeId = matchEpisodeId?.id
-                                console.log('matchEpisode', episodeId)
 
                                 return (
                                     <SwiperSlide
@@ -81,7 +84,8 @@ const Hero = () => {
                                             backgroundImage: `url(${"https://cors.zimjs.com/" + item?.bannerImage})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'cover',
-                                            height: '100%!important'
+                                            height: '100%!important',
+                                            // position: 'relative'
                                         }} 
                                         key={index}
                                     >
@@ -108,7 +112,7 @@ const Hero = () => {
                                                         </li>
                                                             {   
                                                                 item?.format === "TV" 
-                                                                ? `Episode: ${ item.currentEpisode } `
+                                                                ? `Episode: ${item.currentEpisode } `
                                                                 : item?.format
                                                             }
                                                     </ul>
@@ -147,10 +151,17 @@ const Hero = () => {
                                                 />
                                             </div>
                                         </div>
+                                        
                                     </SwiperSlide>
                                 )
                             })
                         }
+                        <div className="autoplay-progress" slot="container-end">
+                                            <svg viewBox="0 0 48 48" ref={progressCircle}>
+                                                <circle cx="24" cy="24" r="20"></circle>
+                                            </svg>
+                                            <span ref={progressContent}></span>
+                                        </div>
                     </Swiper>
                 )
             }
