@@ -37,3 +37,10 @@
     align-items: center;
     gap: 5px;
 }
+
+/********** MEDIA QUERY (800px) ***********/
+@media screen and (max-width: 800px) {
+    .container__footer ul {
+        gap: 1.5rem;
+    }
+}
