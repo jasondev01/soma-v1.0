@@ -9,7 +9,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchHero = async () => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=1&perPage=10`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=1&perPage=15`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -47,7 +47,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchPopular = async () => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=1&perPage=17`, {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=1&perPage=20`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',

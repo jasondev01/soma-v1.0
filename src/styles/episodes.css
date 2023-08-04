@@ -33,3 +33,10 @@
     box-shadow: var(--box-shadow);
     font-size: 14px;
 }
+
+/********  MEDIA QUERY (800px)  *********/
+@media screen and (max-width: 800px) {
+    .anime__episodes {
+        height: 240px;
+    }
+}

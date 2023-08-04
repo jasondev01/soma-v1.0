@@ -31,7 +31,9 @@ const Hero = () => {
             // console.log('Hero Section', response)
             if(response) {
                 setPageLoad(true);
-                setData(response);
+                const clean = response.filter(clean => clean?.slug !== 'mushoku-tensei:-jobless-reincarnation-season-2') 
+                // console.log('Hero Section clean', clean)
+                setData(clean);
             } else {
                 setTimeout(() => {
                     fetchData();
@@ -73,7 +75,7 @@ const Hero = () => {
                         onAutoplayTimeLeft={onAutoplayTimeLeft}
                     >
                         {
-                            Object.values(data)?.map((item, index) => {
+                            Object.values(data)?.slice(0, 10)?.map((item, index) => {
                                 const matchEpisode = info?.find(info => info.slug === item?.slug)
                                 const matchEpisodeId = matchEpisode?.episodes?.find(match => match.number === item?.currentEpisode)
                                 const episodeId = matchEpisodeId?.id

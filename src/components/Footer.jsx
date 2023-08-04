@@ -13,13 +13,19 @@ const Footer = () => {
                 <ul>
                     <li>
                         <Link to='/terms'>
-                            Terms of Service
+                            Terms of Service 
                         </Link>
+                    </li>
+                    <li className='bulletpoints'>
+                        •
                     </li>
                     <li>
                         <Link to='/dmca'>
                             DMCA
                         </Link>
+                    </li>
+                    <li className='bulletpoints'>
+                        •
                     </li>
                     <li>
                         <a href='https://github.com/jasondev01/soma' 
@@ -36,6 +42,9 @@ const Footer = () => {
                 </p>
                 <ul>
                     <li>&copy; soma.</li>
+                    <li className='bulletpoints'>
+                        •
+                    </li>
                     <li>2023</li>
                 </ul>
             </div>

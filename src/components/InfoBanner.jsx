@@ -75,7 +75,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         <div className='anime__info'>
                             <span>Status:</span>
                             <p>
-                                {data?.status === 'RELEASING' ? 'Ongoing' : data?.status}
+                                {data?.status === 'RELEASING' ? 'Ongoing' : (data?.status === 'FINISHED' ? 'Completed' : data?.status)}
                             </p>
                         </div>
                     }

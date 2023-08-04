@@ -2,14 +2,14 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 2%;
-    padding-bottom: 4rem;
+    padding-bottom: 5rem;
 }
 
 /********** HIGHEST RATING BOX *********/
 .highest__rating {
     grid-column: span 2;
     grid-row: span 2;
-    height: 520px;
+    height: 530px;
     position: relative;
     overflow: hidden;
     border: 1px solid var(--primary-bg);
@@ -170,7 +170,7 @@
 @media screen and (max-width: 1024px ){
     .container__trending {
         grid-template-columns: repeat(4, 1fr);
-        padding-bottom: 3.5rem;
+        padding-bottom: 7rem;
     }
     
     .trending h2 {
@@ -187,7 +187,11 @@
 
     .trending h2 {
         width: var(--container-sm);
-    }   
+    }
+    
+    .highest__rating {
+        height: 430px;
+    }
 }
 
 /*************** MEDIAY QUERIES (600) *************/
