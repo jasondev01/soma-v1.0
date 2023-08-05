@@ -9,7 +9,19 @@ export default function useLocalStorage() {
                 return result.watched;
             }
             return null;
+        }
+        return null;
+    }
+
+    function getSomaWatched() {
+        if (typeof window !== 'undefined') {
+            const watched = localStorage.getItem('watched');
+            if (watched !== null) { // Check for null instead of undefined
+                const result = JSON.parse(watched);
+                return result.watched;
             }
+            return null;
+        }
         return null;
     }
 
@@ -21,7 +33,7 @@ export default function useLocalStorage() {
                 return result.watched[id];
             }
             return null;
-            }
+        }
         return null;
     }
 
@@ -42,16 +54,17 @@ export default function useLocalStorage() {
                     title,
                     image,
                     ep: [
-                        {
-                            id: ep.id,
-                            number: ep.number,
-                        },
+                            {
+                                id: ep.id,
+                                number: ep.number,
+                            },
                     ],
                 };
                 result.watched[id] = toSave;
                 localStorage.setItem("watched", JSON.stringify(result));
             }
         }
+        return null;
     }
 
     function delSomaWatched(id) {
