@@ -1,13 +1,15 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
+import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
+import { useState } from "react";
 
 const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
     
-    const baseUrl = "https://www.youtube.com/watch?v="
+    const [ isBookmarked, setIsBookmarked ] = useState(true)
 
     // console.log("currentEpisode", currentEpisode)
     // console.log("firstEpisode", firstEpisode)
-    // console.log("anime data: ", data)
+    console.log("anime data: ", data)
     const findCurrentEpisode = data.episodes.find(episode => episode.number === currentEpisode)
     const findFirstEpisode = data.episodes.find(episode => episode.number === firstEpisode)
     // console.log('findCurrentEpisode', findCurrentEpisode)
@@ -31,7 +33,17 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         <div className='anime__info'>
                             <span>Title:</span>
                             <h3>
-                                {data?.title?.english || data?.title?.romaji}
+                                    {data?.title?.english || data?.title?.romaji} {isBookmarked 
+                                        ? <BsBookmarkStarFill 
+                                            className="bookmark" 
+                                            onClick={() => setIsBookmarked(prev => !prev)}
+                                            title="Marked as Bookmarked"
+                                        />  
+                                        : <BsBookmarkStar 
+                                            className="bookmark"  
+                                            onClick={() => setIsBookmarked(prev => !prev)}
+                                            title="Add to Bookmark"
+                                        />}
                             </h3>
                         </div>
                     }

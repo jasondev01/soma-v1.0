@@ -18,7 +18,7 @@ const Latest = () => {
             if(response) {
                 setPageLoad(true)
                 const limitResponse = response.slice(0, 15)
-                // console.log("Latest: ", limitResponse)
+                console.log("Latest: ", limitResponse)
                 setData(limitResponse);
             } else {
                 setTimeout(() => {
@@ -45,10 +45,6 @@ const Latest = () => {
                     <div className='container container__latest'>
                     {
                         data?.map( (item, index) => {
-                            const decodedTitle = decodeURIComponent(item?.anime?.title?.romaji);
-                            const formattedTitle = decodedTitle.toLowerCase()
-                            .replace(/[\s]+/g, "-")
-                            .replace(/[\s\.\,\:\(\)]/g, "");
                             return (
                                 <div key={index} className='latest__card__container'>
                                     <Link to={`/info/${item?.anime?.slug}`} className="latest__card">
@@ -86,7 +82,6 @@ const Latest = () => {
                         })
                     }
                     </div>
-                    
                 )
             }
             

@@ -11,6 +11,7 @@ import NewSeason from "./pages/NewSeason"
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import DMCA from "./pages/DMCA"
 import Terms from "./pages/Terms"
+import Profile from "./pages/Profile"
 
 function App() {
 
@@ -29,6 +30,8 @@ function App() {
                         <Route path="/info/:id" element={<Info />} />
                         <Route path="/watch/:id/:episode/:episodeId" element={<Watch />} />
                         <Route path="/pass/:id/:epNum" element={<PassingData />} />
+
+                        <Route path="/profile" element={<Profile />} />
                         <Route path='*' element={<Navigate to='/' />} />
                     </Route>
                 </Routes>

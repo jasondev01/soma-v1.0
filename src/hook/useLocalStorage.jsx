@@ -74,22 +74,22 @@ export default function useLocalStorage() {
     }
 
     // Add an event listener to the "beforeunload" event to save the local storage
-    useEffect(() => {
-        let timeoutId;
+    // useEffect(() => {
+    //     let timeoutId;
     
-        const handleBeforeUnload = () => {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                localStorage.setItem('watched', JSON.stringify(getSomaWatched()));
-            }, 200); // Adjust the debounce delay as needed
-        };
+    //     const handleBeforeUnload = () => {
+    //         clearTimeout(timeoutId);
+    //         timeoutId = setTimeout(() => {
+    //             localStorage.setItem('watched', JSON.stringify(getSomaWatched()));
+    //         }, 200); // Adjust the debounce delay as needed
+    //     };
     
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        return () => {
-            clearTimeout(timeoutId);
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-      }, []);
+    //     window.addEventListener('beforeunload', handleBeforeUnload);
+    //     return () => {
+    //         clearTimeout(timeoutId);
+    //         window.removeEventListener('beforeunload', handleBeforeUnload);
+    //     };
+    // }, []);
 
     return {
         getSomaWatched,

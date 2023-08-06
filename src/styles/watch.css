@@ -145,9 +145,9 @@ option span {
 .stream__header {
     margin-top: 5px;
     position: absolute;
-    top: -38px;
+    top: -40px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
 }
@@ -239,7 +239,7 @@ option span {
     }
 
     .episode__video {
-        padding-top: 1rem;
+        padding-top: 3rem;
     }
 }
 

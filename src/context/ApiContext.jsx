@@ -1,7 +1,7 @@
 import { useContext, createContext, useEffect, useState } from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
-import { baseUrl, animeUrl } from "../utilities/service";
+import { animeUrl } from "../utilities/service";
 
 const ApiContext = createContext();
 

@@ -16,8 +16,11 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useApiContext from "../context/ApiContext";
 import axios from 'axios'
+import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
+
 
 const VideoPlayer = ({ onVideoEnd, animeResult }) => {
+    const [ isBookmarked, setIsBookmarked ] = useState(true)
     const [ videoSource, setVideoSource ] = useState(``)
     const [ currentQuality, setCurrentQuality ] = useState();
     const [ quality, setQuality ] = useState([]);
@@ -30,6 +33,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
     const { fetchEpisodeWatch } = useApiContext();
     const navigate = useNavigate();
     const videoRef = useRef(null);
+
 
     const fetchSource = async () => {
         const response = await axios.get(`https://api.enime.moe/source/${animeResult.sources[0].id}`);
@@ -173,7 +177,19 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
                 </ControlBar>
             </Player>
             <div className="stream__header">
-                
+                {
+                    isBookmarked 
+                    ? <BsBookmarkStarFill 
+                        className="bookmark" 
+                        onClick={() => setIsBookmarked(prev => !prev)}
+                        title="Marked as Bookmarked"
+                    />  
+                    : <BsBookmarkStar 
+                        className="bookmark"  
+                        onClick={() => setIsBookmarked(prev => !prev)}
+                        title="Add to Bookmark"
+                    />
+                }
                 <button 
                     title={`Auto Fullscreen is Currently ${isFullScreen ? 'On' : 'Off'}`}
                     className={`fullscreen-toggle ${isFullScreen ? 'active' : ''}`} 

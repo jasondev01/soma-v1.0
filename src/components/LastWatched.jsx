@@ -39,7 +39,6 @@ const LastWatched = () => {
                         modules={[FreeMode, Navigation]}
                     >
                     {
-                        
                         Object.values(watchedData).reverse().map((item, index) => {
                             return (
                                 <SwiperSlide 
