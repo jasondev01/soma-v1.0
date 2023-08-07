@@ -205,6 +205,15 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
+    const getNews = async () => {
+        try {
+            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/anime/${id}`)
+        } catch(error) {
+            console.log("News", error.message);
+            return false;
+        }
+    }
+
     return (
         <ApiContext.Provider value={{ 
             fetchHero,
@@ -218,6 +227,7 @@ export const ApiProvider = ({ children }) => {
             fetchSearch,
             fetchLatestOngoing,
             fetchInfoOngoing,
+            getNews,
         }}>
             {children}
         </ApiContext.Provider>);

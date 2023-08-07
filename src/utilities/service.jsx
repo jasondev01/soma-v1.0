@@ -1,5 +1,6 @@
-export const baseUrl = ""
-export const animeUrl = "https://api.enime.moe"
+export const baseUrl = import.meta.env.VITE_API_NEWS_URL
+export const animeUrl = import.meta.env.VITE_API_ANIME_URL
+export const bypassUrl = import.meta.env.VITE_API_CORS_URL
 
 // login and register user service
 

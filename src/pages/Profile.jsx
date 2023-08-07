@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
 import '../styles/profile.css'
-import { AiOutlineInfoCircle } from 'react-icons/ai'
 
 const Profile = () => {
     const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
 
     return (
         <>
