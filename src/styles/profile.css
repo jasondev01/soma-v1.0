@@ -1,10 +1,10 @@
 .profile__page {
     margin-top: 0;
-    min-height: 550px;
+    /* min-height: 550px; */
 }
 
 .profile__wallpaper {
-    height: 400px;
+    height: 380px;
 }
 
 .profile__item {
@@ -14,6 +14,7 @@
     margin-top: -120px;
     /* margin-left: -25px; */
     gap: 1.7rem;
+    padding-bottom: 10px;
 }
 
 .profile__image {
@@ -42,6 +43,7 @@
 
 .container__profile__content {
     display: flex;
+    padding-bottom: 10px;
 }
 
 .display__contents {
@@ -81,22 +83,111 @@
     color: var(--primary);
 }
 
-.display__options {
+.display__options,
+.news__header {
     display: flex;
     gap: 1.2rem;
     margin: 1rem 0;
 }
 
-.display__options li {
+.display__options li,
+.news__header {
     padding: .5rem;
     cursor: pointer;
     background: var(--secondary);
+    width: max-content;
+    color: var(--primary);
+    box-shadow: var(--box-shadow);
 }
 
+/******* NEWS *******/
 .display__news {
     flex-basis: 25%;
     padding: 0 1.2rem;
-    margin: 1rem 0;
+    /* margin: 1rem 0; */
 }
 
+.news__items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.news__item {
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.news__image {
+    height: 230px;
+    box-shadow: var(--box-shadow);
+}
+
+.news__title h5 {
+    font-size: 16px;
+}
+
+.news__desc a {
+    font-size: 15px;
+    color: var(--secondary);
+}
+
+.news__desc a:hover {
+    color: var(--secondary-variant);
+}
+
+.news__published {
+    font-size: 12px;
+}
+
+/******* Media Query (1024px) *******/
+@media screen and (max-width: 1024px) {
+    .display__content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/******* Media Query (800px) *******/
+@media screen and (max-width: 800px) {
+    .container__profile__content {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .display__contents,
+    .display__news {
+        flex-basis: 100%;
+        padding: 0;
+    }
+
+    .news__items {
+        flex-direction: row;
+    }
+}
+
+/******* Media Query (600px) *******/
+@media screen and (max-width: 600px) {
+    .profile__wallpaper {
+        height: 280px;
+    }
+
+    .profile__item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile__info {
+        text-align: center;
+    }
+
+    .display__content {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .news__items {
+        flex-direction: column;
+    }
+}
 
