@@ -28,6 +28,41 @@
 
 .navbar__menu li a {
     text-shadow: var(--text-shadow);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile__user {
+    position: relative;
+}
+
+.user__name {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.profile__options {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    position: absolute;
+    left: -.4rem;
+    bottom: -6rem;
+    background: var(--primary-bg);
+    padding: 1rem 1.2rem;
+    width: max-content;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--secondary);
+    transition: var(--transition);
+}
+
+.profile__options a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .logo {
@@ -161,6 +196,7 @@
     .hamburger.show span:nth-child(3) {
         transform: translateY(-6px) rotate(-55deg);
     }
+
 }
 
 

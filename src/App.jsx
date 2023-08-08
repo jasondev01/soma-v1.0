@@ -12,6 +12,9 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import DMCA from "./pages/DMCA"
 import Terms from "./pages/Terms"
 import Profile from "./pages/Profile"
+import LoginPage from "./pages/LoginPage"
+import AuthLayout from "./layouts/AuthLayout"
+import RegisterPage from "./pages/RegisterPage"
 
 function App() {
 
@@ -33,6 +36,10 @@ function App() {
 
                         <Route path="/profile" element={<Profile />} />
                         <Route path='*' element={<Navigate to='/' />} />
+                    </Route>
+                    <Route element={<AuthLayout />} >
+                        <Route path="/login" element={ <LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
                     </Route>
                 </Routes>
             </Router>

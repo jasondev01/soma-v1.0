@@ -1,7 +1,7 @@
-import { useContext, createContext, useEffect, useState } from "react"
+import { useContext, createContext} from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
-import { animeUrl } from "../utilities/service";
+import { animeUrl, consUrl, corsUrl } from "../utilities/service";
 
 const ApiContext = createContext();
 
@@ -9,7 +9,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchHero = async () => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=1&perPage=15`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/popular?page=1&perPage=15`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -29,7 +29,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatest = async () => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/recent?page=1&perPage=30`,  {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/recent?page=1&perPage=30`,  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -47,7 +47,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchPopular = async () => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=1&perPage=20`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/popular?page=1&perPage=20`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -67,7 +67,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchInfo = async (id) => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/anime/${id}`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -85,7 +85,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchWatch = async (id, episode) => {
         try {
-            const response = await axios.get(`${animeUrl}/view/${id}/${episode}`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/view/${id}/${episode}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -101,7 +101,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchEpisodeWatch = async (episodeId) => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/https://api.consumet.org/anime/enime/watch?episodeId=${episodeId}`, {
+            const response = await axios.get(`${corsUrl}/${consUrl}/anime/enime/watch?episodeId=${episodeId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -117,7 +117,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatestPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`${animeUrl}/recent?page=${pageNumber}&perPage=20&provider=gogoanime`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/recent?page=${pageNumber}&perPage=20&provider=gogoanime`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -133,7 +133,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchPopularPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/popular?page=${pageNumber}&perPage=20`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/popular?page=${pageNumber}&perPage=20`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -153,7 +153,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchSearch = async (query) => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/search/${query}?page=1&perPage=100`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/search/${query}?page=1&perPage=100`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -173,7 +173,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatestOngoing = async () => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/recent?page=1&perPage=100`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/recent?page=1&perPage=100`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -189,7 +189,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchInfoOngoing = async (id) => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/anime/${id}`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -207,7 +207,8 @@ export const ApiProvider = ({ children }) => {
 
     const getNews = async () => {
         try {
-            const response = await axios.get(`https://cors.zimjs.com/${animeUrl}/anime/${id}`)
+            const response = await axios.get(`${corsUrl}/${consUrl}/news/ann/recent-feeds`)
+            return response.data
         } catch(error) {
             console.log("News", error.message);
             return false;

@@ -83,10 +83,10 @@ export const AuthContextProvider = ({children}) => {
 
     // add favorite recipe
     
-    const addBookmark = useCallback(async (slug, title, image, episode, currentEpisode, ) => {
+    const addBookmark = useCallback(async (slug, title, image, currentEpisode ) => {
         if (user) {
             const { _id } = user;
-            const response = await postRequest(`${baseUrl}/users/add-bookmark`, JSON.stringify({ userId: _id, slug, title, image, episode, currentEpisode,  }));
+            const response = await postRequest(`${baseUrl}/users/add-bookmark`, JSON.stringify({ userId: _id, slug, title, image, currentEpisode}));
             if (!response.error) {
                 setUser(response);
                 const updatedUser = { ...user, bookmarked: response.bookmarked };
@@ -99,7 +99,7 @@ export const AuthContextProvider = ({children}) => {
     const removeBookmark = useCallback(async (slug) => {
         if (user) {
             const { _id } = user;
-            const response = await postRequest(`${baseUrl}/users/remove-bookmark`, JSON.stringify({ userId: _id, recipeUri }));
+            const response = await postRequest(`${baseUrl}/users/remove-bookmark`, JSON.stringify({ userId: _id, slug }));
             if (!response.error) {
                 setUser(response);
                 const updatedUser = { ...user, bookmarked: response.bookmarked };

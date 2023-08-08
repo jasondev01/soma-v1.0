@@ -1,18 +1,38 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
 import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAuthContext from "../context/AuthContext";
 
 const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
     
-    const [ isBookmarked, setIsBookmarked ] = useState(true)
+    const [ isBookmarked, setIsBookmarked ] = useState(false)
+    const { addBookmark, removeBookmark, user } = useAuthContext();
 
-    // console.log("currentEpisode", currentEpisode)
-    // console.log("firstEpisode", firstEpisode)
+    useEffect(() => {
+        if (user && user.bookmarked && user.bookmarked.some(item => item.slug === data.slug)) {
+            setIsBookmarked(true);
+        } else {
+            setIsBookmarked(false);
+        }
+    }, [data, user.bookmarked]);
+
+    console.log(`isBookmarked`, isBookmarked)
+
+    const handleAddBookmark = () => {
+        if (user && data?.slug ) {
+            if (isBookmarked) {
+                removeBookmark(data?.slug);
+            } else {
+                addBookmark(data?.slug, data?.title?.english, data?.coverImage, data?.currentEpisode);
+            }
+        }
+    };
+
+
     console.log("anime data: ", data)
     const findCurrentEpisode = data.episodes.find(episode => episode.number === currentEpisode)
     const findFirstEpisode = data.episodes.find(episode => episode.number === firstEpisode)
-    // console.log('findCurrentEpisode', findCurrentEpisode)
 
     return (
         <section id='info' className='info' style={{backgroundImage: `url(${data?.bannerImage})`}} >
@@ -33,17 +53,20 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         <div className='anime__info'>
                             <span>Title:</span>
                             <h3>
-                                    {data?.title?.english || data?.title?.romaji} {isBookmarked 
-                                        ? <BsBookmarkStarFill 
-                                            className="bookmark" 
-                                            onClick={() => setIsBookmarked(prev => !prev)}
-                                            title="Marked as Bookmarked"
-                                        />  
-                                        : <BsBookmarkStar 
-                                            className="bookmark"  
-                                            onClick={() => setIsBookmarked(prev => !prev)}
-                                            title="Add to Bookmark"
-                                        />}
+                            {data?.title?.english || data?.title?.romaji} {' '}
+                            {
+                                isBookmarked 
+                                    ? <BsBookmarkStarFill 
+                                        className="bookmark" 
+                                        title="Marked as Bookmarked"
+                                        onClick={handleAddBookmark}
+                                    />  
+                                    : <BsBookmarkStar
+                                        className="bookmark"  
+                                        title="Add to Bookmark"
+                                        onClick={handleAddBookmark}
+                                    />
+                            }
                             </h3>
                         </div>
                     }

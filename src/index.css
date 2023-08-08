@@ -11,7 +11,7 @@
 }
 
 body {
-    font-family: 'Outfit', sans-serif;;
+    font-family: 'Outfit', sans-serif;
     background: var(--primary-bg);
     color: var(--primary);
     transition: var(--transition);
@@ -179,6 +179,12 @@ span, p, h1, h2, h3, h4, h5 {
     color: var(--secondary);
 }
 
+.login__register {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 
 /* ================== MEDIA QUERIES (MEDIUM DEVICES) =============== */
 @media screen and (max-width: 1024px) {
@@ -205,6 +211,7 @@ span, p, h1, h2, h3, h4, h5 {
     .ongoing__page .section__header h2 {
         flex-basis: 100%;
     }
+
 }
 
 @media screen and (max-width: 600px) {

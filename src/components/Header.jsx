@@ -4,6 +4,11 @@ import{ BsFillSunFill, BsSearch } from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router-dom'
 import useThemeContext from '../context/ThemeContext'
 import { useEffect, useRef, useState } from 'react'
+import { BiSolidUser } from 'react-icons/bi'
+import { GiExitDoor } from 'react-icons/gi'
+import { IoIosSettings } from 'react-icons/io'
+
+import useAuthContext from '../context/AuthContext'
 
 const Header = () => {
     const { theme, toggleTheme } = useThemeContext();
@@ -11,13 +16,19 @@ const Header = () => {
     const [ query, setQuery ] = useState('');
     const [ isMenuOpen, setIsMenuOpen ] = useState(false);
     const [ prevScrollPos, setPrevScrollPos ] = useState(0);
+    const [ profileOptionOpen, setProfileOptionOpen ] = useState(false);
+    const { user, logoutUser } = useAuthContext();
     const navigate = useNavigate();
     const menuRef = useRef(null);
+    const profileSettingRef = useRef(null);
     const toggleRef = useRef(null);
 
     const handleNav = (nav) => {
         setActiveNav(nav)
         setIsMenuOpen(false);
+        if(nav === 'profile') {
+            setProfileOptionOpen(prev => !prev)
+        }
     }
 
     useEffect(() => {
@@ -53,12 +64,31 @@ const Header = () => {
         };
     }, []);
 
+    const handleToggleOptions = (event) => {
+        event.stopPropagation();
+        setProfileOptionOpen(prev => !prev);
+    };
+    
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if ( profileSettingRef.current && !profileSettingRef.current.contains(event.target)) {
+                setProfileOptionOpen(false);
+            }
+        };
+    
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
     return (
         <header id='header'>
             <nav className='navbar' >
                 <div className='container container__navbar' >
                     <div className="navbar__home">
-                        <div className={`hamburger ${isMenuOpen ? 'show' : ''}`} 
+                        <div 
+                            className={`hamburger ${isMenuOpen ? 'show' : ''}`} 
                             ref={toggleRef}
                         >
                             <span style={{
@@ -86,6 +116,56 @@ const Header = () => {
                             ref={menuRef}
                         >
                             <li>
+                            {
+                                user ? (
+                                    <div 
+                                        className={`profile__user
+                                            ${theme ? 'light' : 'dark'}
+                                            ${activeNav === 'profile' ? 'active__nav' : ''}
+                                        `}
+                                        onClick={() => handleNav('profile')}
+                                    >
+                                        <span 
+                                            className='user__name'
+                                            onClick={handleToggleOptions}
+                                        >
+                                            <IoIosSettings />  {user.name}
+                                        </span>
+                                        
+                                        <div className='profile__options'
+                                            style={{
+                                                opacity: profileOptionOpen ? '1' : '0',
+                                                pointerEvents: profileOptionOpen ? '' : 'none'
+                                            }}
+                                            ref={profileSettingRef}
+                                        >
+                                            <Link 
+                                                to='/profile'
+                                            >
+                                                <BiSolidUser/> Profile
+                                            </Link>
+                                            <Link 
+                                                to='/logout'
+                                                onClick={e => logoutUser(e)}
+                                            >
+                                                <GiExitDoor/> Logout
+                                            </Link>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <Link to="/login" 
+                                        className={`
+                                            ${theme ? 'light' : 'dark'}
+                                            ${activeNav === 'profile' ? 'active__nav' : ''}
+                                        `}
+                                        onClick={() => handleNav('profile')}
+                                    >
+                                        <BiSolidUser/> Login
+                                    </Link>
+                                )
+                            }
+                            </li>
+                            <li>
                                 <Link to="/latest" 
                                     className={`
                                         ${theme ? 'light' : 'dark'} 
@@ -96,17 +176,6 @@ const Header = () => {
                                     Latest
                                 </Link>
                             </li>
-                            {/* <li>
-                                <Link to="/trending" 
-                                    className={`
-                                        ${theme ? 'light' : 'dark'}
-                                        ${activeNav === 'trending' ? 'active__nav' : ''}
-                                    `}
-                                    onClick={() => handleNav('trending')}
-                                >
-                                    Trending
-                                </Link>
-                            </li> */}
                             <li>
                                 <Link to="/popular" 
                                     className={`

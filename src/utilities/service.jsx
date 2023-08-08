@@ -1,6 +1,7 @@
-export const baseUrl = import.meta.env.VITE_API_NEWS_URL
+export const consUrl = import.meta.env.VITE_API_NEWS_URL
 export const animeUrl = import.meta.env.VITE_API_ANIME_URL
-export const bypassUrl = import.meta.env.VITE_API_CORS_URL
+export const corsUrl = import.meta.env.VITE_API_CORS_URL
+export const baseUrl = import.meta.env.VITE_API_SOMA_USERS
 
 // login and register user service
 

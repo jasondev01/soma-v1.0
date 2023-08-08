@@ -61,9 +61,6 @@
 
 .anime__info h3 {
     font-size: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 7px;
 }
 
 .bookmark {
