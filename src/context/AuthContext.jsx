@@ -45,7 +45,7 @@ export const AuthContextProvider = ({children}) => {
         setIsRegisterLoading(true);
         setRegisterError(null);
 
-        const response = await postRequest(`${corsUrl}/${baseUrl}/users/register`, JSON.stringify(registerInfo));
+        const response = await postRequest(`${baseUrl}/users/register`, JSON.stringify(registerInfo));
 
         setIsRegisterLoading(false);
 
@@ -63,7 +63,7 @@ export const AuthContextProvider = ({children}) => {
         setIsLoginLoading(true);
         setLoginError(null);
 
-        const response = await postRequest(`${corsUrl}/${baseUrl}/users/login`, JSON.stringify(loginInfo));
+        const response = await postRequest(`${baseUrl}/users/login`, JSON.stringify(loginInfo));
         
         setIsLoginLoading(false);
 
@@ -86,7 +86,7 @@ export const AuthContextProvider = ({children}) => {
     const addBookmark = useCallback(async (slug, title, image, currentEpisode ) => {
         if (user) {
             const { _id } = user;
-            const response = await postRequest(`${corsUrl}/${baseUrl}/users/add-bookmark`, JSON.stringify({ userId: _id, slug, title, image, currentEpisode}));
+            const response = await postRequest(`${baseUrl}/users/add-bookmark`, JSON.stringify({ userId: _id, slug, title, image, currentEpisode}));
             if (!response.error) {
                 setUser(response);
                 const updatedUser = { ...user, bookmarked: response.bookmarked };
@@ -99,7 +99,7 @@ export const AuthContextProvider = ({children}) => {
     const removeBookmark = useCallback(async (slug) => {
         if (user) {
             const { _id } = user;
-            const response = await postRequest(`${corsUrl}/${baseUrl}/users/remove-bookmark`, JSON.stringify({ userId: _id, slug }));
+            const response = await postRequest(`${baseUrl}/users/remove-bookmark`, JSON.stringify({ userId: _id, slug }));
             if (!response.error) {
                 setUser(response);
                 const updatedUser = { ...user, bookmarked: response.bookmarked };
