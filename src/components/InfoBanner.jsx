@@ -17,8 +17,6 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
         }
     }, [data, user?.bookmarked]);
 
-    console.log(`isBookmarked`, isBookmarked)
-
     const handleAddBookmark = () => {
         if (user && data?.slug ) {
             if (isBookmarked) {

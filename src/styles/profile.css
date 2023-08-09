@@ -44,6 +44,7 @@
 .container__profile__content {
     display: flex;
     padding-bottom: 10px;
+    min-height: 450px;
 }
 
 .display__contents {
@@ -104,9 +105,16 @@
     padding: .5rem;
     cursor: pointer;
     background: var(--secondary);
+    border: 1px solid var(--secondary);
     width: max-content;
     color: var(--primary);
     box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.display__options li:hover,
+.news__header:hover {
+    background: var(--secondary-variant);
 }
 
 /******* NEWS *******/

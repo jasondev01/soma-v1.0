@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import Login from "../components/Login"
-import login from '../assets/login.jpg'
+import login from '../assets/login.webp'
 
 const LoginPage = () => {
     

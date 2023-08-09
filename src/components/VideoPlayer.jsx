@@ -15,12 +15,11 @@ import QualityButton from "./QualityButton";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useApiContext from "../context/ApiContext";
-import axios from 'axios'
 import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
-
+import useAuthContext from "../context/AuthContext";
 
 const VideoPlayer = ({ onVideoEnd, animeResult }) => {
-    const [ isBookmarked, setIsBookmarked ] = useState(true)
+    const [ isBookmarked, setIsBookmarked ] = useState(false)
     const [ videoSource, setVideoSource ] = useState(``)
     const [ currentQuality, setCurrentQuality ] = useState();
     const [ quality, setQuality ] = useState([]);
@@ -30,15 +29,34 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
         return storedScreenState !== null ? storedScreenState === 'true' : false;
     });
     const { episodeId } = useParams();
-    const { fetchEpisodeWatch } = useApiContext();
+    const { fetchEpisodeWatch, getSource } = useApiContext();
+    const { addBookmark, removeBookmark, user } = useAuthContext();
     const navigate = useNavigate();
     const videoRef = useRef(null);
 
-
     const fetchSource = async () => {
-        const response = await axios.get(`https://api.enime.moe/source/${animeResult.sources[0].id}`);
+        const response = await getSource(animeResult.sources[0].id);
         setVideoSource(response.data.url)
     }
+
+    useEffect(() => {
+        if (user && user.bookmarked && user.bookmarked.some(item => item.slug === animeResult?.anime.slug)) {
+            setIsBookmarked(true);
+        } else {
+            setIsBookmarked(false);
+        }
+    }, [animeResult, user?.bookmarked]);
+
+    const handleAddBookmark = () => {
+        console.log('animeResult', animeResult)
+        if (user && animeResult?.anime.slug ) {
+            if (isBookmarked) {
+                removeBookmark(animeResult?.anime.slug);
+            } else {
+                addBookmark(animeResult?.anime?.slug, animeResult?.anime.title?.english, animeResult?.anime?.coverImage, animeResult?.anime?.episodes.length);
+            }
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -146,8 +164,8 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
         if (isFullScreen) {
             enterFullscreen();
         } 
-
     }, [isFullScreen]);
+
 
     return (
         <>
@@ -181,13 +199,13 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
                     isBookmarked 
                     ? <BsBookmarkStarFill 
                         className="bookmark" 
-                        onClick={() => setIsBookmarked(prev => !prev)}
                         title="Marked as Bookmarked"
+                        onClick={handleAddBookmark}
                     />  
                     : <BsBookmarkStar 
                         className="bookmark"  
-                        onClick={() => setIsBookmarked(prev => !prev)}
                         title="Add to Bookmark"
+                        onClick={handleAddBookmark}
                     />
                 }
                 <button 

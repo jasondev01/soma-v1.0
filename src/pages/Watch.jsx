@@ -25,7 +25,6 @@ const Watch = () => {
     const { theme } = useThemeContext();
     const { setSomaWatched } = useLocalStorage()
     const navigate = useNavigate();
-    // console.log("Watch Info", parseFloat(episode));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,17 +37,17 @@ const Watch = () => {
                 setEpisodeRange(episodes);
                 console.log("episodes", episodes);
 
-                const episodeData = {
-                    id: id,
-                    title: response?.anime?.title?.english,
-                    image: response?.anime?.coverImage,
-                    ep: { 
-                        id: response?.id, 
-                        number: response?.number 
-                    },
-                }
+                // const episodeData = {
+                //     id: id,
+                //     title: response?.anime?.title?.english,
+                //     image: response?.anime?.coverImage,
+                //     ep: { 
+                //         id: response?.id, 
+                //         number: response?.number 
+                //     },
+                // }
                 
-                setSomaWatched(episodeData)
+                // setSomaWatched(episodeData)
 
                 const matchingEpisode = episodes.find(episode => episode.number === response?.number)
                 console.log("matchingEpisode", matchingEpisode.number);

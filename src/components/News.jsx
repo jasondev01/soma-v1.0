@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { corsUrl } from '../utilities/service';
 
 const News = ({news}) => {
+    const [ sliceShow, setSliceShow ] = useState(false);
+
+    const handleShow = () => {
+        setSliceShow(prev => !prev)
+    }
 
     return (
         <aside className='display__news'>
-            <div className='news__header'>
+            <div className={`news__header ${sliceShow ? 'active' : ''}`}
+                onClick={handleShow}
+            >
                 <h4>
                     News
                 </h4>
             </div>
-            <article className='news__items'>
+            <article className={`news__items ${sliceShow ? '' : 'd-none'}`}>
             {
-                news?.slice(0, 2).map((item, index) => {
+                news?.slice(0, 2)?.map((item, index) => {
                     const inputTimeString = item.uploadedAt;
                     const currentYear = new Date().getFullYear();
                     const firstCommaIndex = inputTimeString.indexOf(",");
@@ -26,9 +35,9 @@ const News = ({news}) => {
                                 href={item.url} target='_blank' rel='noreferrer' 
                                 className='news__image'
                             >
-                                <img 
-                                    src={item.thumbnail} 
-                                    alt="" 
+                                <LazyLoadImage 
+                                    src={`${corsUrl}/${item.thumbnail}`} 
+                                    alt={item.title} 
                                     height={100}
                                     width={100}
                                 />

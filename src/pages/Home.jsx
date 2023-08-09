@@ -15,7 +15,7 @@ const Home = () => {
                 />
             </Helmet>
             <Hero />
-            <LastWatched />
+            {/* <LastWatched /> */}
             <Latest />
             <Popular />
         </>

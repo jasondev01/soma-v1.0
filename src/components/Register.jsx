@@ -14,11 +14,9 @@ const Register = () => {
         user
     } = useAuthContext();
 
-    // if(user) {
-    //     navigate('/profile')
-    // } 
-
-    // console.log('register user: ', user)
+    if(user) {
+        navigate('/profile')
+    } 
 
     return (
         <div className='form__container'>

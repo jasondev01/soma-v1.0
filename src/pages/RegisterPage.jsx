@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import register from '../assets/register.jpg'
+import register from '../assets/register.webp'
 import Register from "../components/Register"
 
 const RegisterPage = () => {

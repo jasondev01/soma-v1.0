@@ -205,6 +205,16 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
+    const getSource = async (episode) => {
+        try {
+            const response= await axios.get(`${corsUrl}/${animeUrl}/${episode}`)
+            return response;
+        } catch(error) {
+            console.log("Source", error.message)
+            return false;
+        }
+    }
+
     const getNews = async () => {
         try {
             const response = await axios.get(`${corsUrl}/${consUrl}/news/ann/recent-feeds`)
@@ -214,6 +224,7 @@ export const ApiProvider = ({ children }) => {
             return false;
         }
     }
+
 
     return (
         <ApiContext.Provider value={{ 
@@ -229,6 +240,7 @@ export const ApiProvider = ({ children }) => {
             fetchLatestOngoing,
             fetchInfoOngoing,
             getNews,
+            getSource,
         }}>
             {children}
         </ApiContext.Provider>);
