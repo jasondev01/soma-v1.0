@@ -24,4 +24,3 @@ dist-ssr
 *.sln
 *.sw?
 OGApiRequestPerComponent.txt
-vercel.json

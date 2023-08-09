@@ -15,7 +15,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
         } else {
             setIsBookmarked(false);
         }
-    }, [data, user.bookmarked]);
+    }, [data, user?.bookmarked]);
 
     console.log(`isBookmarked`, isBookmarked)
 
