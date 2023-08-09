@@ -81,8 +81,7 @@ export const AuthContextProvider = ({children}) => {
         setUser(null);
     }, []);
 
-    // add favorite recipe
-    
+    // add bookmark
     const addBookmark = useCallback(async (slug, title, image, currentEpisode ) => {
         if (user) {
             const { _id } = user;
@@ -95,7 +94,7 @@ export const AuthContextProvider = ({children}) => {
         }
     }, [user]);
 
-    // remove favorite recipe
+    // remove bookmark
     const removeBookmark = useCallback(async (slug) => {
         if (user) {
             const { _id } = user;
@@ -103,6 +102,32 @@ export const AuthContextProvider = ({children}) => {
             if (!response.error) {
                 setUser(response);
                 const updatedUser = { ...user, bookmarked: response.bookmarked };
+                localStorage.setItem('User', JSON.stringify(updatedUser));
+            }
+        }
+    }, [user]);
+
+    // add a watched item
+    const addWatchedItem = useCallback(async (title, slug, image, episodeId, episodeNumber) => {
+        if (user) {
+            const { _id } = user;
+            const response = await postRequest(`${baseUrl}/users/add-watched`, JSON.stringify({ userId: _id, title, slug, image, episodeId, episodeNumber }));
+            if (!response.error) {
+                setUser(response);
+                const updatedUser = { ...user, watched: response.watched };
+                localStorage.setItem('User', JSON.stringify(updatedUser));
+            }
+        }
+    }, [user]);
+
+    // remove a watched item
+    const removeWatchedItem = useCallback(async (watchedItemId) => {
+        if (user) {
+            const { _id } = user;
+            const response = await postRequest(`${baseUrl}/users/remove-watched`, JSON.stringify({ userId: _id, watchedItemId }));
+            if (!response.error) {
+                setUser(response);
+                const updatedUser = { ...user, watched: response.watched };
                 localStorage.setItem('User', JSON.stringify(updatedUser));
             }
         }
@@ -126,10 +151,12 @@ export const AuthContextProvider = ({children}) => {
                 loginError,
                 loginInfo,
                 isLoginLoading,
-                // Add bookmark
+                // bookmark
                 addBookmark,
-                // Remove bookmark
                 removeBookmark,
+                // watched
+                addWatchedItem,
+                removeWatchedItem,
             }}
         >
             {children}

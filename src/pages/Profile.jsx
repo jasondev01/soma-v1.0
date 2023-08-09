@@ -12,6 +12,7 @@ import useThemeContext from '../context/ThemeContext';
 const Profile = () => {
     const [ news, setNews ] = useState([]);
     const [ bookmarked, setBookmarked ] = useState([])
+    const [ watched, setWatched ] = useState([])
     const { getNews } = useApiContext();
     const { user } = useAuthContext();
     const { theme } = useThemeContext();
@@ -20,7 +21,7 @@ const Profile = () => {
     const fetchNews = async () => {
         try {
             const response = await getNews()
-            console.log("News", response);
+            // console.log("News", response);
             setNews(response)
         } catch(error) {    
             console.log("error", error)
@@ -29,21 +30,24 @@ const Profile = () => {
 
     useEffect(() => {
         fetchNews()
-
         const storedUser = JSON.parse(localStorage.getItem('User'));
 
         if (user) {
-            // If the user is logged in, update the bookmarked state from user data
-            setBookmarked(user.bookmarked);
+            // if the user is logged in, update the states from user data
+            setBookmarked(user?.bookmarked);
+            setWatched(user?.watched)
         } else if (storedUser) {
             // If the user is not logged in but there's stored user data, update the bookmarked state from stored data
             setBookmarked(storedUser?.bookmarked);
+            setWatched(storedUser?.watched)
         } else {
             // If neither user nor stored data is available, navigate to "/"
             navigate('/');
         }
-    }, [user])
+    }, [])
 
+    console.log("watched", watched);
+    
     return (
         <>
         <section className='profile__page'>
@@ -71,20 +75,24 @@ const Profile = () => {
                     />
                 </div>
                 <div className='profile__info'>
-                    <h3 className={`profile__name 
-                        ${theme ? 'light' : 'dark'}`}
-                    >
+                    <h2 className={`${theme ? 'light' : 'dark'}`}>
                         {user?.name}
-                    </h3>
+                    </h2>
                     <p className={`profile__email ${theme ? 'light' : 'dark'}`}>
                         {user?.email}
                     </p>
-                    <span className={`${theme ? 'light' : 'dark'}`}>
-                        Bookmarked: {bookmarked.length < 10 ? `0${bookmarked.length}` : bookmarked.length }
-                    </span>
-                    <span className={`${theme ? 'light' : 'dark'}`}>
-                        Watched: 30
-                    </span>
+                    {
+                        bookmarked?.length > 0 &&
+                        <span className={`${theme ? 'light' : 'dark'}`}>
+                            Bookmarked: {bookmarked?.length < 10 ? `0${bookmarked?.length}` : bookmarked?.length}
+                        </span>
+                    }
+                    {
+                        watched?.length > 0 && 
+                        <span className={`${theme ? 'light' : 'dark'} `}>
+                            Watched: {watched?.length < 10 ? `0${watched?.length}` : watched?.length}
+                        </span>
+                    }
                 </div>
             </div>
         </section>
@@ -92,7 +100,7 @@ const Profile = () => {
             marginTop: '1rem'
         }}>
             <div className="container container__profile__content">
-                <ProfileContent bookmarked={bookmarked} />
+                <ProfileContent bookmarked={bookmarked} watched={watched} />
                 <News news={news}/>
             </div>
         </section>

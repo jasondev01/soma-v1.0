@@ -8,27 +8,30 @@ import { Link } from "react-router-dom";
 import { lastWatchedBreakPoints } from "../utilities/utility";
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import '../styles/continue.css'
-import useLocalStorage from "../hook/useLocalStorage";
 import { useState, useEffect } from "react";
+import useAuthContext from "../context/AuthContext";
 
 const LastWatched = () => {
     const [ watchedData, setWatchedData ] = useState([]);
-    const { getSomaWatched } = useLocalStorage();
+    const { user } = useAuthContext();
 
     useEffect(() => {
-        const data = getSomaWatched()
-        setWatchedData(data)
-        // console.log('Last Watched: ', data)
+        const storedUser = JSON.parse(localStorage.getItem('User'));
+        if (user) {
+            // if the user is logged in, update the watched state from user data
+            setWatchedData(user?.watched)
+        } else {
+            setWatchedData(storedUser?.watched)
+        } 
     }, [])
-
 
     return (
         <>
             {
-                watchedData &&
+                user?.name &&
                 <section className="continue">
                     <div className='section__header'>
-                        <h2>Last Watched</h2>
+                        <h2> {user?.name}, this is Last Watched Anime</h2>
                     </div>
                     <Swiper className='container container__continue'
                         slidesPerView={5}
@@ -39,13 +42,14 @@ const LastWatched = () => {
                         modules={[FreeMode, Navigation]}
                     >
                     {
-                        Object.values(watchedData).reverse().map((item, index) => {
+                        watchedData?.reverse().map((item, index) => {
+                            const current = item.episodes[item.episodes.length - 1]
                             return (
                                 <SwiperSlide 
                                     key={index} 
                                     className={`continue__item`}
                                 >
-                                    <Link to={`/watch/${item?.id}/${item.ep[item.ep.length - 1].number}/${item.ep[item.ep.length - 1].id}`} >
+                                    <Link to={`/watch/${item?.slug}/${current.number}/${current.id}`} >
                                         <div className='continue__image'>
                                             <LazyLoadImage
                                                 effect="blur"
@@ -58,12 +62,12 @@ const LastWatched = () => {
                                             <span 
                                                 className={`continue__episode`}
                                             >
-                                                Episode {item.ep[item.ep.length - 1].number}
+                                                Episode {current.number}
                                             </span>
                                         </div>
-                                        <span className="continue__rating">
+                                        {/* <span className="continue__rating">
                                             HOT
-                                        </span>
+                                        </span> */}
                                     </Link >
                                 </SwiperSlide>
                             )

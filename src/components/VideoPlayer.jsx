@@ -13,17 +13,18 @@ import "video-react/dist/video-react.css";
 import HLSSource from "./HLSSource";
 import QualityButton from "./QualityButton";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useApiContext from "../context/ApiContext";
 import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
 import useAuthContext from "../context/AuthContext";
 
-const VideoPlayer = ({ onVideoEnd, animeResult }) => {
+const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
     const [ isBookmarked, setIsBookmarked ] = useState(false)
     const [ videoSource, setVideoSource ] = useState(``)
     const [ currentQuality, setCurrentQuality ] = useState();
     const [ quality, setQuality ] = useState([]);
     const [ fetchEnimeEpisode, setFetchEnimeEpisode ] = useState(false)
+    const [ qualityLoading, setQualityLoading ] = useState(true);
     const [ isFullScreen, setIsFullScreen ] = useState(() => {
         const storedScreenState = localStorage.getItem('fullscreen');
         return storedScreenState !== null ? storedScreenState === 'true' : false;
@@ -31,7 +32,6 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
     const { episodeId } = useParams();
     const { fetchEpisodeWatch, getSource } = useApiContext();
     const { addBookmark, removeBookmark, user } = useAuthContext();
-    const navigate = useNavigate();
     const videoRef = useRef(null);
 
     const fetchSource = async () => {
@@ -40,7 +40,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
     }
 
     useEffect(() => {
-        if (user && user.bookmarked && user.bookmarked.some(item => item.slug === animeResult?.anime.slug)) {
+        if (user && user.bookmarked && user.bookmarked.some(item => item.slug === animeResult?.anime?.slug)) {
             setIsBookmarked(true);
         } else {
             setIsBookmarked(false);
@@ -48,12 +48,11 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
     }, [animeResult, user?.bookmarked]);
 
     const handleAddBookmark = () => {
-        console.log('animeResult', animeResult)
         if (user && animeResult?.anime.slug ) {
             if (isBookmarked) {
                 removeBookmark(animeResult?.anime.slug);
             } else {
-                addBookmark(animeResult?.anime?.slug, animeResult?.anime.title?.english, animeResult?.anime?.coverImage, animeResult?.anime?.episodes.length);
+                addBookmark(animeResult?.anime?.slug, animeResult?.anime.title?.english, animeResult?.anime?.coverImage, animeResult?.anime?.episodes?.length);
             }
         }
     };
@@ -61,20 +60,13 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchEpisodeWatch(episodeId);
-            if (response.status === 500) {
-                console.log('error', response.status)
-                setTimeout(() => {
-                    fetchData();
-                }, 6000);
-            } else if (response.status === 404) {
-                console.log('error', response.status)
-                fetchSource()
-                setFetchEnimeEpisode(true)
-            } else {
+            // console.log('response', response)
+            if (response) {
                 // console.log("Setting Data", response);
                 setQuality(response);
+                setQualityLoading(false)
                 // checking the video sources if they have at least one quality and if none, navigate to info page
-                const sortedSources = response.sources.sort((a, b) => {
+                const sortedSources = response?.sources?.sort((a, b) => {
                     if (a.quality === '1080p') {
                         return -1;
                     }
@@ -86,7 +78,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
                     const indexB = qualityOrder.indexOf(b.quality);
                     return indexA - indexB;
                 });
-                const findQuality = sortedSources.find(
+                const findQuality = sortedSources?.find(
                     (source) =>
                         source.quality === '1080p'  ||
                         source.quality === '720p'   ||
@@ -96,12 +88,17 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
                         source.quality === 'default' 
                 );
                 if (findQuality) {
-                    setVideoSource(findQuality.url);
-                    setCurrentQuality(findQuality.quality);
+                    setVideoSource(findQuality?.url);
+                    setCurrentQuality(findQuality?.quality);
                 } else {
-                    console.log('Quality not found');
-                    navigate(`/info/${id}`)
-                }
+                    fetchSource();
+                    setFetchEnimeEpisode(true);
+                }  
+            } else {
+                console.log('error', response.response.status)
+                setTimeout(() => {
+                    fetchData();
+                }, 6000);
             }
         };
         fetchData();
@@ -191,6 +188,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult }) => {
                         onChange={handleQualityChange}
                         currentQuality={currentQuality}
                         fetchEnimeEpisode={fetchEnimeEpisode}
+                        qualityLoading={qualityLoading}
                     />
                 </ControlBar>
             </Player>

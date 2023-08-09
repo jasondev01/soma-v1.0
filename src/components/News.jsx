@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { corsUrl } from '../utilities/service';
+import useThemeContext from '../context/ThemeContext';
 
 const News = ({news}) => {
     const [ sliceShow, setSliceShow ] = useState(false);
+    const { theme } = useThemeContext();
 
     const handleShow = () => {
         setSliceShow(prev => !prev)
@@ -15,12 +17,12 @@ const News = ({news}) => {
                 onClick={handleShow}
             >
                 <h4>
-                    News
+                    Latest News
                 </h4>
             </div>
             <article className={`news__items ${sliceShow ? '' : 'd-none'}`}>
             {
-                news?.slice(0, 2)?.map((item, index) => {
+                news?.slice(0, 10)?.map((item, index) => {
                     const inputTimeString = item.uploadedAt;
                     const currentYear = new Date().getFullYear();
                     const firstCommaIndex = inputTimeString.indexOf(",");
@@ -43,15 +45,17 @@ const News = ({news}) => {
                                 />
                             </a>
                             <div className='news__title'>
-                                <h5>
-                                    <a href="#">
+                                <h5 >
+                                    <a href="#" className={theme ? 'light' : 'dark'}>
                                         {item.title}
                                     </a>
                                 </h5>
                                 
                             </div>
                             <div className='news__desc'>
-                                <p>{item.preview.intro} {' '} </p>
+                                <p >
+                                    {item.preview.intro} {' '} 
+                                </p>
                                 
                                 <a href={item.url} target='_blank' rel='noreferrer'>Read More</a>
                             </div>

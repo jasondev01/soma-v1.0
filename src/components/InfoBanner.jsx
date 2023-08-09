@@ -27,7 +27,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
         }
     };
 
-    console.log("anime data: ", data)
+    // console.log("anime data: ", data)
     const findCurrentEpisode = data.episodes.find(episode => episode.number === currentEpisode)
     const findFirstEpisode = data.episodes.find(episode => episode.number === firstEpisode)
 

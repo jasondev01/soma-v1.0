@@ -207,7 +207,7 @@ export const ApiProvider = ({ children }) => {
 
     const getSource = async (episode) => {
         try {
-            const response= await axios.get(`${corsUrl}/${animeUrl}/${episode}`)
+            const response= await axios.get(`${corsUrl}/${animeUrl}/source/${episode}`)
             return response;
         } catch(error) {
             console.log("Source", error.message)

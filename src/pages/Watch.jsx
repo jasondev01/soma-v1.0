@@ -9,7 +9,7 @@ import VideoPlayer from '../components/VideoPlayer';
 import Pageloader from '../components/Pageloader'
 import { Helmet } from 'react-helmet';
 import useThemeContext from '../context/ThemeContext';
-import useLocalStorage from '../hook/useLocalStorage';
+import useAuthContext from '../context/AuthContext';
 
 const Watch = () => {
     const [ episodeRange, setEpisodeRange  ] = useState([]);
@@ -20,10 +20,10 @@ const Watch = () => {
     const [ nextEpisodeId, setNextEpisodeId ] = useState();
     const [ prevEpisodeId, setPrevEpisodeId] = useState();
 
-    const { id, episode, episodeId } = useParams();
+    const { id, episode, episodeId } = useParams(); // id => slug
     const { fetchWatch } = useApiContext();
     const { theme } = useThemeContext();
-    const { setSomaWatched } = useLocalStorage()
+    const { addWatchedItem, removeWatchedItem, user } = useAuthContext();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,28 +35,20 @@ const Watch = () => {
                 setAnimeResult(response);
                 const episodes = response?.anime?.episodes;
                 setEpisodeRange(episodes);
-                console.log("episodes", episodes);
+                // console.log("episodes", episodes);
 
-                // const episodeData = {
-                //     id: id,
-                //     title: response?.anime?.title?.english,
-                //     image: response?.anime?.coverImage,
-                //     ep: { 
-                //         id: response?.id, 
-                //         number: response?.number 
-                //     },
-                // }
-                
-                // setSomaWatched(episodeData)
+                // add to database 
+                if (user && response?.id && response?.number) {
+                    addWatchedItem( response?.anime?.title?.english, id, response?.anime?.coverImage, response?.id, response?.number)
+                } else {
+                    console.log("There's an error addign to watched")
+                }
 
                 const matchingEpisode = episodes.find(episode => episode.number === response?.number)
-                console.log("matchingEpisode", matchingEpisode.number);
                 if (matchingEpisode) {
                     const currentEpisodeNumber = matchingEpisode.number;
                     const nextEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber + 1);
                     const prevEpisode = episodes.find((episode) => episode.number === currentEpisodeNumber - 1);
-                    console.log('Next Episode', nextEpisode)
-                    console.log('Prev Episode', prevEpisode)
                     setNextEpisode(nextEpisode?.number);
                     setPrevEpisode(prevEpisode?.number);
                     setNextEpisodeId(nextEpisode?.id)
