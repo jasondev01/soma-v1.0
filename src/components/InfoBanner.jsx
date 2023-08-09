@@ -29,7 +29,6 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
         }
     };
 
-
     console.log("anime data: ", data)
     const findCurrentEpisode = data.episodes.find(episode => episode.number === currentEpisode)
     const findFirstEpisode = data.episodes.find(episode => episode.number === firstEpisode)
@@ -177,18 +176,6 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                             </p>
                         </div>
                     }
-                    {/* {
-                        data?.trailer?.id &&
-                        <div className='anime__info'>
-                                <span>Trailer:</span>
-                                <a href={`${baseUrl}${data?.trailer?.id}`} 
-                                    target="__blank" rel="noreferrer"
-                                    style={{textDecoration: "underline"}}
-                                >
-                                    Watch Trailer
-                                </a>
-                        </div>
-                    } */}
                     <div className='anime__info'>
                         <span>Summary:</span>
                         <p>

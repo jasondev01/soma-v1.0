@@ -14,11 +14,7 @@ const News = ({news}) => {
                 news?.slice(0, 2).map((item, index) => {
                     const inputTimeString = item.uploadedAt;
                     const currentYear = new Date().getFullYear();
-
-                    // Find the index of the first comma
                     const firstCommaIndex = inputTimeString.indexOf(",");
-
-                    // Replace the comma with a space and the current year
                     const formattedTimeString = inputTimeString.substring(0, firstCommaIndex) +
                     ", " + currentYear + " at" + inputTimeString.substring(firstCommaIndex + 1);
                     return (

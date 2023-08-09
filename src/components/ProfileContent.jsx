@@ -13,10 +13,10 @@ const ProfileContent = ({bookmarked}) => {
             </ul>
             <div className='display__content'>
             {
-                bookmarked.map((item, index) => {
+                bookmarked?.map((item, index) => {
                     return (
                         <Link 
-                            to={`/info/${item.slug}`}
+                            to={`/info/${item?.slug}`}
                             key={index}
                             className='content__item'
                         >
