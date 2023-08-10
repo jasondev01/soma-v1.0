@@ -13,7 +13,7 @@ const ProfileContent = ({bookmarked, watched}) => {
     }
 
     const dataToShow = active === 'bookmarked' ? bookmarked?.slice().reverse() : watched?.slice().reverse();
-    const totalItems = dataToShow.length;
+    const totalItems = dataToShow?.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const handlePageChange = (newPage) => {
