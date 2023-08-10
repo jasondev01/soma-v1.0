@@ -187,7 +187,8 @@ const Header = () => {
                                         style={{
                                             opacity: profileOptionOpen ? '1' : '0',
                                             pointerEvents: profileOptionOpen ? '' : 'none',
-                                            bottom: user ? '-10.8rem' : '-7rem'
+                                            bottom: user ? '-10.8rem' : '-7rem',
+                                            left: user ? '-5.85rem' : '-5.4rem'
                                         }}
                                         ref={profileSettingRef}
                                     >   
