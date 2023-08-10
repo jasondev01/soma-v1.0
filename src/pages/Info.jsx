@@ -7,6 +7,7 @@ import InfoBanner from '../components/InfoBanner';
 import useApiContext from '../context/ApiContext';
 import Relations from '../components/Relations';
 import { Helmet } from 'react-helmet';
+import useAuthContext from '../context/AuthContext';
 
 const Info = () => {
     const [ data, setData ] = useState([])
@@ -14,13 +15,25 @@ const Info = () => {
     const [ episodeRange, setEpisodeRange ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false)
     const [ activeButton, setActiveButton ] = useState()
+    const [ isWatched, setIsWatched ] = useState([]);
     const { id } = useParams();
     const { fetchInfo } = useApiContext();
+    const { user } = useAuthContext();
+
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('User'));
+        if (user || storedUser) {
+            // if the user is logged in, update the states from user data
+            const response = user?.watched || storedUser?.watched
+            const matchedAnime = response?.find(item => item.slug === id)
+            setIsWatched(matchedAnime)
+        } 
+    }, [id])
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchInfo(id);
-            // console.log('info response', response)
+            console.log('info response', response)
             if(response) {
                 setData(response);
                 setEpisodeRange(response.episodes);
@@ -111,10 +124,11 @@ const Info = () => {
                 {
                     totalEpisodes > 200 ? (
                         displayedEpisodes.slice().reverse().map((item, index) => {
+                            const alreadyWatched = isWatched?.episodes?.find(e => e.number === item.number)
                             return (
                                 <Link to={`/watch/${id}/${item.number}/${item.id}`} 
                                     key={index} 
-                                    className='btn btn-primary'
+                                    className={`btn btn-primary ${alreadyWatched?.number === item.number ? 'active' : ''}`}
                                 >
                                     {
                                         item.number < 10 ? `EP 0${item.number}` : `EP ${item.number}`
@@ -124,10 +138,11 @@ const Info = () => {
                         })
                     ) : data.episodes && data.episodes.length > 0 ? (
                             episodeRange.slice().reverse().map((item, index) => {
+                                const alreadyWatched = isWatched?.episodes?.find(e => e.number === item.number)
                                 return (
                                     <Link to={`/watch/${id}/${item.number}/${item.id}`} 
                                         key={index} 
-                                        className='btn btn-primary'
+                                        className={`btn btn-primary ${alreadyWatched?.number === item.number ? 'active' : ''}`}
                                     >
                                     {
                                         item.number < 10 ? `EP 0${item.number}` : `EP ${item.number}`

@@ -8,11 +8,24 @@ import { Link } from "react-router-dom";
 import { breakpoints } from "../utilities/utility";
 import "../styles/episodes.css"
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import useAuthContext from "../context/AuthContext";
+import { useEffect, useState } from "react";
 
 const Episodes = ({animeResult, episodeNumber, id}) => {
-    
-    // console.log("Episodes Watch: ", animeResult)
-    // console.log("currentEpisode", currentEpisode)
+    const [ isWatched, setIsWatched ] = useState([]);
+    const { user } = useAuthContext();
+
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('User'));
+        if (user || storedUser) {
+            // if the user is logged in, update the isWatched state from user data
+            const response = user?.watched || storedUser?.watched
+            const matchedAnime = response?.find(item => item.slug === id)
+            setIsWatched(matchedAnime)
+        } 
+    }, [animeResult, episodeNumber, id])
+
+
     return (
         <>
         <Swiper className='container__episodes'
@@ -27,6 +40,7 @@ const Episodes = ({animeResult, episodeNumber, id}) => {
                 animeResult?.anime?.episodes &&
                 animeResult?.anime?.episodes.slice().reverse().map((item, index) => {
                     const currentEpisode = episodeNumber === item.number ? true : false;
+                    const alreadyWatched = isWatched?.episodes?.find(e => e.number === item.number)
                     return (
                         <SwiperSlide 
                             key={index} 
@@ -47,7 +61,7 @@ const Episodes = ({animeResult, episodeNumber, id}) => {
                                     </div>
                                 }
                                 <span 
-                                    className={`anime__episode__episode ${currentEpisode ? 'active' : ''}`}
+                                    className={`anime__episode__episode ${currentEpisode || alreadyWatched?.number === item.number ? 'active' : ''}`}
                                 >
                                     Episode {item.number}
                                 </span>

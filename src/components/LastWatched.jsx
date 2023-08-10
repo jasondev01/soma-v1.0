@@ -28,10 +28,10 @@ const LastWatched = () => {
     return (
         <>
             {
-                user?.name &&
+                user?.name && watchedData?.length > 0 &&
                 <section className="continue">
                     <div className='section__header'>
-                        <h2> {user?.name}, this is Last Watched Anime</h2>
+                        <h2> {user?.name}, this is your last watched anime</h2>
                     </div>
                     <Swiper className='container container__continue'
                         slidesPerView={5}

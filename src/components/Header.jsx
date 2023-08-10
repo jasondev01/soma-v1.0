@@ -5,8 +5,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import useThemeContext from '../context/ThemeContext'
 import { useEffect, useRef, useState } from 'react'
 import { BiSolidUser } from 'react-icons/bi'
-import { GiExitDoor } from 'react-icons/gi'
+import { GiExitDoor, GiEntryDoor } from 'react-icons/gi'
 import { IoIosSettings } from 'react-icons/io'
+import { FaUserCog } from 'react-icons/fa'
 
 import useAuthContext from '../context/AuthContext'
 
@@ -116,56 +117,6 @@ const Header = () => {
                             ref={menuRef}
                         >
                             <li>
-                            {
-                                user ? (
-                                    <div 
-                                        className={`profile__user
-                                            ${theme ? 'light' : 'dark'}
-                                            ${activeNav === 'profile' ? 'active__nav' : ''}
-                                        `}
-                                        onClick={() => handleNav('profile')}
-                                    >
-                                        <span 
-                                            className='user__name'
-                                            onClick={handleToggleOptions}
-                                        >
-                                            <IoIosSettings />  {user.name}
-                                        </span>
-                                        
-                                        <div className='profile__options'
-                                            style={{
-                                                opacity: profileOptionOpen ? '1' : '0',
-                                                pointerEvents: profileOptionOpen ? '' : 'none'
-                                            }}
-                                            ref={profileSettingRef}
-                                        >
-                                            <Link 
-                                                to='/profile'
-                                            >
-                                                <BiSolidUser/> Profile
-                                            </Link>
-                                            <Link 
-                                                to='/logout'
-                                                onClick={e => logoutUser(e)}
-                                            >
-                                                <GiExitDoor/> Logout
-                                            </Link>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <Link to="/login" 
-                                        className={`
-                                            ${theme ? 'light' : 'dark'}
-                                            ${activeNav === 'profile' ? 'active__nav' : ''}
-                                        `}
-                                        onClick={() => handleNav('profile')}
-                                    >
-                                        <BiSolidUser/> Login
-                                    </Link>
-                                )
-                            }
-                            </li>
-                            <li>
                                 <Link to="/latest" 
                                     className={`
                                         ${theme ? 'light' : 'dark'} 
@@ -191,9 +142,9 @@ const Header = () => {
                                 <Link to="/new-season" 
                                     className={`
                                         ${theme ? 'light' : 'dark'}
-                                        ${activeNav === 'ongoing' ? 'active__nav' : ''}
+                                        ${activeNav === 'new-season' ? 'active__nav' : ''}
                                     `}
-                                    onClick={() => handleNav('ongoing')}
+                                    onClick={() => handleNav('new-season')}
                                 >
                                     New Season
                                 </Link>
@@ -216,15 +167,77 @@ const Header = () => {
                             </button>
                            
                         </form>
-                        <button onClick={toggleTheme} className={`${theme ? 'light' : ''}`}>
-                            {
-                                theme ? (
-                                    <BsFillSunFill className='theme__icon'/>
-                                ) : (
-                                    <RxMoon className='theme__icon'/>
-                                )
-                            }
-                        </button>
+                        <ul className='user__nav'>
+                            <li>
+                                <div 
+                                    className={`profile__user 
+                                        ${theme ? 'light' : 'dark'}
+                                        ${activeNav === 'profile' ? 'active__nav' : ''}
+                                    `}
+                                    onClick={() => handleNav('profile')}
+                                >
+                                    <span 
+                                        className='user__name '
+                                        onClick={handleToggleOptions}
+                                    >
+                                        <FaUserCog />
+                                    </span>
+                                    
+                                    <div className='profile__options'
+                                        style={{
+                                            opacity: profileOptionOpen ? '1' : '0',
+                                            pointerEvents: profileOptionOpen ? '' : 'none',
+                                            bottom: user ? '-10.8rem' : '-7rem'
+                                        }}
+                                        ref={profileSettingRef}
+                                    >   
+                                        {
+                                            user &&
+                                            <Link 
+                                                to='/profile'
+                                            >
+                                                <BiSolidUser/> Profile
+                                            </Link>              
+                                        }
+                                        {
+                                            !user && 
+                                            <Link 
+                                                to='/login'
+                                            >
+                                                <GiEntryDoor/> Login
+                                            </Link>
+                                        }
+                                        <Link 
+                                            onClick={toggleTheme}
+                                        >
+                                            {
+                                                theme 
+                                                ? <span><RxMoon /> Theme</span>
+                                                : <span><BsFillSunFill /> Theme</span>
+                                            }
+                                        </Link>
+                                        {
+                                            user && 
+                                            <Link 
+                                                to='/setting'
+                                            >
+                                                <IoIosSettings/> Settings
+                                            </Link>
+                                        }
+                                        {
+                                            user &&
+                                            <Link 
+                                                to='/logout'
+                                                onClick={e => logoutUser(e)}
+                                            >
+                                                <GiExitDoor/> Logout
+                                            </Link>
+                                        }
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        
                     </div>
                 </div>
             </nav>

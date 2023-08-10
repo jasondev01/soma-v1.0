@@ -32,22 +32,16 @@ const Profile = () => {
         fetchNews()
         const storedUser = JSON.parse(localStorage.getItem('User'));
 
-        if (user) {
+        if (user || storedUser) {
             // if the user is logged in, update the states from user data
-            setBookmarked(user?.bookmarked);
-            setWatched(user?.watched)
-        } else if (storedUser) {
-            // If the user is not logged in but there's stored user data, update the bookmarked state from stored data
-            setBookmarked(storedUser?.bookmarked);
-            setWatched(storedUser?.watched)
+            setBookmarked(user?.bookmarked || storedUser?.bookmarked);
+            setWatched(user?.watched || storedUser?.watched )
         } else {
-            // If neither user nor stored data is available, navigate to "/"
+            // if there is no user, navigate to "/"
             navigate('/');
         }
     }, [])
 
-    console.log("watched", watched);
-    
     return (
         <>
         <section className='profile__page'>

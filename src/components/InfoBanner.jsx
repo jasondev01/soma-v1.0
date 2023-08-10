@@ -22,7 +22,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
             if (isBookmarked) {
                 removeBookmark(data?.slug);
             } else {
-                addBookmark(data?.slug, data?.title?.english, data?.coverImage, data?.currentEpisode);
+                addBookmark(data?.slug, data?.title?.english || data?.title?.romaji, data?.coverImage, data?.currentEpisode);
             }
         }
     };
