@@ -12,7 +12,7 @@ const ProfileContent = ({bookmarked, watched}) => {
         setCurrentPage(1);
     }
 
-    const dataToShow = active === 'bookmarked' ? bookmarked.slice().reverse() : watched.slice().reverse();
+    const dataToShow = active === 'bookmarked' ? bookmarked?.slice().reverse() : watched?.slice().reverse();
     const totalItems = dataToShow.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -22,10 +22,10 @@ const ProfileContent = ({bookmarked, watched}) => {
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const paginatedData = dataToShow.slice(startIndex, endIndex);
+    const paginatedData = dataToShow?.slice(startIndex, endIndex);
 
     useEffect(() => {
-        window.scrollTo({top: 270});
+        window.scrollTo({top: 70});
     }, [currentPage]);
 
     return (
@@ -75,7 +75,7 @@ const ProfileContent = ({bookmarked, watched}) => {
             </div>
             <div className="display__pagination">
                 {
-                    Array.from({ length: totalPages }, (_, index) => (
+                    Array?.from({ length: totalPages }, (_, index) => (
                         <button
                             key={index}
                             onClick={() => handlePageChange(index + 1)}
