@@ -42,7 +42,7 @@ const LastWatched = () => {
                         modules={[FreeMode, Navigation]}
                     >
                     {
-                        watchedData?.reverse().map((item, index) => {
+                        watchedData?.slice().reverse().map((item, index) => {
                             const current = item.episodes[item.episodes.length - 1]
                             return (
                                 <SwiperSlide 
