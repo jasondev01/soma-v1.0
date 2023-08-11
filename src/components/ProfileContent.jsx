@@ -5,12 +5,11 @@ import { Link } from "react-router-dom"
 const ProfileContent = ({bookmarked, watched}) => {
     const [ active, setActive ] = useState('bookmarked');
     const [ currentPage, setCurrentPage ] = useState(1);
-    const itemsPerPage = 20;
-
     const handleActive = (show) => {
         setActive(show);
         setCurrentPage(1);
     }
+    const itemsPerPage = 20;
 
     const dataToShow = active === 'bookmarked' ? bookmarked?.slice().reverse() : watched?.slice().reverse();
     const totalItems = dataToShow?.length;
@@ -80,7 +79,10 @@ const ProfileContent = ({bookmarked, watched}) => {
                             key={index}
                             onClick={() => handlePageChange(index + 1)}
                             disabled={currentPage === index + 1}
-                            className={`btn btn-primary ${currentPage === index + 1 ? 'active' : ''}`}
+                            className={`btn btn-primary 
+                                ${currentPage === index + 1 ? 'active' : ''}
+                                ${totalPages < 2 ? 'd-none' : ''}
+                            `}
                         >
                             {index + 1}
                         </button>

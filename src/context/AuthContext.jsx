@@ -1,5 +1,5 @@
 import { useContext, createContext, useCallback, useEffect, useState } from "react";
-import { baseUrl, corsUrl, postRequest } from "../utilities/service";
+import { baseUrl, postRequest, secretKey } from "../utilities/service";
 
 export const AuthContext = createContext();
 
@@ -12,6 +12,7 @@ export const AuthContextProvider = ({children}) => {
     const [ isLoginLoading, setIsLoginLoading ] = useState(false);
     const [ isUpdateProfileError, setIsUpdateProfileError ] = useState(null);
     const [ isUpdateProfileLoading, setIsUpdateProfileLoading ] = useState(false);
+    const [ userCount, setUserCount ] = useState();
 
 
     const [ registerInfo, setRegisterInfo ] = useState({
@@ -79,6 +80,7 @@ export const AuthContextProvider = ({children}) => {
     const logoutUser = useCallback(() => {
         localStorage.removeItem("User");
         setUser(null);
+        setUserCount(null)
     }, []);
 
     // add bookmark
@@ -155,6 +157,18 @@ export const AuthContextProvider = ({children}) => {
         }
     }, [user, setUser]);
 
+    const getCount = useCallback(async () => {
+        if (user) {
+            const { _id, email } = user;
+            const response = await postRequest(`${baseUrl}/users/user-count`, JSON.stringify({ userId: _id, email, secretKey }));
+            if (!response.error) {
+                setUserCount(response)
+            } else {
+                return console.log(response.error);
+            }
+        }
+    }, [user]);
+
     return (
         <AuthContext.Provider 
             value={{
@@ -182,7 +196,10 @@ export const AuthContextProvider = ({children}) => {
                 // update profile
                 isUpdateProfileLoading,
                 isUpdateProfileError,
-                updateProfile
+                updateProfile,
+                //get users count
+                getCount,
+                userCount
             }}
         >
             {children}

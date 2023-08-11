@@ -33,11 +33,9 @@ const Profile = () => {
         const storedUser = JSON.parse(localStorage.getItem('User'));
 
         if (user || storedUser) {
-            // if the user is logged in, update the states from user data
             setBookmarked(user?.bookmarked || storedUser?.bookmarked);
             setWatched(user?.watched || storedUser?.watched )
         } else {
-            // if there is no user, navigate to "/"
             navigate('/');
         }
     }, [])

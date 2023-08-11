@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useAuthContext from '../context/AuthContext'
 import '../styles/settingform.css'
 import { useNavigate } from 'react-router-dom';
+import { removeHtmlTags } from '../utilities/utility';
 
 const SettingForm = ({user, storedUser}) => {
     const { updateProfile, isUpdateProfileError, isUpdateProfileLoading, } = useAuthContext()
@@ -21,16 +22,29 @@ const SettingForm = ({user, storedUser}) => {
         e.preventDefault();
         if(formData.username.length < 5){
             return setError('Username must be 5 characters or longer')
+        } else {
+            const cleanUsername = removeHtmlTags(formData.username);
+            setFormData(prev => ({...prev, username: cleanUsername}))
         }
         if(formData.nickname.length < 5){
             return setError('Nickname name must be 3 characters or longer')
-        } 
+        } else {
+            const cleanNickname = removeHtmlTags(formData.image);
+            setFormData(prev => ({...prev, image: cleanNickname}))
+        }
         if(formData.image.length > 200){
             return setError('Image URL is too long')
+        } else {
+            const cleanImage = removeHtmlTags(formData.nickname);
+            setFormData(prev => ({...prev, nickname: cleanImage}))
         }
         if(formData.wallpaper.length > 200){
             return setError('Wallpaper URL is too long')
-        } 
+        } else {
+            const cleanWallpaper = removeHtmlTags(formData.wallpaper);
+            setFormData(prev => ({...prev, wallpaper: cleanWallpaper}))
+        }
+        
         console.log(`isUpdateProfileError`, isUpdateProfileError)
         updateProfile(formData);
         navigate('/profile')

@@ -9,6 +9,7 @@ import { GiExitDoor, GiEntryDoor } from 'react-icons/gi'
 import { IoIosSettings } from 'react-icons/io'
 import { FaUserCog } from 'react-icons/fa'
 import { BsBook } from 'react-icons/bs'
+import NoProfile from '../assets/no_profile.webp'
 
 import useAuthContext from '../context/AuthContext'
 
@@ -19,7 +20,7 @@ const Header = () => {
     const [ isMenuOpen, setIsMenuOpen ] = useState(false);
     const [ prevScrollPos, setPrevScrollPos ] = useState(0);
     const [ profileOptionOpen, setProfileOptionOpen ] = useState(false);
-    const { user, logoutUser } = useAuthContext();
+    const { user, logoutUser, userCount, getCount } = useAuthContext();
     const navigate = useNavigate();
     const menuRef = useRef(null);
     const profileSettingRef = useRef(null);
@@ -83,6 +84,10 @@ const Header = () => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, []);
+
+    useEffect(() => {
+        getCount()
+    }, [getCount, user, logoutUser])
 
     return (
         <header id='header'>
@@ -150,6 +155,18 @@ const Header = () => {
                                     New Season
                                 </Link>
                             </li>
+                            {
+                                userCount &&
+                                <li>
+                                    <Link
+                                        className={`
+                                            ${theme ? 'light' : 'dark'}
+                                        `}
+                                    >
+                                        Total Users: {userCount?.count < 10 ? `0${userCount?.count}` : userCount?.count}
+                                    </Link>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <div className='navbar__search'>
@@ -186,7 +203,7 @@ const Header = () => {
                                     {
                                         user ? 
                                         <img 
-                                            src={user?.profile?.image} 
+                                            src={user?.profile?.image || NoProfile} 
                                             alt={user?.profile?.nickname} 
                                         />
                                         : <FaUserCog />
