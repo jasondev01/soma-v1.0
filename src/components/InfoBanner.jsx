@@ -24,8 +24,11 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
             } else {
                 addBookmark(data?.slug, data?.title?.english || data?.title?.romaji, data?.coverImage, data?.currentEpisode);
             }
+        } else {
+            alert('Hey there guest! You need to login first to bookmark this')
         }
     };
+
 
     // console.log("anime data: ", data)
     const findCurrentEpisode = data.episodes.find(episode => episode.number === currentEpisode)

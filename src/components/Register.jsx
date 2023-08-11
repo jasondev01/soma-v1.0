@@ -15,7 +15,7 @@ const Register = () => {
     } = useAuthContext();
 
     if(user) {
-        navigate('/profile')
+        navigate('/')
     } 
 
     return (

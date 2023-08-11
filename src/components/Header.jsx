@@ -8,6 +8,7 @@ import { BiSolidUser } from 'react-icons/bi'
 import { GiExitDoor, GiEntryDoor } from 'react-icons/gi'
 import { IoIosSettings } from 'react-icons/io'
 import { FaUserCog } from 'react-icons/fa'
+import { BsBook } from 'react-icons/bs'
 
 import useAuthContext from '../context/AuthContext'
 
@@ -196,7 +197,7 @@ const Header = () => {
                                         style={{
                                             opacity: profileOptionOpen ? '1' : '0',
                                             pointerEvents: profileOptionOpen ? '' : 'none',
-                                            bottom: user ? '-10.8rem' : '-7rem',
+                                            bottom: user ? '-10.8rem' : '-8.5rem',
                                             left: user ? '-5.85rem' : '-5.4rem'
                                         }}
                                         ref={profileSettingRef}
@@ -217,6 +218,15 @@ const Header = () => {
 
                                             >
                                                 <GiEntryDoor/> Login
+                                            </Link>
+                                        }
+                                        {
+                                            !user && 
+                                            <Link 
+                                                to='/register'
+
+                                            >
+                                                <BsBook/> Register
                                             </Link>
                                         }
                                         <Link 

@@ -120,7 +120,7 @@
 }
 
 .info__recommendation {
-    margin-top: 3rem;
+    margin: 3rem auto;
 }
 
 .container__recommendation {
@@ -206,11 +206,6 @@
     .info__recommendation p {
         width: var(--container-md);
     }
-
-    /* .__range__info {
-        flex-direction: row;
-        justify-content: flex-start;
-    } */
 
 }
 

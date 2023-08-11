@@ -54,6 +54,8 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
             } else {
                 addBookmark(animeResult?.anime?.slug, animeResult?.anime.title?.english, animeResult?.anime?.coverImage, animeResult?.anime?.episodes?.length);
             }
+        } else {
+            alert('Hey there guest! You need to login first to bookmark this')
         }
     };
 

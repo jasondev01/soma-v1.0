@@ -33,7 +33,7 @@ const Info = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchInfo(id);
-            console.log('info response', response)
+            // console.log('info response', response)
             if(response) {
                 setData(response);
                 setEpisodeRange(response.episodes);
@@ -96,7 +96,11 @@ const Info = () => {
             firstEpisode={firstEpisode} 
             currentEpisode={currentEpisode}
         />
-        <section className='info__episodes'>
+        <section className='info__episodes'
+            style={{
+                marginBottom: data?.relations?.length === 0 ? '3rem' : ''
+            }}
+        >
             <h2>Episodes</h2>
             <div className='container container__episodes'>
                 <div className='__range__info'>

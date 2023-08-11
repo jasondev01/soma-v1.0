@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styles/loaderbox.css'
 import Rin from '../assets/logo.webp'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 const LoaderBox = () => {
     return (
@@ -13,25 +14,41 @@ const LoaderBox = () => {
                             <span className='loading'>
                                 Loading
                             </span>
-                            <img src={Rin} alt="This is one of the artwork of https://www.instagram.com/animeglowart/" />
+                            <LazyLoadImage
+                                effect='blur' 
+                                src={Rin} 
+                                alt="This is one of the artwork animeglowart" 
+                            />
                         </span>
                         <span style={{ '--i': 1 }} className="cube-span">
                             <span className='loading'>
                                 Loading
                             </span>
-                            <img src={Rin} alt="This is one of the artwork of https://www.instagram.com/animeglowart/" />
+                            <LazyLoadImage
+                                effect='blur' 
+                                src={Rin} 
+                                alt="This is one of the artwork animeglowart" 
+                            />
                         </span>
                         <span style={{ '--i': 2 }} className="cube-span">
                             <span className='loading'>
                                 Loading
                             </span>
-                            <img src={Rin} alt="This is one of the artwork of https://www.instagram.com/animeglowart/" />
+                            <LazyLoadImage
+                                effect='blur' 
+                                src={Rin} 
+                                alt="This is one of the artwork animeglowart" 
+                            />
                         </span>
                         <span style={{ '--i': 3 }} className="cube-span">
                             <span className='loading'>
                                 Loading
                             </span>
-                            <img src={Rin} alt="This is one of the artwork of https://www.instagram.com/animeglowart/" />
+                            <LazyLoadImage
+                                effect='blur' 
+                                src={Rin} 
+                                alt="This is one of the artwork animeglowart" 
+                            />
                         </span>
                     </div>
                 </div>

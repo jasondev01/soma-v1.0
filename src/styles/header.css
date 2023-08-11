@@ -60,7 +60,6 @@
     flex-direction: column;
     gap: .8rem;
     position: absolute;
-    
     background: var(--primary-bg);
     padding: 1rem 1.2rem;
     width: max-content;

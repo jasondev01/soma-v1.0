@@ -15,7 +15,7 @@ const Login = () => {
     } = useAuthContext();
 
     if(user) {
-        navigate('/profile')
+        navigate('/')
     }
 
     return (
