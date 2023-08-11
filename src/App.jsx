@@ -15,6 +15,7 @@ import Profile from "./pages/Profile"
 import LoginPage from "./pages/LoginPage"
 import AuthLayout from "./layouts/AuthLayout"
 import RegisterPage from "./pages/RegisterPage"
+import SettingPage from "./pages/SettingPage"
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
                         <Route path="/pass/:id/:epNum" element={<PassingData />} />
 
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/edit-profile" element={<SettingPage />} />
                         <Route path='*' element={<Navigate to='/' />} />
                     </Route>
                     <Route element={<AuthLayout />} >

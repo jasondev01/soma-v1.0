@@ -72,7 +72,10 @@
     width: 75%;
     margin: 8px auto 15px;
     background: var(--rating);
-    padding: 5px
+    padding: 5px;
+    color: var(--primary);
+    text-align: center;
+    font-size: 14px;
 }
 
 /******* Media Query (1024px) *******/

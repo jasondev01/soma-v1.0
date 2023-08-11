@@ -47,14 +47,13 @@ const Profile = () => {
         <section className='profile__page'>
             <div 
                 style={{
-                    background: `url(${NoWallpaper}) no-repeat`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center top'
+                    // backgroundSize: 'cover',
+                    background: `url(${user?.profile?.wallpaper || NoWallpaper}) no-repeat center center/cover`
                 }}
                 className='profile__wallpaper'
             >
                 {/* <img 
-                    src={NoWallpaper} 
+                    src={user?.profile?.wallpaper} 
                     alt="profile__wallpaper"
                     height={100}
                     width={100}
@@ -63,14 +62,14 @@ const Profile = () => {
             <div className='profile__item'>
                 <div className='profile__image'>
                     <img 
-                        src={NoProfile} 
+                        src={user?.profile?.image || NoProfile} 
                         height={100}
                         width={100}
                     />
                 </div>
                 <div className='profile__info'>
                     <h2 className={`${theme ? 'light' : 'dark'}`}>
-                        {user?.name}
+                        {user?.profile?.username || user?.name}
                     </h2>
                     <p className={`profile__email ${theme ? 'light' : 'dark'}`}>
                         {user?.email}

@@ -3,7 +3,7 @@ import '../styles/footer.css'
 
 const Footer = () => {
     return (
-        <section id='footer' className='footer'>
+        <footer id='footer' className='footer'>
             <div className='container container__footer'>
                 <h1>
                     <Link to='/'>
@@ -48,7 +48,7 @@ const Footer = () => {
                     <li>2023</li>
                 </ul>
             </div>
-        </section>
+        </footer>
     )
 }
 

@@ -168,7 +168,9 @@ const Header = () => {
                            
                         </form>
                         <ul className='user__nav'>
-                            <li>
+                            <li
+                                onClick={handleToggleOptions}
+                            >
                                 <div 
                                     className={`profile__user 
                                         ${theme ? 'light' : 'dark'}
@@ -177,10 +179,17 @@ const Header = () => {
                                     onClick={() => handleNav('profile')}
                                 >
                                     <span 
-                                        className='user__name '
+                                        className='user__name'
                                         onClick={handleToggleOptions}
                                     >
-                                        <FaUserCog />
+                                    {
+                                        user ? 
+                                        <img 
+                                            src={user?.profile?.image} 
+                                            alt={user?.profile?.nickname} 
+                                        />
+                                        : <FaUserCog />
+                                    }
                                     </span>
                                     
                                     <div className='profile__options'
@@ -196,6 +205,7 @@ const Header = () => {
                                             user &&
                                             <Link 
                                                 to='/profile'
+                                                onClick={() => handleNav('profile')}
                                             >
                                                 <BiSolidUser/> Profile
                                             </Link>              
@@ -204,6 +214,7 @@ const Header = () => {
                                             !user && 
                                             <Link 
                                                 to='/login'
+
                                             >
                                                 <GiEntryDoor/> Login
                                             </Link>
@@ -220,7 +231,8 @@ const Header = () => {
                                         {
                                             user && 
                                             <Link 
-                                                to='/setting'
+                                                to='/edit-profile'
+                                                onClick={() => handleNav('profile')}
                                             >
                                                 <IoIosSettings/> Settings
                                             </Link>
@@ -228,7 +240,7 @@ const Header = () => {
                                         {
                                             user &&
                                             <Link 
-                                                to='/logout'
+                                                to='/'
                                                 onClick={e => logoutUser(e)}
                                             >
                                                 <GiExitDoor/> Logout

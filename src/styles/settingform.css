@@ -1,0 +1,37 @@
+.container__setting {
+    min-height: 671px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.setting__form {
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    background: var(--overlay-bg-secondary);
+    display: flex;
+    flex-direction: column;
+}
+
+.setting__form h2  {
+    text-align: center;
+    margin: 1.2rem auto;
+}
+
+.form__control input,
+.setting__form button {
+    min-height: 25px;
+    width: 100%;
+    padding: 15px;
+    margin: 0.4rem auto;
+}
+
+.setting__form button {
+    margin: 1.2rem auto;
+}
+
+.setting__form .error__message {
+    width: 100%;
+}

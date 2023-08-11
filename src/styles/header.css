@@ -45,8 +45,14 @@
 .user__name {
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
     cursor: pointer;
+    height: 32px;
+    width: 32px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px 1px var(--secondary);
+    border: 1px solid var(--secondary);
+    border-radius: 50%;
 }
 
 .profile__options {
@@ -129,8 +135,9 @@
     text-shadow: var(--text-shadow);
 }
 
-.user__nav {
-    margin-left: 0.5rem;
+.user__nav li {
+    cursor: pointer;
+    border-radius: 50%;
 }
 
 .hamburger {
@@ -178,12 +185,11 @@
     }
 
     .navbar__search {
-        gap: 5px;
         justify-content: flex-end;
     }
 
     .search__form {
-        width: 77%;
+        width: 74%;
     }
 
     .hamburger {
@@ -207,6 +213,10 @@
 
 /*************** MEDIAY QUERIES (600px) *************/
 @media screen and (max-width: 600px ){
+    .navbar__search {
+        gap: 6px;
+    }
+
     .navbar__home {
         gap: 5px;
     }

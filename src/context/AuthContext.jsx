@@ -10,6 +10,9 @@ export const AuthContextProvider = ({children}) => {
     const [ isRegisterLoading, setIsRegisterLoading ] = useState(false);
     const [ loginError, setLoginError ] = useState(null);
     const [ isLoginLoading, setIsLoginLoading ] = useState(false);
+    const [ isUpdateProfileError, setIsUpdateProfileError ] = useState(null);
+    const [ isUpdateProfileLoading, setIsUpdateProfileLoading ] = useState(false);
+
 
     const [ registerInfo, setRegisterInfo ] = useState({
         name: "",
@@ -20,9 +23,6 @@ export const AuthContextProvider = ({children}) => {
         email: "",
         password: ""
     });
-
-    // console.log(user)
-    // console.log(loginInfo)
 
     useEffect(() => {
         const user = localStorage.getItem("User")
@@ -133,6 +133,28 @@ export const AuthContextProvider = ({children}) => {
         }
     }, [user]);
 
+    const updateProfile = useCallback(async (formData) => {
+        setIsUpdateProfileLoading(true);
+        setIsUpdateProfileError(null);
+        if (user) {
+            const { _id } = user;
+            const { image, wallpaper, username, nickname, toggleNews } = formData;
+            const response = await postRequest(`${baseUrl}/users/update-profile`, JSON.stringify({ userId: _id, image, wallpaper, username, nickname, toggleNews }));
+            if (!response.error) {
+                const updatedUser = {
+                    ...user,
+                    profile: response.user.profile,
+                };
+                setUser(updatedUser);
+                setIsUpdateProfileLoading(false);
+                localStorage.setItem('User', JSON.stringify(updatedUser));
+            } else {
+                setIsUpdateProfileLoading(false);
+                return setIsUpdateProfileError(response);
+            }
+        }
+    }, [user, setUser]);
+
     return (
         <AuthContext.Provider 
             value={{
@@ -157,6 +179,10 @@ export const AuthContextProvider = ({children}) => {
                 // watched
                 addWatchedItem,
                 removeWatchedItem,
+                // update profile
+                isUpdateProfileLoading,
+                isUpdateProfileError,
+                updateProfile
             }}
         >
             {children}

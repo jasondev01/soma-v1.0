@@ -1,10 +1,9 @@
 .profile__page {
     margin-top: 0;
-    /* min-height: 550px; */
 }
 
 .profile__wallpaper {
-    height: 380px;
+    height: 520px;
 }
 
 .profile__item {
@@ -198,6 +197,10 @@
 
 /******* Media Query (1024px) *******/
 @media screen and (max-width: 1024px) {
+    .profile__wallpaper {
+        height: 420px;
+    }
+    
     .display__content,
     .news__items {
         grid-template-columns: repeat(4, 1fr);
@@ -225,7 +228,7 @@
 /******* Media Query (600px) *******/
 @media screen and (max-width: 600px) {
     .profile__wallpaper {
-        height: 280px;
+        height: 330px;
     }
 
     .profile__item {
