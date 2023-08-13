@@ -40,6 +40,11 @@ const Profile = () => {
         }
     }, [])
 
+    // Calculate the total count of episodes across all watched items
+    const totalEpisodeCount = watched.reduce((total, index) => {
+        return total + index.episodes.length;
+    }, 0);
+  
     return (
         <>
         <section className='profile__page'>
@@ -81,7 +86,7 @@ const Profile = () => {
                     {
                         watched?.length > 0 && 
                         <span className={`${theme ? 'light' : 'dark'} `}>
-                            Watched: {watched?.length < 10 ? `0${watched?.length}` : watched?.length}
+                            Watched: {totalEpisodeCount}
                         </span>
                     }
                 </div>
