@@ -95,6 +95,7 @@ const Watch = () => {
                     name='description' 
                     content={animeResult?.description || animeResult?.title}
                 />
+                <meta property="og:image" content={animeResult?.coverImage} />
             </Helmet>
             <div className="container container__episode">
                 <ul className="breadcrumbs">

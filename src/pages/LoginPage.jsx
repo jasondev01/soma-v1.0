@@ -1,11 +1,19 @@
-import { Link, useNavigate } from "react-router-dom"
 import Login from "../components/Login"
 import login from '../assets/login.webp'
+import { Helmet } from "react-helmet"
 
 const LoginPage = () => {
     
     return (
         <>
+        <Helmet>
+            <title>soma - Login </title>
+            <meta 
+                name='description' 
+                content="soma's Login Page"
+            />
+            <meta property="og:image" content={login} />
+        </Helmet>
         <main 
             style={{
                 height: '100vh',

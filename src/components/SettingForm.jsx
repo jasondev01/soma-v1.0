@@ -20,14 +20,14 @@ const SettingForm = ({user, storedUser}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(formData.username.length < 5){
-            return setError('Username must be 5 characters or longer')
+        if(formData.username.length < 5 || formData.username.length > 10){
+            return setError('Username must be 5-10 characters long')
         } else {
             const cleanUsername = removeHtmlTags(formData.username);
             setFormData(prev => ({...prev, username: cleanUsername}))
         }
-        if(formData.nickname.length < 5){
-            return setError('Nickname name must be 3 characters or longer')
+        if(formData.nickname.length < 5 || formData.nickname.length > 10){
+            return setError('Nickname name must be 3-10 characters long')
         } else {
             const cleanNickname = removeHtmlTags(formData.image);
             setFormData(prev => ({...prev, image: cleanNickname}))

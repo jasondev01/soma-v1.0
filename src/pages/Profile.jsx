@@ -8,6 +8,7 @@ import useAuthContext from '../context/AuthContext'
 import News from '../components/News'
 import ProfileContent from '../components/ProfileContent'
 import useThemeContext from '../context/ThemeContext';
+import { Helmet } from 'react-helmet'
 
 const Profile = () => {
     const [ news, setNews ] = useState([]);
@@ -48,6 +49,14 @@ const Profile = () => {
     return (
         <>
         <section className='profile__page'>
+            <Helmet>
+                <title>{user?.profile?.username || user?.name}'s Profile </title>
+                <meta 
+                    name='description' 
+                    content={user?.profile?.username || user?.name}
+                />
+                <meta property="og:image" content={user?.profile?.wallpaper || NoWallpaper} />
+            </Helmet>
             <div 
                 style={{
                     // backgroundSize: 'cover',

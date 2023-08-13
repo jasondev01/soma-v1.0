@@ -90,6 +90,7 @@ const Info = () => {
                 name='description' 
                 content={`${data?.title.romaji || data?.title?.english} details`}
             />
+            <meta property="og:image" content={data?.coverImage} />
         </Helmet>
         <InfoBanner 
             data={data} 

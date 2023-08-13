@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Helmet } from 'react-helmet'
 import register from '../assets/register.webp'
 import Register from "../components/Register"
 
@@ -6,6 +6,14 @@ const RegisterPage = () => {
 
     return (
         <>
+        <Helmet>
+            <title>soma - Register </title>
+            <meta 
+                name='description' 
+                content="soma's Register Page"
+            />
+            <meta property="og:image" content={register} />
+        </Helmet>
         <main 
             style={{
                 height: '100vh',
