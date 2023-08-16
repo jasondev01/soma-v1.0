@@ -35,13 +35,13 @@ const About = () => {
 
     return (
         <section className="search__page">
-            {/* <Helmet>
+            <Helmet>
                 <title>soma - Search Results {`for ${query}`} </title>
                 <meta 
                     name='description' 
                     content="Search for an anime or movie to watch or stream"
                 />
-            </Helmet> */}
+            </Helmet>
             <div className='section__header'>
                 <h2>
                     Search Results &nbsp;

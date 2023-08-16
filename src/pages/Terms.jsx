@@ -1,8 +1,16 @@
+import { Helmet } from 'react-helmet'
 import '../styles/dmca.css'
 
 const Terms = () => {
     return (
         <section className='terms'>
+            <Helmet>
+                <title>soma - Terms of Service </title>
+                <meta 
+                    name='description' 
+                    content="soma's Terms of Service"
+                />
+            </Helmet>
             <div className='container container__terms'>
                 <h2>
                     Terms of Service

@@ -3,6 +3,7 @@ import background from "../assets/login.webp"
 import useAuthContext from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { Helmet } from "react-helmet"
 
 const SettingPage = () => {
     const { user } = useAuthContext();
@@ -32,6 +33,13 @@ const SettingPage = () => {
                 zIndex: '9999'
             }}
         >
+             <Helmet>
+                <title>Update your Profile</title>
+                <meta 
+                    name='description' 
+                    content="Update your profile by provide URL of the image source"
+                />
+            </Helmet>
             <SettingForm user={user} storedUser={storedUser} />
         </section>
     )

@@ -50,7 +50,7 @@ const Profile = () => {
         <>
         <section className='profile__page'>
             <Helmet>
-                <title>{user?.profile?.username || user?.name}'s Profile </title>
+                <title>{`${user?.profile?.username || user?.name}`}'s Profile </title>
                 <meta 
                     name='description' 
                     content={user?.profile?.username || user?.name}

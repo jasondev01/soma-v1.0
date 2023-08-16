@@ -1,8 +1,16 @@
+import { Helmet } from 'react-helmet'
 import '../styles/dmca.css'
 
 const DMCA = () => {
     return (
         <section className='dmca'>
+            <Helmet>
+                <title>soma - DMCA </title>
+                <meta 
+                    name='description' 
+                    content="soma's Digital Millennium Copyright Act"
+                />
+            </Helmet>
             <div className='container container__dmca'>
                 <h2>
                     DMCA Takedown Request

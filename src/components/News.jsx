@@ -7,60 +7,65 @@ const News = ({news}) => {
     const { theme } = useThemeContext();
 
     return (
-        <div className='display__news'>
-            <div className="news__header">
-                <h4>
-                    Latest News
-                </h4>
-            </div>
-            <div className="news__items">
-            {
-                news?.slice(0, 5)?.map((item) => {
-                    const inputTimeString = item.uploadedAt;
-                    const currentYear = new Date().getFullYear();
-                    const firstCommaIndex = inputTimeString.indexOf(",");
-                    const formattedTimeString = inputTimeString.substring(0, firstCommaIndex) +
-                    ", " + currentYear + " at" + inputTimeString.substring(firstCommaIndex + 1);
-                    return (
-                        <article 
-                            className="news__item"
-                            key={item.title}
-                        >
-                            <a 
-                                href={item.url} target='_blank' rel='noreferrer' 
-                                className='news__image'
+        <>
+        {
+            news &&
+            <div className='display__news'>
+                <div className="news__header">
+                    <h4>
+                        Latest News
+                    </h4>
+                </div>
+                <div className="news__items">
+                {
+                    news?.slice(0, 5)?.map((item) => {
+                        const inputTimeString = item.uploadedAt;
+                        const currentYear = new Date().getFullYear();
+                        const firstCommaIndex = inputTimeString.indexOf(",");
+                        const formattedTimeString = inputTimeString.substring(0, firstCommaIndex) +
+                        ", " + currentYear + " at" + inputTimeString.substring(firstCommaIndex + 1);
+                        return (
+                            <article 
+                                className="news__item"
+                                key={item.title}
                             >
-                                <LazyLoadImage 
-                                    src={`${corsUrl}/${item.thumbnail}`} 
-                                    alt={item.title} 
-                                    height={100}
-                                    width={100}
-                                />
-                            </a>
-                            <div className='news__title'>
-                                <h5 >
-                                    <a href="#" className={theme ? 'light' : 'dark'}>
-                                        {item.title}
-                                    </a>
-                                </h5>
-                                
-                            </div>
-                            <div className='news__desc'>
-                                <p >
-                                    {item.preview.intro} {' '} 
-                                </p>
-                                <a href={item.url} target='_blank' rel='noreferrer'>Read More</a>
-                                
-                            </div>
-                            <span className='news__published'>
-                                {formattedTimeString}
-                            </span>
-                        </article>
-                    )
-                })
-            }
+                                <a 
+                                    href={item.url} target='_blank' rel='noreferrer' 
+                                    className='news__image'
+                                >
+                                    <LazyLoadImage 
+                                        src={`${corsUrl}/${item.thumbnail}`} 
+                                        alt={item.title} 
+                                        height={100}
+                                        width={100}
+                                    />
+                                </a>
+                                <div className='news__title'>
+                                    <h5 >
+                                        <a href={item.url} className={theme ? 'light' : 'dark'}>
+                                            {item.title}
+                                        </a>
+                                    </h5>
+                                    
+                                </div>
+                                <div className='news__desc'>
+                                    <p >
+                                        {item.preview.intro} {' '} 
+                                    </p>
+                                    <a href={item.url} target='_blank' rel='noreferrer'>Read More</a>
+                                    
+                                </div>
+                                <span className='news__published'>
+                                    {formattedTimeString}
+                                </span>
+                            </article>
+                        )
+                    })
+                }
+                </div>
             </div>
-        </div>
+        }
+        </>
     )
 }
 

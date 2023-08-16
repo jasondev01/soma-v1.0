@@ -6,14 +6,7 @@ const LoginPage = () => {
     
     return (
         <>
-        <Helmet>
-            <title>soma - Login </title>
-            <meta 
-                name='description' 
-                content="soma's Login Page"
-            />
-            <meta property="og:image" content={login} />
-        </Helmet>
+        
         <main 
             style={{
                 height: '100vh',
@@ -23,6 +16,14 @@ const LoginPage = () => {
             }}
             className="login__register"
         >
+            <Helmet>
+                <title>soma - Login </title>
+                <meta 
+                    name='description' 
+                    content="soma's Login Page"
+                />
+                <meta property="og:image" content={login} />
+            </Helmet>
             <div 
                 className="container"
                 style={{
