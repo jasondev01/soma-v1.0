@@ -1,5 +1,5 @@
 .anime__episodes {
-    height: 320px;
+    height: 270px;
     position: relative;
     box-shadow: var(--box-shadow);
     margin-bottom: 10px;
@@ -37,6 +37,6 @@
 /********  MEDIA QUERY (800px)  *********/
 @media screen and (max-width: 800px) {
     .anime__episodes {
-        height: 240px;
+        height: 200px;
     }
 }

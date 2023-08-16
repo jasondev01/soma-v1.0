@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LoaderBox from './LoaderBox';
 import useApiContext from '../context/ApiContext';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { LazyLoadComponent, LazyLoadImage } from 'react-lazy-load-image-component';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -57,6 +57,7 @@ const Hero = () => {
 
     return (
         <>
+            <LazyLoadComponent>
             <section id='hero' className='hero'>
             {
                 !pageLoad ? (
@@ -168,6 +169,7 @@ const Hero = () => {
                 )
             }
             </section>
+            </LazyLoadComponent>
         </>
     )
 }
