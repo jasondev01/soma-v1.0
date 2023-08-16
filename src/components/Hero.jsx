@@ -57,7 +57,6 @@ const Hero = () => {
 
     return (
         <>
-            <LazyLoadComponent>
             <section id='hero' className='hero'>
             {
                 !pageLoad ? (
@@ -92,84 +91,84 @@ const Hero = () => {
                                         }} 
                                         key={index}
                                     >
-                                        <div className="container container__hero" >
-                                            <article className='anime__hero__info'>
-                                                <span className='random__tag'>
-                                                    TOP AIRING
-                                                </span>
-                                                <div className='anime__hero__title'>
-                                                    <h3>
-                                                        {item?.title?.english || item?.title?.romaji}
-                                                
-                                                    </h3>
-                                                    <ul className='anime__status__episodes'>
-                                                        <li>
-                                                            { item?.year }
-                                                        </li>
-                                                        <li>
-                                                            { 
-                                                                item.format === "MOVIE" 
-                                                                ? "Movie"
-                                                                : item.status === 'RELEASING' ? 'Ongoing' : `${item.status}`
-                                                            }
-                                                        </li>
-                                                            {   
-                                                                item?.format === "TV" 
-                                                                ? `Episode: ${item.currentEpisode } `
-                                                                : item?.format
-                                                            }
-                                                    </ul>
+                                        <LazyLoadComponent>
+                                            <div className="container container__hero" >
+                                                <article className='anime__hero__info'>
+                                                    <span className='random__tag'>
+                                                        TOP AIRING
+                                                    </span>
+                                                    <div className='anime__hero__title'>
+                                                        <h3>
+                                                            {item?.title?.english || item?.title?.romaji}
+                                                    
+                                                        </h3>
+                                                        <ul className='anime__status__episodes'>
+                                                            <li>
+                                                                { item?.year }
+                                                            </li>
+                                                            <li>
+                                                                { 
+                                                                    item.format === "MOVIE" 
+                                                                    ? "Movie"
+                                                                    : item.status === 'RELEASING' ? 'Ongoing' : `${item.status}`
+                                                                }
+                                                            </li>
+                                                                {   
+                                                                    item?.format === "TV" 
+                                                                    ? `Episode: ${item.currentEpisode } `
+                                                                    : item?.format
+                                                                }
+                                                        </ul>
+                                                    </div>
+                                                    <p>
+                                                        { item.description }
+                                                    </p>
+                                                    <div className='hero__butons'>
+                                                        {
+                                                            episodeId ? (
+                                                                <Link to={`/watch/${item?.slug}/${item?.currentEpisode}/${episodeId}`} 
+                                                                    className='btn btn-primary'
+                                                                >
+                                                                    Watch Now
+                                                                </Link>
+                                                            ) : (
+                                                                <button
+                                                                    className='btn btn-primary'
+                                                                    disabled
+                                                                >
+                                                                    Loading...
+                                                                </button>
+                                                            )
+                                                        }
+                                                        <Link to={`/info/${item?.slug}`} className='btn'>
+                                                            Read Info
+                                                        </Link>
+                                                    </div>
+                                                    
+                                                </article>
+                                                <div className='anime__hero__cover'>
+                                                    <LazyLoadImage
+                                                        effect='blur' 
+                                                        src={`https://cors.zimjs.com/${item.coverImage}`} 
+                                                        alt={item?.title?.romaji} 
+                                                    />
                                                 </div>
-                                                <p>
-                                                    { item.description }
-                                                </p>
-                                                <div className='hero__butons'>
-                                                    {
-                                                        episodeId ? (
-                                                            <Link to={`/watch/${item?.slug}/${item?.currentEpisode}/${episodeId}`} 
-                                                                className='btn btn-primary'
-                                                            >
-                                                                Watch Now
-                                                            </Link>
-                                                        ) : (
-                                                            <button
-                                                                className='btn btn-primary'
-                                                                disabled
-                                                            >
-                                                                Loading...
-                                                            </button>
-                                                        )
-                                                    }
-                                                    <Link to={`/info/${item?.slug}`} className='btn'>
-                                                        Read Info
-                                                    </Link>
-                                                </div>
-                                                
-                                            </article>
-                                            <div className='anime__hero__cover'>
-                                                <LazyLoadImage
-                                                    effect='blur' 
-                                                    src={`https://cors.zimjs.com/${item.coverImage}`} 
-                                                    alt={item?.title?.romaji} 
-                                                />
                                             </div>
-                                        </div>
-                                        
+                                        </LazyLoadComponent>
                                     </SwiperSlide>
                                 )
                             })
                         }
                         <div className="autoplay-progress" slot="container-end">
-                                            <svg viewBox="0 0 48 48" ref={progressCircle}>
-                                                <circle cx="24" cy="24" r="20"></circle>
-                                            </svg>
-                                            <span ref={progressContent}></span>
-                                        </div>
+                            <svg viewBox="0 0 48 48" ref={progressCircle}>
+                                <circle cx="24" cy="24" r="20"></circle>
+                            </svg>
+                            <span ref={progressContent}></span>
+                        </div>
                     </Swiper>
                 )
             }
             </section>
-            </LazyLoadComponent>
         </>
     )
 }
