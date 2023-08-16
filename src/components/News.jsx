@@ -42,7 +42,8 @@ const News = ({news}) => {
                                 </a>
                                 <div className='news__title'>
                                     <h5 >
-                                        <a href={item.url} className={theme ? 'light' : 'dark'}>
+                                        <a href={item.url} target='_blank' rel='noreferrer'
+                                            className={theme ? 'light' : 'dark'}>
                                             {item.title}
                                         </a>
                                     </h5>
