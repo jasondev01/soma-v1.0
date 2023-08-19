@@ -36,7 +36,7 @@ const LastWatched = () => {
                     <Swiper className='container container__continue'
                         slidesPerView={5}
                         breakpoints={lastWatchedBreakPoints}
-                        spaceBetween={25}
+                        spaceBetween={16}
                         navigation={true}
                         freeMode={true}
                         modules={[FreeMode, Navigation]}

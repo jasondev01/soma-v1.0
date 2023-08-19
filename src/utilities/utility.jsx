@@ -27,19 +27,19 @@ export const breakpoints = {
 export const lastWatchedBreakPoints = {
     1025: {
         slidesPerView: 5,
-        spaceBetween: 25,
+        spaceBetween: 16,
     },
     769: {
         slidesPerView: 4,
-        spaceBetween: 25,
+        spaceBetween: 16,
     },
     601: {
         slidesPerView: 3,
-        spaceBetween: 10,
+        spaceBetween: 16,
     },
     0: {
         slidesPerView: 2,
-        spaceBetween: 10,
+        spaceBetween: 16,
     },
 }
 
