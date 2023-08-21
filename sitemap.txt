@@ -1,0 +1,10 @@
+https://soma-chill.vercel.app/
+https://soma-chill.vercel.app/register/
+https://soma-chill.vercel.app/login/
+https://soma-chill.vercel.app/latest/
+https://soma-chill.vercel.app/popular/
+https://soma-chill.vercel.app/proile/
+https://soma-chill.vercel.app/new-season/
+https://soma-chill.vercel.app/search/*
+https://soma-chill.vercel.app/info/*
+https://soma-chill.vercel.app/watch/*
