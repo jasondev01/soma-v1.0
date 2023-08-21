@@ -1,3 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow: 
+
+SITEMAP: https://soma-chill.vercel.app/sitemap.txt
