@@ -29,7 +29,7 @@ const Watch = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchWatch(id, episode);
-            console.log("Watch Page", response);
+            // console.log("Watch Page", response);
             if(response) {
                 setIsEpisodeLoading(true);
                 setAnimeResult(response);
