@@ -14,7 +14,6 @@ import { removeDuplicates } from '../utilities/utility';
 
 const Hero = () => {
     const [ data, setData ] = useState([]);
-    const [ info, setInfo ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
     const { fetchHero, fetchInfo } = useApiContext()
 
@@ -44,17 +43,8 @@ const Hero = () => {
         setPageLoad(false);
     }, [])
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (data.length === 0) return
-            for (const item of data) {
-                const response = await fetchInfo(item?.slug);
-                setInfo(prevInfo => removeDuplicates([...prevInfo, response]));
-            }
-        }
-        fetchData();
-    }, [data])
-
+    // console.log("Banner Info", info);
+    const sortedData = [...data].sort((a, b) => b.averageScore - a.averageScore)
     return (
         <>
             <section id='hero' className='hero'>
@@ -75,11 +65,9 @@ const Hero = () => {
                         onAutoplayTimeLeft={onAutoplayTimeLeft}
                     >
                         {
-                            Object.values(data)?.slice(0, 10)?.map((item, index) => {
-                                const matchEpisode = info?.find(info => info.slug === item?.slug)
-                                const matchEpisodeId = matchEpisode?.episodes?.find(match => match.number === item?.currentEpisode)
-                                const episodeId = matchEpisodeId?.id
-
+                            sortedData?.slice(0, 10)?.map((item, index) => {
+                                const matchEpisode = item.episodes?.find(ep => ep.number === item?.currentEpisode)
+                                const episodeId = matchEpisode?.id
                                 return (
                                     <SwiperSlide
                                         style={{

@@ -29,6 +29,7 @@ const Latest = () => {
         setPageLoad(false)
     }, []);
 
+
     return (
         <section id='latest' className='latest'>
             <div className='section__header'>

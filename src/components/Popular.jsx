@@ -35,6 +35,7 @@ const Trending = () => {
     }, []);
 
     const filteredData = data.filter(item => item !== highestRatedAnime && item?.slug !== 'mushoku-tensei:-jobless-reincarnation-season-2');
+    const sortedData = [...filteredData].sort((a, b) => b.averageScore - a.averageScore)
     return (
         <section id='trending' className='trending'>
             <div className='section__header'>
@@ -86,7 +87,7 @@ const Trending = () => {
                         )
                     }
                     {
-                        filteredData.slice(0, 16).map( (item, index) => {
+                        sortedData.slice(0, 16).map( (item, index) => {
                             return (
                                 <div key={index} className='trending__card__container'>
                                     <Link to={`/info/${item?.slug}`} className="trending__card">

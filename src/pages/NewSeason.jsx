@@ -9,20 +9,24 @@ import PageLoader from '../components/Pageloader'
 import { Helmet } from 'react-helmet';
 
 const OngoingPage = () => {
-    const [ latestOngoing, setLatestOngoing ] = useState([]);
-    const [ data, setData ] = useState([]);
+    const [ newSeason, setNewSeason ] = useState([]);
     const { theme } = useThemeContext();
-    const { fetchLatestOngoing, fetchInfoOngoing } = useApiContext();
+    const { fetchNewSeason } = useApiContext();
 
     const currentSeason = getCurrentSeason();
     const currentYear = new Date().getFullYear()
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchLatestOngoing();
-            // console.log('Latest Ongoing', response);
+            const response = await fetchNewSeason();
+            // console.log('Latest Ongoing', response);    
             if (response) {
-                setLatestOngoing(response);
+                const clean = response.filter(item => 
+                    item.countryOfOrigin !== 'CN' && 
+                    item.status === 'RELEASING' &&
+                    item.season === currentSeason
+                )
+                setNewSeason(clean);
             } else {
                 setTimeout(() => {
                     fetchData();
@@ -31,23 +35,6 @@ const OngoingPage = () => {
         }
         fetchData();
     }, [])
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (latestOngoing.length === 0) return
-            for (const item of latestOngoing) {
-                const response = await fetchInfoOngoing(item?.anime?.slug);
-                if (
-                    response.countryOfOrigin !== 'CN' && 
-                    response.season === currentSeason && 
-                    response.status === "RELEASING"
-                ) 
-                    {setData(prevData => removeDuplicates([...prevData, response]));
-                }
-            }
-        }
-        fetchData();
-    }, [latestOngoing])
 
     // console.log("Current Ongoing: ", data)
 
@@ -66,7 +53,7 @@ const OngoingPage = () => {
                 </h2>
             </div>
             {
-                data.length <= 3 ? (
+                newSeason.length <= 3 ? (
                     <PageLoader />
                 ) : (
                     <div className="container container__ongoing">
@@ -75,7 +62,7 @@ const OngoingPage = () => {
                         </h3>
                         <div className="ongoing__items">
                             {
-                                data.map((item, index) => {
+                                newSeason?.map((item, index) => {
                                     const formattedTime = convertTime(item?.next);
                                     return (
                                         <div key={index} className="ongoing__item">
@@ -91,9 +78,6 @@ const OngoingPage = () => {
                                                             {item.title.romaji || item.title.english}
                                                         </Link>
                                                     </h4>
-                                                    {/* <span>
-                                                        {item.studios[0]}
-                                                    </span> */}
                                                 </div>
                                                 {   
                                                     item.averageScore >= 70 ? (

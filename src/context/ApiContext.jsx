@@ -1,7 +1,7 @@
 import { useContext, createContext} from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
-import { animeUrl, consUrl, corsUrl } from "../utilities/service";
+import { animeUrl, consUrl, corsUrl, baseUrl } from "../utilities/service";
 
 const ApiContext = createContext();
 
@@ -9,17 +9,18 @@ export const ApiProvider = ({ children }) => {
 
     const fetchHero = async () => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/popular?page=1&perPage=15`, {
+            const response = await axios.get(`${baseUrl}/hero`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             })
-            const responseData = response?.data?.data;
+            const responseData = response?.data;
             const cleanData = responseData.map(item => ({
                 ...item,
                 description: removeHtmlTags(item.description)
             }))
+            // console.log("Hero Context", cleanData);
             return cleanData;
         } catch(error) {
             console.log("Hero Context", error.message);
@@ -29,13 +30,13 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatest = async () => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/recent?page=1&perPage=30`,  {
+            const response = await axios.get(`${baseUrl}/latest`,  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             })
-            const responseData = response?.data?.data;
+            const responseData = response?.data;
             // console.log("Latest Context", responseData)
             const filteredData = responseData.filter(item => item?.anime?.countryOfOrigin !== 'CN')
             return filteredData;
@@ -47,17 +48,18 @@ export const ApiProvider = ({ children }) => {
 
     const fetchPopular = async () => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/popular?page=1&perPage=20`, {
+            const response = await axios.get(`${baseUrl}/popular`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             });
-            const responseData = response.data.data;
+            const responseData = response?.data;
             const cleanData = responseData.map(item => ({
                 ...item,
                 description: removeHtmlTags(item.description)
             }))
+            // console.log("Popular Context", cleanData)
             return cleanData;
         } catch(error) {
             console.log("Popular Context", error.message);
@@ -117,7 +119,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatestPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/recent?page=${pageNumber}&perPage=20&provider=gogoanime`, {
+            const response = await axios.get(`${corsUrl}/${animeUrl}/recent?page=${pageNumber}&perPage=30&provider=gogoanime`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -171,39 +173,27 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
-    const fetchLatestOngoing = async () => {
+    const fetchNewSeason = async () => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/recent?page=1&perPage=100`, {
+            const response = await axios.get(`${baseUrl}/new-season`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             });
-            const responseData = response?.data?.data;
-            return responseData;
+            const responseData = response?.data;
+            const cleanData = responseData.map(item => ({
+                ...item,
+                description: removeHtmlTags(item.description)
+            }))
+            // console.log("Latest Ongoing Context", cleanData);
+            return cleanData;
         } catch(error) {
             console.log("Latest Ongoing", error.message);
             return false;
         }
     }
 
-    const fetchInfoOngoing = async (id) => {
-        try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            });
-            const responseData = response.data;
-            const cleanedDescription = removeHtmlTags(responseData.description);
-            const cleanData = { ...responseData, description: cleanedDescription };
-            return cleanData;
-        } catch(error) {
-            console.log("Latest Info Ongoing", error.message);
-            return false;
-        }
-    }
 
     const getSource = async (episode) => {
         try {
@@ -237,8 +227,7 @@ export const ApiProvider = ({ children }) => {
             fetchLatestPage,
             fetchPopularPage,
             fetchSearch,
-            fetchLatestOngoing,
-            fetchInfoOngoing,
+            fetchNewSeason,
             getNews,
             getSource,
         }}>

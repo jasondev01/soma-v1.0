@@ -43,6 +43,14 @@ export const lastWatchedBreakPoints = {
     },
 }
 
+export const handleRangeClick = (setDisplayedEpisodes, setActiveButton, episodeRange, range, rangeLabel) => {
+    const start = range.start;
+    const end = range.end;
+    const episodesToShow = episodeRange.slice(start, end + 1);
+    setDisplayedEpisodes(episodesToShow);
+    setActiveButton(rangeLabel)
+};
+
 export const formatDate = (info) => {
     let formattedDate = '';
     if (info.airedAt) {

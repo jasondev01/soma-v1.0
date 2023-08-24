@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import '../styles/info.css'
 import { Link, useParams } from 'react-router-dom';
 import Pageloader from '../components/Pageloader';
-import Recommendation from '../components/Recommendation';
+// import Recommendation from '../components/Recommendation';
 import InfoBanner from '../components/InfoBanner';
 import useApiContext from '../context/ApiContext';
 import Relations from '../components/Relations';
 import { Helmet } from 'react-helmet';
 import useAuthContext from '../context/AuthContext';
+import { handleRangeClick } from '../utilities/utility';
 
 const Info = () => {
     const [ data, setData ] = useState([])
@@ -24,8 +25,8 @@ const Info = () => {
         const storedUser = JSON.parse(localStorage.getItem('User'));
         if (user || storedUser) {
             // if the user is logged in, update the states from user data
-            const response = user?.watched || storedUser?.watched
-            const matchedAnime = response?.find(item => item.slug === id)
+            const response = user?.watched || storedUser?.watched;
+            const matchedAnime = response?.find(item => item.slug === id);
             setIsWatched(matchedAnime)
         } 
     }, [id])
@@ -67,19 +68,7 @@ const Info = () => {
         range.push({ start, end });
     }
 
-    const handleRangeClick = (range, rangeLabel) => {
-        const start = range.start;
-        const end = range.end;
-        const episodesToShow = episodeRange.slice(start, end + 1);
-        setDisplayedEpisodes(episodesToShow);
-        setActiveButton(rangeLabel)
-    };
-
-    const difference = (a, b) => {
-        return a - b;
-    }
-
-    const firstEpisode = difference(data?.episodes.length, data?.episodes.length) + 1;
+    const firstEpisode = (data?.episodes.length - data?.episodes.length) + 1;
     const currentEpisode = data?.currentEpisode;
 
     return (
@@ -115,7 +104,13 @@ const Info = () => {
                                 : "btn btn-primary"
                             }
                             key={index} 
-                            onClick={() => handleRangeClick(range, `${range.start + 1}-${range.end + 1}`)}
+                            onClick={() => handleRangeClick(
+                                    setDisplayedEpisodes,
+                                    setActiveButton,
+                                    episodeRange, 
+                                    range, 
+                                    `${range.start + 1}-${range.end + 1}`
+                                )}
                         >
                             {`${range.start + 1}-${range.end + 1}`}
                         </button>

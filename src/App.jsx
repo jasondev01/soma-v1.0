@@ -22,7 +22,7 @@ function App() {
 
     return (
         <>
-            <Analytics />
+            {/* <Analytics /> */}
             <Router>
                 <Routes>
                     <Route element={<MainLayout />} > 
