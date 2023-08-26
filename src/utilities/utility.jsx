@@ -8,38 +8,38 @@ export const removeHtmlTags = (htmlString) => {
 export const breakpoints = {
     1440: {
         slidesPerView: 5,
-        spaceBetween: 25,
+        spaceBetween: 19.2,
     },
     1200: {
         slidesPerView: 4,
-        spaceBetween: 25,
+        spaceBetween: 19.2,
     },
     600: {
         slidesPerView: 3,
-        spaceBetween: 25,
+        spaceBetween: 19.2,
     },
     0: {
         slidesPerView: 2,
-        spaceBetween: 10,
+        spaceBetween: 19.2,
     },
 }
 
 export const lastWatchedBreakPoints = {
     1025: {
         slidesPerView: 5,
-        spaceBetween: 16,
+        spaceBetween: 19.2,
     },
     769: {
         slidesPerView: 4,
-        spaceBetween: 16,
+        spaceBetween: 19.2,
     },
     601: {
         slidesPerView: 3,
-        spaceBetween: 16,
+        spaceBetween: 19.2,
     },
     0: {
         slidesPerView: 2,
-        spaceBetween: 16,
+        spaceBetween: 19.2,
     },
 }
 
