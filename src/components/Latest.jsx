@@ -17,8 +17,7 @@ const Latest = () => {
             const response = await fetchLatest();
             if(response) {
                 setPageLoad(true)
-                const limitResponse = response.slice(0, 15)
-                setData(limitResponse);
+                setData(response.slice(0, 15));
             } else {
                 setTimeout(() => {
                     fetchData();

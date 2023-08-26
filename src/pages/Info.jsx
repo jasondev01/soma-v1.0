@@ -9,15 +9,16 @@ import Relations from '../components/Relations';
 import { Helmet } from 'react-helmet';
 import useAuthContext from '../context/AuthContext';
 import { handleRangeClick } from '../utilities/utility';
+import Countdown from '../components/Countdown';
 
 const Info = () => {
-    const [ data, setData ] = useState([])
+    const [ data, setData ] = useState(null)
     const [ displayedEpisodes, setDisplayedEpisodes ] = useState([]);
     const [ episodeRange, setEpisodeRange ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false)
     const [ activeButton, setActiveButton ] = useState()
     const [ isWatched, setIsWatched ] = useState([]);
-    const { id } = useParams();
+    const { id: slug } = useParams();
     const { fetchInfo } = useApiContext();
     const { user } = useAuthContext();
 
@@ -26,14 +27,14 @@ const Info = () => {
         if (user || storedUser) {
             // if the user is logged in, update the states from user data
             const response = user?.watched || storedUser?.watched;
-            const matchedAnime = response?.find(item => item.slug === id);
+            const matchedAnime = response?.find(item => item.slug === slug);
             setIsWatched(matchedAnime)
         } 
-    }, [id])
+    }, [slug])
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchInfo(id);
+            const response = await fetchInfo(slug);
             // console.log('info response', response)
             if(response) {
                 setData(response);
@@ -48,7 +49,7 @@ const Info = () => {
         }
         fetchData();
         setPageLoad(false)
-    }, [id])
+    }, [slug])
 
     // Pageload
     if(!pageLoad) {
@@ -56,7 +57,7 @@ const Info = () => {
     }
 
     // get total episodes and range
-    const totalEpisodes = episodeRange.length;
+    const totalEpisodes = episodeRange?.length;
     const rangeSize = 200; 
     const numRanges = Math.ceil(totalEpisodes / rangeSize);
 
@@ -68,16 +69,17 @@ const Info = () => {
         range.push({ start, end });
     }
 
-    const firstEpisode = (data?.episodes.length - data?.episodes.length) + 1;
+    const firstEpisode = (data?.episodes?.length - data?.episodes?.length) + 1;
     const currentEpisode = data?.currentEpisode;
-
+    const nextEpisode = data.next;
+    
     return (
         <>
         <Helmet>
-            <title>soma - {data?.title.romaji || data?.title?.english} </title>
+            <title>soma - {data?.title?.romaji || data?.title?.english} </title>
             <meta 
                 name='description' 
-                content={`${data?.title.romaji || data?.title?.english} details`}
+                content={`${data?.title?.romaji || data?.title?.english} details`}
             />
             <meta property="og:image" content={data?.coverImage} />
         </Helmet>
@@ -92,6 +94,7 @@ const Info = () => {
             }}
         >
             <h2>Episodes</h2>
+            <Countdown nextEpisode={nextEpisode} />
             <div className='container container__episodes'>
                 <div className='__range__info'>
                 {
@@ -123,10 +126,10 @@ const Info = () => {
                 >
                 {
                     totalEpisodes > 200 ? (
-                        displayedEpisodes.slice().reverse().map((item, index) => {
+                        displayedEpisodes?.slice().reverse().map((item, index) => {
                             const alreadyWatched = isWatched?.episodes?.find(e => e.number === item.number)
                             return (
-                                <Link to={`/watch/${id}/${item.number}/${item.id}`} 
+                                <Link to={`/watch/${slug}/${item.number}/${item.id}`} 
                                     key={index} 
                                     className={`btn btn-primary ${alreadyWatched?.number === item.number ? 'active' : ''}`}
                                 >
@@ -136,11 +139,11 @@ const Info = () => {
                                 </Link> 
                             )
                         })
-                    ) : data.episodes && data.episodes.length > 0 ? (
-                            episodeRange.slice().reverse().map((item, index) => {
+                    ) : data?.episodes && data?.episodes?.length > 0 ? (
+                            episodeRange?.slice().reverse().map((item, index) => {
                                 const alreadyWatched = isWatched?.episodes?.find(e => e.number === item.number)
                                 return (
-                                    <Link to={`/watch/${id}/${item.number}/${item.id}`} 
+                                    <Link to={`/watch/${slug}/${item.number}/${item.id}`} 
                                         key={index} 
                                         className={`btn btn-primary ${alreadyWatched?.number === item.number ? 'active' : ''}`}
                                     >

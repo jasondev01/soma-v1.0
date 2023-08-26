@@ -10,16 +10,14 @@ import { Helmet } from 'react-helmet';
 const LatestPage = () => {
     const [ data, setData ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
-    const [ pageNumber, setPageNumber ] = useState(1);
-    const { fetchLatestPage } = useApiContext()
+    const { fetchLatest } = useApiContext()
  
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchLatestPage(pageNumber);
+            const response = await fetchLatest();
             // console.log("Latest Page", response)
             if(response) {
-                const filterdResponse = response.filter(item => item?.anime?.countryOfOrigin !== 'CN')
-                setData(filterdResponse);
+                setData(response);
                 setPageLoad(true)
             } else {
                 setPageLoad(false)
@@ -30,15 +28,11 @@ const LatestPage = () => {
         }
         fetchData();
         setPageLoad(false)
-    }, [pageNumber])
+    }, [])
 
     if(!pageLoad) {
         return <Pageloader />
     }
-
-    const handlePageClick = (page) => {
-        setPageNumber(page);
-    };
 
     return (
         <section className="latest__page" >
@@ -96,9 +90,6 @@ const LatestPage = () => {
                             )
                         })
                     }
-                </div>
-                <div className="pagination">
-                    <PaginationButtons handlePageClick={handlePageClick} pageNumber={pageNumber} />
                 </div>
             </div>
         </section>

@@ -22,11 +22,11 @@ const OngoingPage = () => {
             // console.log('Latest Ongoing', response);    
             if (response) {
                 const clean = response.filter(item => 
-                    item.countryOfOrigin !== 'CN' && 
                     item.status === 'RELEASING' &&
                     item.season === currentSeason
                 )
-                setNewSeason(clean);
+                const processedData = clean.sort((a, b) => new Date(b.next) - new Date(a.next))
+                setNewSeason(processedData);
             } else {
                 setTimeout(() => {
                     fetchData();
@@ -35,8 +35,6 @@ const OngoingPage = () => {
         }
         fetchData();
     }, [])
-
-    // console.log("Current Ongoing: ", data)
 
     return (
         <section className='ongoing__page'>

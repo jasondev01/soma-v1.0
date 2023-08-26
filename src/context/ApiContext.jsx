@@ -1,7 +1,7 @@
 import { useContext, createContext} from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
-import { animeUrl, consUrl, corsUrl, baseUrl } from "../utilities/service";
+import { animeUrl, consUrl, corsUrl, baseUrl, postRequest } from "../utilities/service";
 
 const ApiContext = createContext();
 
@@ -36,10 +36,9 @@ export const ApiProvider = ({ children }) => {
                     'Accept': 'application/json',
                 }
             })
-            const responseData = response?.data;
+            const responseData = response?.data?.data;
             // console.log("Latest Context", responseData)
-            const filteredData = responseData.filter(item => item?.anime?.countryOfOrigin !== 'CN')
-            return filteredData;
+            return responseData;
         } catch(error) {
             console.log("Latest Context", error.message);
             return false;
@@ -67,21 +66,18 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
-    const fetchInfo = async (id) => {
+    const fetchInfo = async (slug) => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            })
+            // const response = await postRequest(`${baseUrl}/info/`, JSON.stringify({ slug }))
+            const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${slug}`)
             const responseData = response.data;
             const cleanedDescription = removeHtmlTags(responseData.description);
             const cleanData = { ...responseData, description: cleanedDescription };
+            // console.log("Info Context", cleanData);
             return cleanData;
         } catch(error) {
             console.log("Info Context", error.message);
-            return false;
+            return true;
         }
     }
 
@@ -114,22 +110,6 @@ export const ApiProvider = ({ children }) => {
         } catch (error) {
             console.log("Episode Watch Context", error.message);
             return error;
-        }
-    }
-
-    const fetchLatestPage = async (pageNumber) => {
-        try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/recent?page=${pageNumber}&perPage=30&provider=gogoanime`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            })
-            const responseData = response?.data?.data;
-            return responseData;
-        } catch(error) {
-            console.log("Latest Page Context", error.message);
-            return false;
         }
     }
 
@@ -224,7 +204,6 @@ export const ApiProvider = ({ children }) => {
             fetchInfo,
             fetchWatch,
             fetchEpisodeWatch,
-            fetchLatestPage,
             fetchPopularPage,
             fetchSearch,
             fetchNewSeason,
