@@ -18,10 +18,11 @@ const LastWatched = () => {
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('User'));
         if (user) {
-            // if the user is logged in, update the watched state from user data
-            setWatchedData(user?.watched)
+            const latestWatched = user?.watched?.sort((a, b) => new Date(b?.updatedAt) - new Date(a?.updatedAt))
+            setWatchedData(latestWatched)
         } else {
-            setWatchedData(storedUser?.watched)
+            const latestWatched = storedUser?.watched?.sort((a, b) => new Date(b?.updatedAt) - new Date(a?.updatedAt))
+            setWatchedData(latestWatched)
         } 
     }, [])
 
@@ -41,7 +42,7 @@ const LastWatched = () => {
                         modules={[FreeMode, Navigation]}
                     >
                     {
-                        watchedData?.slice().reverse().map((item, index) => {
+                        watchedData?.map((item, index) => {
                             const current = item.episodes[item.episodes.length - 1]
                             return (
                                 <SwiperSlide 
@@ -64,9 +65,6 @@ const LastWatched = () => {
                                                 Episode {current.number}
                                             </span>
                                         </div>
-                                        {/* <span className="continue__rating">
-                                            HOT
-                                        </span> */}
                                     </Link >
                                 </SwiperSlide>
                             )

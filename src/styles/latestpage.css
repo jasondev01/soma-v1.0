@@ -7,7 +7,7 @@
 
 .latest__page__card {
     position: relative;
-    height: 320px;
+    height: 270px;
     box-shadow: var(--box-shadow);
     border: 1px solid var(--primary-bg);
     transition: var(--transition);

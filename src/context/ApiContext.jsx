@@ -1,7 +1,7 @@
 import { useContext, createContext} from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
-import { animeUrl, consUrl, corsUrl, baseUrl, postRequest } from "../utilities/service";
+import { animeUrl, consUrl, corsUrl, baseUrl, postRequest, restSecret, sampleSecret } from "../utilities/service";
 
 const ApiContext = createContext();
 
@@ -9,13 +9,13 @@ export const ApiProvider = ({ children }) => {
 
     const fetchHero = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/hero`, {
+            const response = await axios.post(`${baseUrl}/hero`, JSON.stringify({ restSecret }), {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             })
-            const responseData = response?.data;
+            const responseData = response.data.data;
             const cleanData = responseData.map(item => ({
                 ...item,
                 description: removeHtmlTags(item.description)
@@ -30,13 +30,13 @@ export const ApiProvider = ({ children }) => {
 
     const fetchLatest = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/latest`,  {
+            const response = await axios.post(`${baseUrl}/latest`, JSON.stringify({ restSecret }), {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                }
+                },
             })
-            const responseData = response?.data?.data;
+            const responseData = response.data.data;
             // console.log("Latest Context", responseData)
             return responseData;
         } catch(error) {
@@ -47,13 +47,13 @@ export const ApiProvider = ({ children }) => {
 
     const fetchPopular = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/popular`, {
+            const response = await axios.post(`${baseUrl}/popular`, JSON.stringify({ restSecret }), {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             });
-            const responseData = response?.data;
+            const responseData = response.data;
             const cleanData = responseData.map(item => ({
                 ...item,
                 description: removeHtmlTags(item.description)
@@ -68,13 +68,13 @@ export const ApiProvider = ({ children }) => {
 
     const fetchInfo = async (slug) => {
         try {
-            // const response = await postRequest(`${baseUrl}/info/`, JSON.stringify({ slug }))
-            const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${slug}`)
+            const response = await postRequest(`${baseUrl}/info/`, JSON.stringify({ slug }))
+            // const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${slug}`)
             const responseData = response.data;
-            const cleanedDescription = removeHtmlTags(responseData.description);
-            const cleanData = { ...responseData, description: cleanedDescription };
-            // console.log("Info Context", cleanData);
-            return cleanData;
+            // const cleanedDescription = removeHtmlTags(responseData.description);
+            // const cleanData = { ...responseData, description: cleanedDescription };
+            // console.log("Info Context", responseData);
+            return responseData;
         } catch(error) {
             console.log("Info Context", error.message);
             return true;
@@ -155,13 +155,13 @@ export const ApiProvider = ({ children }) => {
 
     const fetchNewSeason = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/new-season`, {
+            const response = await axios.post(`${baseUrl}/new-season`, JSON.stringify({ restSecret }), {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 }
             });
-            const responseData = response?.data;
+            const responseData = response.data.data;
             const cleanData = responseData.map(item => ({
                 ...item,
                 description: removeHtmlTags(item.description)
@@ -173,7 +173,6 @@ export const ApiProvider = ({ children }) => {
             return false;
         }
     }
-
 
     const getSource = async (episode) => {
         try {

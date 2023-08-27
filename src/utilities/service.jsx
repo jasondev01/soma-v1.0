@@ -3,6 +3,8 @@ export const animeUrl = import.meta.env.VITE_API_ANIME_URL
 export const corsUrl = import.meta.env.VITE_API_CORS_URL
 export const baseUrl = import.meta.env.VITE_API_SOMA_USERS
 export const secretKey = import.meta.env.VITE_API_SECRET_KEY
+export const restSecret = import.meta.env.VITE_API_REST_SECRET
+export const sampleSecret = import.meta.env.VITE_API_SAMPLE_SECRET
 
 // login and register user service
 

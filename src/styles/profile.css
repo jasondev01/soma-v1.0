@@ -57,7 +57,7 @@
 .display__content {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
+    gap: 1.2rem;
     margin-bottom: 1.7rem;
     min-height: 520px;
 }

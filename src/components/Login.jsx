@@ -1,9 +1,13 @@
-import React from 'react'
+import { useState } from 'react'
 import '../styles/form.css'
 import { Link, useNavigate } from 'react-router-dom'
 import useAuthContext from '../context/AuthContext';
+import { AiOutlineUser } from 'react-icons/ai'
+import { BiSolidLock } from 'react-icons/bi'
+import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa'
 
 const Login = () => {
+    const [ showPassword, setShowPassword ] = useState(false);
     const navigate = useNavigate();
     const { 
         loginUser, 
@@ -13,9 +17,13 @@ const Login = () => {
         isLoginLoading,
         user
     } = useAuthContext();
-
+    
     if(user) {
         navigate('/')
+    }
+
+    const handleShowPassword = () => {
+        setShowPassword(prev => !prev)
     }
 
     return (
@@ -26,28 +34,44 @@ const Login = () => {
             <form
                 className='__form'
                 onSubmit={loginUser}
+                autoComplete="on"
             >
                 <label>
                     <input type="text" required
-                        placeholder='Email address'
+                        placeholder='Username or Email address'
+                        autoComplete="username"
                         onChange={e => updateLoginInfo({
                             ...loginInfo,
-                            email: e.target.value
+                            identifier: e.target.value
                         })}
                     />
+                    <AiOutlineUser className='input__icon'/>
                 </label>
                 <label>
-                    <input type="password" required
+                    <input type={`${showPassword ? 'text' : 'password'}`} 
+                        required
                         placeholder='Password'
+                        // value={loginInfo.password}
+                        autoComplete="password"
                         onChange={e => updateLoginInfo({
                             ...loginInfo,
                             password: e.target.value
                         })}
                     />
+                    <BiSolidLock className='input__icon'/>
+                    <FaRegEye
+                        className={`eye__icon ${showPassword ? 'd-none' : ''}`}
+                        onClick={handleShowPassword}
+                    />
+                    <FaRegEyeSlash
+                        className={`eye__icon ${showPassword ? '' : 'd-none'}`}
+                        onClick={handleShowPassword}
+                    />
                 </label>
                 <button 
                     type='submit'
                     className='btn btn-primary form__button'
+                    disabled={isLoginLoading}
                 >
                 {
                     isLoginLoading 

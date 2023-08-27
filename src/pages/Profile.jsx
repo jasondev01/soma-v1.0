@@ -14,6 +14,7 @@ const Profile = () => {
     const [ news, setNews ] = useState([]);
     const [ bookmarked, setBookmarked ] = useState([])
     const [ watched, setWatched ] = useState([])
+    const [ currentUser, setCurrentUser ] = useState(null)
     const { getNews } = useApiContext();
     const { user } = useAuthContext();
     const { theme } = useThemeContext();
@@ -35,11 +36,17 @@ const Profile = () => {
 
         if (user || storedUser) {
             setBookmarked(user?.bookmarked || storedUser?.bookmarked);
-            setWatched(user?.watched || storedUser?.watched )
+            setWatched(
+                user?.watched.sort((a, b) => new Date(b?.updatedAt) - new Date(a?.updatedAt)) 
+                || 
+                storedUser?.watched.sort((a, b) => new Date(b?.updatedAt) - new Date(a?.updatedAt)) 
+            )
+            setCurrentUser(storedUser)
         } else {
             navigate('/');
         }
     }, [])
+
 
     // Calculate the total count of episodes across all watched items
     const totalEpisodeCount = watched.reduce((total, index) => {
@@ -95,7 +102,7 @@ const Profile = () => {
                     {
                         watched?.length > 0 && 
                         <span className={`${theme ? 'light' : 'dark'} `}>
-                            Watched: {totalEpisodeCount}
+                            Watched: {user.totalWatched || currentUser.totalWatched}
                         </span>
                     }
                 </div>

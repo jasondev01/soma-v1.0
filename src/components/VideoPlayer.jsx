@@ -36,6 +36,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
 
     const fetchSource = async () => {
         const response = await getSource(animeResult.sources[0].id);
+        if (!response) alert('Video Link is Broken');
         setVideoSource(response.data.url)
     }
 
@@ -98,6 +99,8 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
                 }  
             } else {
                 console.log('error', response.response.status)
+                fetchSource();
+                setFetchEnimeEpisode(true);
                 setTimeout(() => {
                     fetchData();
                 }, 6000);

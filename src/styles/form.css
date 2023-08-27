@@ -38,6 +38,7 @@
     overflow: hidden;
     box-shadow: var(--box-shadow);
     font-family: 'Outfit', sans-serif;
+    position: relative;
 }
 
 .form__button {
@@ -46,8 +47,24 @@
 
 .__form label input{
     width: 100%;
-    padding: 20px;
+    padding: 20px 35px;
     height: 20px;
+}
+
+.input__icon,
+.eye__icon {
+    position: absolute;
+    left: 10px;
+    bottom: 30%;
+    color: var(--primary-bg);
+    z-index: 99;
+}
+
+.eye__icon {
+    left: 282px!important;
+    bottom: 30%;
+    width: max-content;
+    cursor: pointer;
 }
 
 ::placeholder {

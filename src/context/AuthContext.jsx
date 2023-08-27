@@ -1,5 +1,5 @@
 import { useContext, createContext, useCallback, useEffect, useState } from "react";
-import { baseUrl, postRequest, secretKey } from "../utilities/service";
+import { baseUrl, postRequest, secretKey, } from "../utilities/service";
 
 export const AuthContext = createContext();
 
@@ -11,6 +11,7 @@ export const AuthContextProvider = ({children}) => {
     const [ loginError, setLoginError ] = useState(null);
     const [ isLoginLoading, setIsLoginLoading ] = useState(false);
     const [ isUpdateProfileError, setIsUpdateProfileError ] = useState(null);
+    const [ errorUpdateMessage, setErrorUpdateMessage ] = useState(null);
     const [ isUpdateProfileLoading, setIsUpdateProfileLoading ] = useState(false);
     const [ userCount, setUserCount ] = useState();
 
@@ -21,7 +22,6 @@ export const AuthContextProvider = ({children}) => {
         password: ""
     });
     const [ loginInfo, setLoginInfo ] = useState({
-        email: "",
         password: ""
     });
 
@@ -110,10 +110,10 @@ export const AuthContextProvider = ({children}) => {
     }, [user]);
 
     // add a watched item
-    const addWatchedItem = useCallback(async (title, slug, image, episodeId, episodeNumber) => {
+    const addWatchedItem = useCallback(async (title, slug, image, episodeId, episodeNumber, date) => {
         if (user) {
             const { _id } = user;
-            const response = await postRequest(`${baseUrl}/users/add-watched`, JSON.stringify({ userId: _id, title, slug, image, episodeId, episodeNumber }));
+            const response = await postRequest(`${baseUrl}/users/add-watched`, JSON.stringify({ userId: _id, title, slug, image, episodeId, episodeNumber, date }));
             if (!response.error) {
                 setUser(response);
                 const updatedUser = { ...user, watched: response.watched };
@@ -135,9 +135,23 @@ export const AuthContextProvider = ({children}) => {
         }
     }, [user]);
 
+    // remove all watched items
+    const removeAllWatchedItems = useCallback(async () => {
+        if (user) {
+            const { _id } = user;
+            const response = await postRequest(`${baseUrl}/users/delete-watched-list`, JSON.stringify({ userId: _id }));
+            if (!response.error) {
+                setUser(response);
+                const updatedUser = { ...user, watched: response.watched };
+                localStorage.setItem('User', JSON.stringify(updatedUser));
+            }
+        }
+    }, [user]);
+
+    // update profile
     const updateProfile = useCallback(async (formData) => {
         setIsUpdateProfileLoading(true);
-        setIsUpdateProfileError(null);
+        setIsUpdateProfileError(false);
         if (user) {
             const { _id } = user;
             const { image, wallpaper, username, nickname, toggleNews } = formData;
@@ -151,12 +165,15 @@ export const AuthContextProvider = ({children}) => {
                 setIsUpdateProfileLoading(false);
                 localStorage.setItem('User', JSON.stringify(updatedUser));
             } else {
+                console.log(response)
                 setIsUpdateProfileLoading(false);
-                return setIsUpdateProfileError(response);
+                setIsUpdateProfileError(true);
+                setErrorUpdateMessage(response.message)
             }
         }
-    }, [user, setUser]);
+    }, [user]);
 
+    // get count of all the user -> admin right
     const getCount = useCallback(async () => {
         if (user) {
             const { _id, email } = user;
@@ -196,6 +213,7 @@ export const AuthContextProvider = ({children}) => {
                 // update profile
                 isUpdateProfileLoading,
                 isUpdateProfileError,
+                errorUpdateMessage,
                 updateProfile,
                 //get users count
                 getCount,

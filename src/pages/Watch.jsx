@@ -39,9 +39,18 @@ const Watch = () => {
 
                 // add to database 
                 if (user && response?.id && response?.number) {
-                    addWatchedItem( response?.anime?.title?.english, id, response?.anime?.coverImage, response?.id, response?.number)
+                    const date = new Date();
+                    const currentDate = date.toISOString();
+                    addWatchedItem( 
+                        response?.anime?.title?.english, 
+                        id, 
+                        response?.anime?.coverImage, 
+                        response?.id, 
+                        response?.number,
+                        currentDate
+                    )
                 } else {
-                    console.log("There's an error addign to watched")
+                    console.log("There's an error adding to watched")
                 }
 
                 const matchingEpisode = episodes.find(episode => episode.number === response?.number)
@@ -57,6 +66,7 @@ const Watch = () => {
                     console.log('Not Match Episode')
                 }
             } else {
+                console.log('error', response)
                 setTimeout(() => {
                     fetchData();
                 }, 6000)

@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAuthContext from '../context/AuthContext'
 import '../styles/settingform.css'
 import { useNavigate } from 'react-router-dom';
 import { removeHtmlTags } from '../utilities/utility';
 
 const SettingForm = ({user, storedUser}) => {
-    const { updateProfile, isUpdateProfileError, isUpdateProfileLoading, } = useAuthContext()
+    const { updateProfile, isUpdateProfileError, isUpdateProfileLoading, errorUpdateMessage} = useAuthContext()
+    const navigate = useNavigate()
+    const [ message, setMessage ] = useState('');
+    const [ error, setError ] = useState(false)
     const [ formData, setFormData ] = useState({
         image: user?.profile?.image || storedUser?.profile?.image,
         wallpaper: user?.profile?.wallpaper || storedUser?.profile?.wallpaper,
@@ -13,42 +16,54 @@ const SettingForm = ({user, storedUser}) => {
         nickname: user?.profile?.nickname || storedUser?.profile?.nickname,
         toggleNews: false,
     });
-    const navigate = useNavigate()
-    const [ error, setError ] = useState('');
 
-    // console.log(`formData`, formData.username)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(formData.username.length < 5 || formData.username.length > 10){
-            return setError('Username must be 5-10 characters long')
+        if(formData?.username?.length < 5 || formData?.username?.length > 10){
+            return setMessage('Username must be 5-10 characters long')
         } else {
             const cleanUsername = removeHtmlTags(formData.username);
             setFormData(prev => ({...prev, username: cleanUsername}))
         }
-        if(formData.nickname.length < 5 || formData.nickname.length > 10){
-            return setError('Nickname name must be 3-10 characters long')
+        if(formData?.nickname?.length < 3 || formData?.nickname?.length > 20){
+            return setMessage('Nickname name must be 3-20 characters long')
         } else {
             const cleanNickname = removeHtmlTags(formData.image);
             setFormData(prev => ({...prev, image: cleanNickname}))
         }
-        if(formData.image.length > 200){
-            return setError('Image URL is too long')
+        if(formData?.image?.length > 200){
+            return setMessage('Image URL is too long')
         } else {
-            const cleanImage = removeHtmlTags(formData.nickname);
+            const cleanImage = removeHtmlTags(formData?.nickname);
             setFormData(prev => ({...prev, nickname: cleanImage}))
         }
-        if(formData.wallpaper.length > 200){
-            return setError('Wallpaper URL is too long')
+        if(formData?.wallpaper?.length > 200){
+            return setMessage('Wallpaper URL is too long')
         } else {
-            const cleanWallpaper = removeHtmlTags(formData.wallpaper);
+            const cleanWallpaper = removeHtmlTags(formData?.wallpaper);
             setFormData(prev => ({...prev, wallpaper: cleanWallpaper}))
         }
-        
-        console.log(`isUpdateProfileError`, isUpdateProfileError)
+
         updateProfile(formData);
-        navigate('/profile')
+        if (isUpdateProfileError) {
+            setMessage(errorUpdateMessage)
+        } 
     };
+
+    useEffect(() => {
+        if (!isUpdateProfileError) {
+            navigate('/profile')
+        } else {
+            setError(isUpdateProfileError)
+            setMessage(errorUpdateMessage)
+            console.log('message', message)
+            setTimeout(() => {
+                setError(false)
+            }, 2000)
+        }
+    }, [updateProfile, errorUpdateMessage, user])
+
 
     return (
         <div className="container container__setting">
@@ -114,6 +129,7 @@ const SettingForm = ({user, storedUser}) => {
                 <button
                     className="btn btn-primary"
                     type='submit'
+                    disabled={isUpdateProfileLoading === true || error === true}
                 >
                 {
                     isUpdateProfileLoading
@@ -123,9 +139,9 @@ const SettingForm = ({user, storedUser}) => {
                     
                 </button>
                 {
-                    error !== '' &&
+                    message !== '' &&
                     <span className='error__message'>
-                        {error}
+                        {message}
                     </span>
                 }
             </form>

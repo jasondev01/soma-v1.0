@@ -15,7 +15,7 @@ const ProfileContent = ({bookmarked, watched}) => {
     //     return item.concat(index.episodes);
     // }, []);
 
-    const dataToShow = active === 'bookmarked' ? bookmarked?.slice().reverse() : watched?.slice().reverse() //allEpisodes?.slice().reverse();
+    const dataToShow = active === 'bookmarked' ? bookmarked.slice().reverse() : watched //allEpisodes?.slice().reverse();
     const totalItems = dataToShow?.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -52,10 +52,6 @@ const ProfileContent = ({bookmarked, watched}) => {
             <div className='display__content'>
             {
                 paginatedData?.map((item, index) => {
-                    // const find = watched?.map(watchedItem => watchedItem.episodes?.find(episodeId => episodeId?._id === item?._id) )
-                    // const findMatched = find?.find(find => find?._id === item?._id);
-                    // console.log(`findMatched`, findMatched)
-                    // console.log(`find`, find)
                     return (
                         <Link 
                             to={`/info/${item?.slug}`}
@@ -66,9 +62,6 @@ const ProfileContent = ({bookmarked, watched}) => {
                                 src={item?.image} 
                                 alt={item?.title} 
                             />
-                            {
-                                
-                            }
                             <div className='content__title'>
                                 <h3>
                                     {item?.title}
