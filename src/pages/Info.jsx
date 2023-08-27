@@ -71,7 +71,7 @@ const Info = () => {
 
     const firstEpisode = (data?.episodes?.length - data?.episodes?.length) + 1;
     const currentEpisode = data?.currentEpisode;
-    const nextEpisode = data.next;
+    const nextEpisode = data?.next;
     
     return (
         <>

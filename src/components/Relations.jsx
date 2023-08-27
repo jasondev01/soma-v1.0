@@ -13,13 +13,13 @@ const Relations = ({data}) => {
     return (
         <>
         {
-            data.relations.length > 0 && 
+            data.relations?.length > 0 && 
             <section className='info__recommendation'>
                 <div className="section__header">
                     <h2>Relations: </h2>
                 </div>
                 {
-                    data.relations.length > 0 ? (
+                    data.relations?.length > 0 ? (
                         <Swiper className='container container__recommendation'
                             slidesPerView={4}
                             breakpoints={breakpoints}
