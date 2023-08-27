@@ -43,13 +43,13 @@ const LastWatched = () => {
                     >
                     {
                         watchedData?.map((item, index) => {
-                            const current = item.episodes[item.episodes.length - 1]
+                            const current = item.episodes[item.episodes?.length - 1]
                             return (
                                 <SwiperSlide 
                                     key={index} 
                                     className={`continue__item`}
                                 >
-                                    <Link to={`/watch/${item?.slug}/${current.number}/${current.id}`} >
+                                    <Link to={`/watch/${item?.slug}/${current?.number}/${current?.id}`} >
                                         <div className='continue__image'>
                                             <LazyLoadImage
                                                 effect="blur"
@@ -62,7 +62,7 @@ const LastWatched = () => {
                                             <span 
                                                 className={`continue__episode`}
                                             >
-                                                Episode {current.number}
+                                                Episode {current?.number}
                                             </span>
                                         </div>
                                     </Link >

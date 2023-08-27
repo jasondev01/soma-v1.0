@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 import useAuthContext from "../context/AuthContext";
 
 const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
-    
     const [ isBookmarked, setIsBookmarked ] = useState(false)
     const { addBookmark, removeBookmark, user } = useAuthContext();
 
     useEffect(() => {
-        if (user && user.bookmarked && user.bookmarked.some(item => item.slug === data.slug)) {
+        if (user && user?.bookmarked && user?.bookmarked.some(item => item?.slug === data?.slug)) {
             setIsBookmarked(true);
         } else {
             setIsBookmarked(false);
@@ -31,8 +30,8 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
 
 
     // console.log("anime data: ", data)
-    const findCurrentEpisode = data.episodes.find(episode => episode.number === currentEpisode)
-    const findFirstEpisode = data.episodes.find(episode => episode.number === firstEpisode)
+    const findCurrentEpisode = data?.episodes?.find(episode => episode?.number === currentEpisode)
+    const findFirstEpisode = data?.episodes?.find(episode => episode?.number === firstEpisode)
 
     return (
         <section id='info' className='info' style={{backgroundImage: `url(${data?.bannerImage})`}} >
@@ -115,7 +114,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         </div>
                     }
                     {
-                        data.synonyms.length > 0 &&
+                        data?.synonyms?.length > 0 &&
                         <ul className='anime__info__ul'>
                             <span>Other Names:</span>
                             <li> 
@@ -184,14 +183,14 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         </p>
                     </div>
                     {
-                        data?.episodes.length > 0 && data?.type !== 'MANGA' ? (
+                        data?.episodes?.length > 0 && data?.type !== 'MANGA' ? (
                             <div className='anime__info__buttons'>
                                 <Link 
                                     to={`/watch/${data?.slug}/${findCurrentEpisode?.number}/${findCurrentEpisode?.id}`} 
                                     className="btn btn-primary"
                                 >
                                 {
-                                    data.episodes.length <= 10
+                                    data?.episodes?.length <= 10
                                     ? `Watch EP 0${data?.currentEpisode}`
                                     : `Watch EP ${currentEpisode}`
                                 }
