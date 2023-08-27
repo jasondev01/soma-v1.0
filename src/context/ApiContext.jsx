@@ -71,10 +71,10 @@ export const ApiProvider = ({ children }) => {
             const response = await postRequest(`${baseUrl}/info/`, JSON.stringify({ slug }))
             // const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${slug}`)
             const responseData = response.data;
-            // const cleanedDescription = removeHtmlTags(responseData.description);
-            // const cleanData = { ...responseData, description: cleanedDescription };
+            const cleanedDescription = removeHtmlTags(responseData.description);
+            const cleanData = { ...responseData, description: cleanedDescription };
             // console.log("Info Context", responseData);
-            return responseData;
+            return cleanData;
         } catch(error) {
             console.log("Info Context", error.message);
             return true;

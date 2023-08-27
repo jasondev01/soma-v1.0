@@ -51,7 +51,6 @@ const Login = () => {
                     <input type={`${showPassword ? 'text' : 'password'}`} 
                         required
                         placeholder='Password'
-                        // value={loginInfo.password}
                         autoComplete="password"
                         onChange={e => updateLoginInfo({
                             ...loginInfo,
