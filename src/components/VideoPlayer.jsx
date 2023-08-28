@@ -25,10 +25,6 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
     const [ quality, setQuality ] = useState([]);
     const [ fetchEnimeEpisode, setFetchEnimeEpisode ] = useState(false)
     const [ qualityLoading, setQualityLoading ] = useState(true);
-    const [ isFullScreen, setIsFullScreen ] = useState(() => {
-        const storedScreenState = localStorage.getItem('fullscreen');
-        return storedScreenState !== null ? storedScreenState === 'true' : false;
-    });
     const { episodeId } = useParams();
     const { fetchEpisodeWatch, getSource } = useApiContext();
     const { addBookmark, removeBookmark, user } = useAuthContext();
@@ -134,39 +130,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
         };
     }, [onVideoEnd]);
 
-    // handle toggle full screen
-    const handleFullScreenToggle = () => {
-        setIsFullScreen(prevScreenState => {
-            const newScreenState = !prevScreenState;
-            localStorage.setItem('fullscreen', newScreenState.toString());
-            return newScreenState;
-        });
-    }
 
-    // stores a state of fullscreen
-    useEffect(() => {
-        const storedScreenState = localStorage.getItem('fullscreen');
-        if (storedScreenState !== null) {
-            setIsFullScreen(storedScreenState === 'true');
-        }
-    }, []);
-
-    // get the fullscreen json from the localstorage
-    useEffect(() => {
-        const videoReact = document.querySelector('.video-react-controls-enabled')
-        localStorage.setItem('fullscreen', JSON.stringify(isFullScreen));
-
-        // if state is true
-        const enterFullscreen = () => {
-            if (isFullScreen) {
-                videoReact.requestFullscreen();
-            } 
-        };
-        
-        if (isFullScreen) {
-            enterFullscreen();
-        } 
-    }, [isFullScreen]);
 
 
     return (
@@ -177,10 +141,8 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
                 playsInline
             >
                 <HLSSource src={videoSource}/>
-                
                 <BigPlayButton position="center" />
                 <LoadingSpinner />
-
                 <ControlBar >
                     
                     <PlaybackRateMenuButton rates={[2, 1.5, 1, 0.5, 0.1]}/>
@@ -211,13 +173,6 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
                         onClick={handleAddBookmark}
                     />
                 }
-                <button 
-                    title={`Auto Fullscreen is Currently ${isFullScreen ? 'On' : 'Off'}`}
-                    className={`fullscreen-toggle ${isFullScreen ? 'active' : ''}`} 
-                    onClick={handleFullScreenToggle}
-                >
-                    Toggle Auto Fullscreen {isFullScreen ? 'Off' : 'On'}
-                </button>
             </div>
             
         </>

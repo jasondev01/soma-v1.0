@@ -22,7 +22,7 @@ function App() {
 
     return (
         <>
-            <Analytics />
+            <Analytics mode={'production'} />
             <Router>
                 <Routes>
                     <Route element={<MainLayout />} > 

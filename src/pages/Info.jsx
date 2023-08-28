@@ -35,8 +35,8 @@ const Info = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchInfo(slug);
-            // console.log('info response', response)
-            if(response) {
+            console.log('info response', response)
+            if(response && response.description !== '') {
                 setData(response);
                 setEpisodeRange(response.episodes);
                 setPageLoad(true)
@@ -44,7 +44,7 @@ const Info = () => {
             } else {
                 setTimeout(() => {
                     fetchData();
-                }, 6000)
+                }, 1000)
             }
         }
         fetchData();
@@ -76,10 +76,10 @@ const Info = () => {
     return (
         <>
         <Helmet>
-            <title>soma - {data?.title?.romaji || data?.title?.english} </title>
+            <title>soma - {data?.title?.romaji || data?.title?.english || 'title'} </title>
             <meta 
                 name='description' 
-                content={`${data?.title?.romaji || data?.title?.english} details`}
+                content={`${data?.title?.romaji || data?.title?.english || 'title'} details`}
             />
             <meta property="og:image" content={data?.coverImage} />
         </Helmet>

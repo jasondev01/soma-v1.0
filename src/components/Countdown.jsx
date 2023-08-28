@@ -4,7 +4,7 @@ function formatTimeUnit(unit) {
     return unit < 10 ? `0${unit}` : unit;
 }
 
-function Countdown({ nextEpisode }) {
+const Countdown = ({ nextEpisode }) => {
     const [ countdownValue, setCountdownValue ] = useState("");
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function Countdown({ nextEpisode }) {
         }, 1000);
 
         return () => {
-        clearInterval(interval);
+            clearInterval(interval);
         };
     }, [nextEpisode]);
 

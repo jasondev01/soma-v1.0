@@ -38,7 +38,7 @@ body {
     --text-shadow: 2px 1px 2px rgba(124, 124, 124, 0.6);
     --box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);
 
-    --rating: rgb(255, 87, 87);
+    --rating: hsl(0, 100%, 67%);
 
     --container-lg: 72%;
     --container-md: 86%;

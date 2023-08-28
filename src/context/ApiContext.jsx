@@ -1,7 +1,7 @@
 import { useContext, createContext} from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
-import { animeUrl, consUrl, corsUrl, baseUrl, postRequest, restSecret, sampleSecret } from "../utilities/service";
+import { animeUrl, consUrl, corsUrl, baseUrl, restSecret } from "../utilities/service";
 
 const ApiContext = createContext();
 
@@ -68,12 +68,17 @@ export const ApiProvider = ({ children }) => {
 
     const fetchInfo = async (slug) => {
         try {
-            const response = await postRequest(`${baseUrl}/info/`, JSON.stringify({ slug }))
+            const response = await axios.post(`${baseUrl}/info`, JSON.stringify({ slug }), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
             // const response = await axios.get(`${corsUrl}/${animeUrl}/anime/${slug}`)
-            const responseData = response.data;
-            const cleanedDescription = removeHtmlTags(responseData.description);
+            const responseData = response.data.data;
+            const cleanedDescription = removeHtmlTags(responseData?.description);
             const cleanData = { ...responseData, description: cleanedDescription };
-            console.log("Info Context", responseData);
+            console.log("Info Context", cleanData);
             return cleanData;
         } catch(error) {
             console.log("Info Context", error.message);
