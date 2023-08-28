@@ -37,7 +37,7 @@ export const ApiProvider = ({ children }) => {
                 },
             })
             const responseData = response.data.data;
-            console.log("Latest Context", responseData)
+            // console.log("Latest Context", responseData)
             return responseData;
         } catch(error) {
             console.log("Latest Context", error.message);
@@ -78,7 +78,7 @@ export const ApiProvider = ({ children }) => {
             const responseData = response.data.data;
             const cleanedDescription = removeHtmlTags(responseData?.description);
             const cleanData = { ...responseData, description: cleanedDescription };
-            console.log("Info Context", cleanData);
+            // console.log("Info Context", cleanData);
             return cleanData;
         } catch(error) {
             console.log("Info Context", error.message);
@@ -171,7 +171,7 @@ export const ApiProvider = ({ children }) => {
                 ...item,
                 description: removeHtmlTags(item.description)
             }))
-            // console.log("Latest Ongoing Context", cleanData);
+            // console.log("New Season Context", cleanData);
             return cleanData;
         } catch(error) {
             console.log("Latest Ongoing", error.message);
