@@ -199,6 +199,21 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
+    const getUpdate = async ( endpoint, admin ) => {
+        try {
+            const response = await axios.post(`${baseUrl}/update-${endpoint}`, JSON.stringify({ admin }), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
+            return response;
+        } catch(error) {
+            console.log(`${endpoint} error`, error)
+            return false
+        }
+    }
+
 
     return (
         <ApiContext.Provider value={{ 
@@ -213,6 +228,7 @@ export const ApiProvider = ({ children }) => {
             fetchNewSeason,
             getNews,
             getSource,
+            getUpdate,
         }}>
             {children}
         </ApiContext.Provider>);

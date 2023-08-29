@@ -5,14 +5,17 @@ import useApiContext from '../context/ApiContext'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingSkeleton from './LoadingSkeleton';
 import useThemeContext from '../context/ThemeContext'
+import useAuthContext from '../context/AuthContext';
 
 const Latest = () => {
     const { fetchLatest } = useApiContext()
     const [ data, setData ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
-    const { theme } = useThemeContext()
+    const { theme } = useThemeContext();
    
     useEffect(() => {
+
+
         const fetchData = async () => {
             const response = await fetchLatest();
             if(response) {
@@ -27,7 +30,6 @@ const Latest = () => {
         fetchData();
         setPageLoad(false)
     }, []);
-
 
     return (
         <section id='latest' className='latest'>

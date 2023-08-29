@@ -4,7 +4,8 @@ export const corsUrl = import.meta.env.VITE_API_CORS_URL
 export const baseUrl = import.meta.env.VITE_API_SOMA_USERS
 export const secretKey = import.meta.env.VITE_API_SECRET_KEY
 export const restSecret = import.meta.env.VITE_API_REST_SECRET
-export const admin = import.meta.env.VITE_API_EMAIL
+export const admin = import.meta.env.VITE_API_ADMIN_EMAIL
+export const sub_admin = import.meta.env.VITE_API_SUB_EMAIL
 
 // login and register user service
 export const postRequest = async (url, body) => {

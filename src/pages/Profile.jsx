@@ -9,12 +9,14 @@ import News from '../components/News'
 import ProfileContent from '../components/ProfileContent'
 import useThemeContext from '../context/ThemeContext';
 import { Helmet } from 'react-helmet'
+import { admin, sub_admin } from '../utilities/service';
+import Updater from '../components/Updater'
 
 const Profile = () => {
     const [ news, setNews ] = useState([]);
     const [ bookmarked, setBookmarked ] = useState([])
     const [ watched, setWatched ] = useState([])
-    const [ currentUser, setCurrentUser ] = useState(null)
+    const [ session, setSession ] = useState(null);
     const { getNews } = useApiContext();
     const { user } = useAuthContext();
     const { theme } = useThemeContext();
@@ -23,7 +25,6 @@ const Profile = () => {
     const fetchNews = async () => {
         try {
             const response = await getNews()
-            // console.log("News", response);
             setNews(response)
         } catch(error) {    
             console.log("error", error)
@@ -41,18 +42,12 @@ const Profile = () => {
                 || 
                 storedUser?.watched.sort((a, b) => new Date(b?.updatedAt) - new Date(a?.updatedAt)) 
             )
-            setCurrentUser(storedUser)
+            setSession(storedUser)
         } else {
             navigate('/');
         }
     }, [])
 
-
-    // Calculate the total count of episodes across all watched items
-    const totalEpisodeCount = watched.reduce((total, index) => {
-        return total + index.episodes.length;
-    }, 0);
-  
     return (
         <>
         <section className='profile__page'>
@@ -107,6 +102,13 @@ const Profile = () => {
                     }
                 </div>
             </div>
+            {
+                admin === session?.email || sub_admin === session?.email 
+                ?
+                <Updater session={session}/>
+                :
+                <></>
+            }
         </section>
         <section style={{
             marginTop: '1rem'
