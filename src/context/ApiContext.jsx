@@ -201,7 +201,12 @@ export const ApiProvider = ({ children }) => {
 
     const getUpdate = async ( endpoint ) => {
         try {
-            const response = await axios.get(`${baseUrl}/update-${endpoint}`)
+            const response = await axios.get(`${baseUrl}/update-${endpoint}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
             return response;
         } catch(error) {
             console.log(`${endpoint} error`, error)
