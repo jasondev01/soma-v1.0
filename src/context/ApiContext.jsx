@@ -1,7 +1,7 @@
 import { useContext, createContext} from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
-import { animeUrl, consUrl, corsUrl, baseUrl, restSecret } from "../utilities/service";
+import { animeUrl, consUrl, corsUrl, baseUrl, restSecret, postRequest } from "../utilities/service";
 
 const ApiContext = createContext();
 
@@ -201,7 +201,7 @@ export const ApiProvider = ({ children }) => {
 
     const getUpdate = async ( endpoint, admin ) => {
         try {
-            const response = await axios.post(`${baseUrl}/update-${endpoint}`, JSON.stringify({ admin }), {
+            const response = await postRequest(`${baseUrl}/update-${endpoint}`, JSON.stringify({ admin }), {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
