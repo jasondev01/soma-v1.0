@@ -201,12 +201,7 @@ export const ApiProvider = ({ children }) => {
 
     const getUpdate = async ( endpoint, admin ) => {
         try {
-            const response = await postRequest(`${baseUrl}/update-${endpoint}`, JSON.stringify({ admin }), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            })
+            const response = await postRequest(`${baseUrl}/update-${endpoint}`, JSON.stringify({ admin }))
             return response;
         } catch(error) {
             console.log(`${endpoint} error`, error)
