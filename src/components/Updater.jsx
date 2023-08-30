@@ -9,13 +9,13 @@ const Updater = (session) => {
 
     const admin = session?.session?.email;
 
-    const handleUpdate = async ( endpoint, admin ) => {
+    const handleUpdate = async ( endpoint ) => {
         setActiveButton(endpoint)
-        console.log('email', session?.session?.email)
+        console.log('email', admin)
         try {
             setUpdating(true)
             setResponse('Updating..')
-            const response = await getUpdate(endpoint, admin)
+            const response = await getUpdate(endpoint)
             if (!response) alert(`Error fetching ${endpoint} endpoint`)
             setResponse('Updated!')
             setTimeout(() => {
@@ -40,25 +40,25 @@ const Updater = (session) => {
             }}
         >
             <button className={`btn btn-primary ${activeButton === 'hero' ? 'active' : ''}`}
-                onClick={() => handleUpdate('hero', admin)}
+                onClick={() => handleUpdate('hero')}
                 disabled={!session.session || updating}
             >
                 { activeButton === 'hero' && updating ? response : 'Hero' }
             </button>
             <button className={`btn btn-primary ${activeButton === 'latest' ? 'active' : ''}`}
-                onClick={() => handleUpdate('latest', admin)}
+                onClick={() => handleUpdate('latest')}
                 disabled={!session.session || updating}
             >
                 { activeButton === 'latest' && updating ? response : 'Latest' }
             </button>
             <button className={`btn btn-primary ${activeButton === 'popular' ? 'active' : ''}`}
-                onClick={() => handleUpdate('popular', admin)}
+                onClick={() => handleUpdate('popular')}
                 disabled={!session.session || updating}
             >
                 { activeButton === 'popular' && updating ? response : 'Popular' }
             </button>
             <button className={`btn btn-primary ${activeButton === 'newseason' ? 'active' : ''}`}
-                onClick={() => handleUpdate('newseason', admin)}
+                onClick={() => handleUpdate('newseason')}
                 disabled={!session.session || updating}
             >
                 { activeButton === 'newseason' && updating ? response : 'New Season' }

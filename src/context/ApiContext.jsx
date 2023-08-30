@@ -199,9 +199,9 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
-    const getUpdate = async ( endpoint, admin ) => {
+    const getUpdate = async ( endpoint ) => {
         try {
-            const response = await postRequest(`${baseUrl}/update-${endpoint}`, JSON.stringify({ admin }))
+            const response = await axios.get(`${baseUrl}/update-${endpoint}`)
             return response;
         } catch(error) {
             console.log(`${endpoint} error`, error)
