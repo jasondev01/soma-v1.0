@@ -2,7 +2,7 @@ import '../styles/ongoing.css'
 import useThemeContext from '../context/ThemeContext'
 import { useEffect, useState } from 'react';
 import useApiContext from '../context/ApiContext';
-import { getCurrentSeason, convertTime, removeDuplicates } from '../utilities/utility'
+import { getCurrentSeason, convertTime } from '../utilities/utility'
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PageLoader from '../components/Pageloader'
@@ -23,7 +23,8 @@ const OngoingPage = () => {
             if (response) {
                 const clean = response.filter(item => 
                     item.status === 'RELEASING' &&
-                    item.season === currentSeason
+                    item.season === 'SUMMER' && // currentSeason &&
+                    item.year === currentYear
                 )
                 const processedData = clean.sort((a, b) => new Date(b.next) - new Date(a.next))
                 setNewSeason(processedData);
@@ -51,12 +52,12 @@ const OngoingPage = () => {
                 </h2>
             </div>
             {
-                newSeason.length <= 3 ? (
+                newSeason.length <= 0 ? (
                     <PageLoader />
                 ) : (
                     <div className="container container__ongoing">
                         <h3>
-                            Current Season: {currentSeason} {currentYear}
+                            Current Season: {"SUMMER" || currentSeason} {currentYear} (no anime for fall yet)
                         </h3>
                         <div className="ongoing__items">
                             {
