@@ -32,7 +32,7 @@ const Hero = () => {
                 setPageLoad(true);
                 const clean = response.filter(clean => clean?.slug !== 'mushoku-tensei:-jobless-reincarnation-season-2') 
                 const processed = removeDuplicates(clean);
-                console.log('hero', processed)
+                // console.log('hero', processed)
                 setData(processed);
             } else {
                 setTimeout(() => {
