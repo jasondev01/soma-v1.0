@@ -15,14 +15,14 @@ import { removeDuplicates } from '../utilities/utility';
 const Hero = () => {
     const [ data, setData ] = useState([]);
     const [ pageLoad, setPageLoad ] = useState(false);
-    const { fetchHero, fetchInfo } = useApiContext()
+    const { fetchHero } = useApiContext()
 
-    const progressCircle = useRef(null);
-    const progressContent = useRef(null);
-    const onAutoplayTimeLeft = (s, time, progress) => {
-        progressCircle.current.style.setProperty('--progress', 1 - progress);
-        progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-    };
+    // const progressCircle = useRef(null);
+    // const progressContent = useRef(null);
+    // const onAutoplayTimeLeft = (s, time, progress) => {
+    //     progressCircle.current.style.setProperty('--progress', 1 - progress);
+    //     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+    // };
     
     useEffect(() => {
         const fetchData = async () => {
@@ -61,9 +61,10 @@ const Hero = () => {
                         effect={'fade'}
                         pagination={{
                             dynamicBullets: true,
+                            clickable: true
                         }}
                         modules={[Autoplay, Pagination, EffectFade]}
-                        onAutoplayTimeLeft={onAutoplayTimeLeft}
+                        // onAutoplayTimeLeft={onAutoplayTimeLeft}
                     >
                         {
                             sortedData?.slice(0, 10)?.map((item, index) => {
@@ -148,12 +149,12 @@ const Hero = () => {
                                 )
                             })
                         }
-                        <div className="autoplay-progress" slot="container-end">
+                        {/* <div className="autoplay-progress" slot="container-end">
                             <svg viewBox="0 0 48 48" ref={progressCircle}>
                                 <circle cx="24" cy="24" r="20"></circle>
                             </svg>
                             <span ref={progressContent}></span>
-                        </div>
+                        </div> */}
                     </Swiper>
                 )
             }
