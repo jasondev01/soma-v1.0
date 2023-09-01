@@ -126,7 +126,6 @@ const Watch = () => {
                 <div className='episode__video'>
                     <div className='watch__container'>
                         <VideoPlayer 
-                            id={id} 
                             onVideoEnd={handleVideoEnd}
                             animeResult={animeResult}
                         />

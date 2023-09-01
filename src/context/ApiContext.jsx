@@ -7,6 +7,7 @@ const ApiContext = createContext();
 
 export const ApiProvider = ({ children }) => {
 
+
     const fetchHero = async () => {
         try {
             const response = await axios.post(`${baseUrl}/hero`, JSON.stringify({ restSecret }), {
@@ -99,22 +100,6 @@ export const ApiProvider = ({ children }) => {
         } catch(error) {
             console.log("Watch Info Context", error.message);
             return false;
-        }
-    }
-
-    const fetchEpisodeWatch = async (episodeId) => {
-        try {
-            const response = await axios.get(`${corsUrl}/${consUrl}/anime/enime/watch?episodeId=${episodeId}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            })
-            const responseData = response.data;
-            return responseData;
-        } catch (error) {
-            console.log("Episode Watch Context", error.message);
-            return error;
         }
     }
 
@@ -222,7 +207,7 @@ export const ApiProvider = ({ children }) => {
             fetchPopular,
             fetchInfo,
             fetchWatch,
-            fetchEpisodeWatch,
+            // fetchEpisodeWatch, -> deprecated
             fetchPopularPage,
             fetchSearch,
             fetchNewSeason,

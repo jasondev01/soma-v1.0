@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@consumet/extensions": "^1.5.1",
     "@vercel/analytics": "^1.0.2",
     "axios": "^1.4.0",
     "dompurify": "^3.0.4",

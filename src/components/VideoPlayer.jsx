@@ -17,8 +17,11 @@ import { useParams } from "react-router-dom";
 import useApiContext from "../context/ApiContext";
 import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
 import useAuthContext from "../context/AuthContext";
+import { ANIME } from "@consumet/extensions";
 
-const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
+const enime = new ANIME.Enime()
+
+const VideoPlayer = ({ onVideoEnd, animeResult}) => {
     const [ isBookmarked, setIsBookmarked ] = useState(false)
     const [ videoSource, setVideoSource ] = useState(``)
     const [ currentQuality, setCurrentQuality ] = useState();
@@ -26,7 +29,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
     const [ fetchEnimeEpisode, setFetchEnimeEpisode ] = useState(false)
     const [ qualityLoading, setQualityLoading ] = useState(true);
     const { episodeId } = useParams();
-    const { fetchEpisodeWatch, getSource } = useApiContext();
+    const { getSource } = useApiContext();
     const { addBookmark, removeBookmark, user } = useAuthContext();
     const videoRef = useRef(null);
 
@@ -58,7 +61,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchEpisodeWatch(episodeId);
+            const response = await enime.fetchEpisodeSources(episodeId);
             // console.log('response', response)
             if (response) {
                 // console.log("Setting Data", response);
@@ -111,6 +114,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
         setCurrentQuality(option.quality)
     };
 
+
     // handle video end
     useEffect(() => {
         const videoElement = videoRef.current.video.video;
@@ -129,9 +133,6 @@ const VideoPlayer = ({ onVideoEnd, animeResult, id }) => {
             videoElement.removeEventListener("timeupdate", handleTimeUpdate);
         };
     }, [onVideoEnd]);
-
-
-
 
     return (
         <>
