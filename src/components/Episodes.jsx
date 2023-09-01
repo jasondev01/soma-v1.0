@@ -50,7 +50,7 @@ const Episodes = ({animeResult, episodeNumber, id}) => {
                                 <div className='anime__episode__image'>
                                     <LazyLoadImage
                                         effect="blur"
-                                        src={item?.image !== null ? `https://cors.zimjs.com/${item?.image}` : `https://cors.zimjs.com/${animeResult?.anime?.coverImage}`} 
+                                        src={item?.image !== null ? `${item?.image}` : `${animeResult?.anime?.coverImage}`} 
                                         alt={item?.title}
                                     />
                                 </div>

@@ -2,11 +2,13 @@ import { useContext, createContext} from "react"
 import axios from "axios"
 import { removeHtmlTags } from '../utilities/utility';
 import { animeUrl, consUrl, corsUrl, baseUrl, restSecret, postRequest } from "../utilities/service";
+import { ANIME } from "@consumet/extensions";
 
 const ApiContext = createContext();
 
 export const ApiProvider = ({ children }) => {
 
+    const enime = new ANIME.Enime()
 
     const fetchHero = async () => {
         try {
@@ -89,7 +91,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchWatch = async (id, episode) => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/view/${id}/${episode}`, {
+            const response = await axios.get(`${animeUrl}/view/${id}/${episode}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -103,9 +105,30 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
+    const fetchWatchSource = async (episodeId) => {
+        try {
+            const response = await enime.fetchEpisodeSources(episodeId)
+            return response;
+        } catch(error) {
+            console.log("fetchWatchSource", error.message)
+            return false;
+        }
+    }
+
+    
+    const getSource = async (episode) => {
+        try {
+            const response= await axios.get(`${animeUrl}/source/${episode}`)
+            return response;
+        } catch(error) {
+            console.log("Source", error.message)
+            return false;
+        }
+    }
+
     const fetchPopularPage = async (pageNumber) => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/popular?page=${pageNumber}&perPage=20`, {
+            const response = await axios.get(`${animeUrl}/popular?page=${pageNumber}&perPage=20`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -125,7 +148,7 @@ export const ApiProvider = ({ children }) => {
 
     const fetchSearch = async (query) => {
         try {
-            const response = await axios.get(`${corsUrl}/${animeUrl}/search/${query}?page=1&perPage=100`, {
+            const response = await axios.get(`${animeUrl}/search/${query}?page=1&perPage=100`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -164,19 +187,9 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
-    const getSource = async (episode) => {
-        try {
-            const response= await axios.get(`${corsUrl}/${animeUrl}/source/${episode}`)
-            return response;
-        } catch(error) {
-            console.log("Source", error.message)
-            return false;
-        }
-    }
-
     const getNews = async () => {
         try {
-            const response = await axios.get(`${corsUrl}/${consUrl}/news/ann/recent-feeds`)
+            const response = await axios.get(`${consUrl}/news/ann/recent-feeds`)
             return response.data
         } catch(error) {
             console.log("News", error.message);
@@ -207,12 +220,12 @@ export const ApiProvider = ({ children }) => {
             fetchPopular,
             fetchInfo,
             fetchWatch,
-            // fetchEpisodeWatch, -> deprecated
+            fetchWatchSource,
+            getSource,
             fetchPopularPage,
             fetchSearch,
             fetchNewSeason,
             getNews,
-            getSource,
             getUpdate,
         }}>
             {children}

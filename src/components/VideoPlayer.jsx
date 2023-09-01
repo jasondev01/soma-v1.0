@@ -17,9 +17,7 @@ import { useParams } from "react-router-dom";
 import useApiContext from "../context/ApiContext";
 import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
 import useAuthContext from "../context/AuthContext";
-import { ANIME } from "@consumet/extensions";
 
-const enime = new ANIME.Enime()
 
 const VideoPlayer = ({ onVideoEnd, animeResult}) => {
     const [ isBookmarked, setIsBookmarked ] = useState(false)
@@ -29,7 +27,7 @@ const VideoPlayer = ({ onVideoEnd, animeResult}) => {
     const [ fetchEnimeEpisode, setFetchEnimeEpisode ] = useState(false)
     const [ qualityLoading, setQualityLoading ] = useState(true);
     const { episodeId } = useParams();
-    const { getSource } = useApiContext();
+    const { getSource, fetchWatchSource } = useApiContext();
     const { addBookmark, removeBookmark, user } = useAuthContext();
     const videoRef = useRef(null);
 
@@ -61,13 +59,12 @@ const VideoPlayer = ({ onVideoEnd, animeResult}) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await enime.fetchEpisodeSources(episodeId);
+            const response = await fetchWatchSource(episodeId);
             // console.log('response', response)
             if (response) {
-                // console.log("Setting Data", response);
                 setQuality(response);
                 setQualityLoading(false)
-                // checking the video sources if they have at least one quality and if none, navigate to info page
+                // check the response if there are sources
                 const sortedSources = response?.sources?.sort((a, b) => {
                     if (a.quality === '1080p') {
                         return -1;
@@ -97,12 +94,9 @@ const VideoPlayer = ({ onVideoEnd, animeResult}) => {
                     setFetchEnimeEpisode(true);
                 }  
             } else {
-                console.log('error', response.response.status)
+                console.log('error', response)
                 fetchSource();
                 setFetchEnimeEpisode(true);
-                setTimeout(() => {
-                    fetchData();
-                }, 6000);
             }
         };
         fetchData();
