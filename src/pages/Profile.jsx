@@ -24,8 +24,8 @@ const Profile = () => {
     
     const fetchNews = async () => {
         try {
-            const response = await getNews()
-            setNews(response)
+            // const response = await getNews()
+            setNews(null)
         } catch(error) {    
             console.log("error", error)
         }

@@ -15,8 +15,15 @@ const Updater = (session) => {
         try {
             setUpdating(true)
             setResponse('Updating..')
-            const response = await getUpdate(endpoint)
+
+            const requestTimeout = 60000; 
+
+            const response = await Promise.race([
+                getUpdate(endpoint),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), requestTimeout))
+            ]);
             if (!response) alert(`Error fetching ${endpoint} endpoint`)
+            
             setResponse('Updated!')
             setTimeout(() => {
                 setUpdating(false)

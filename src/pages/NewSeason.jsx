@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet';
 const OngoingPage = () => {
     const [ newSeason, setNewSeason ] = useState([]);
     const { theme } = useThemeContext();
-    const { fetchNewSeason } = useApiContext();
+    const { fetchNewSeason, getUpdate, updatItemNewSeason } = useApiContext();
 
     const currentSeason = getCurrentSeason();
     const currentYear = new Date().getFullYear()
@@ -28,6 +28,31 @@ const OngoingPage = () => {
                 )
                 const processedData = clean.sort((a, b) => new Date(b.next) - new Date(a.next))
                 setNewSeason(processedData);
+
+                if (processedData.length > 0) {
+                    const lastItem = processedData[processedData?.length - 1];
+                    const nextTime = new Date(lastItem?.next).getTime() - new Date().getTime();
+                  
+                    if(nextTime <= 0) {
+                        await updatItemNewSeason(lastItem?.slug)
+                        await getUpdate('latest')
+                    } else {
+                        console.log(nextTime)
+                        const interval = setInterval(async() => {
+                            try {
+                                const remainingTime = new Date(lastItem?.next).getTime() - new Date().getTime();
+                                console.log('remaining time', remainingTime)
+                                if (remainingTime <= 0) {
+                                    await updatItemNewSeason(lastItem?.slug)
+                                    await getUpdate('latest')
+                                    clearInterval(interval);
+                                }
+                            } catch (error) {
+                                console.log("setInterval", error)
+                            }
+                        }, nextTime); 
+                    }
+                }
             } else {
                 setTimeout(() => {
                     fetchData();

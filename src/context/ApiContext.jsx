@@ -187,6 +187,20 @@ export const ApiProvider = ({ children }) => {
         }
     }
 
+    const updatItemNewSeason = async (slug) => {
+        try {
+            const response = await axios.post(`${baseUrl}/update-newseason-one`, JSON.stringify({ slug }), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
+            console.log('updatItemNewSeason', response)
+        } catch (error) {
+            console.log('updatItemNewSeason', error)
+        }
+    }
+
     const getNews = async () => {
         try {
             const response = await axios.get(`${consUrl}/news/ann/recent-feeds`)
@@ -227,6 +241,7 @@ export const ApiProvider = ({ children }) => {
             fetchNewSeason,
             getNews,
             getUpdate,
+            updatItemNewSeason
         }}>
             {children}
         </ApiContext.Provider>);
