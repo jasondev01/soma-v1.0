@@ -190,8 +190,8 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                                     className="btn btn-primary"
                                 >
                                 {
-                                    data?.episodes?.length <= 10
-                                    ? `Watch EP 0${data?.currentEpisode}`
+                                    data?.episodes[data?.episodes.length - 1].number < 10
+                                    ? `Watch EP 0${data?.episodes[data?.episodes.length - 1].number}`
                                     : `Watch EP ${currentEpisode}`
                                 }
                                 </Link>

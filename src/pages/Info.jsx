@@ -35,7 +35,7 @@ const Info = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetchInfo(slug);
-            // console.log('info response', response)
+            console.log('info response', response)
             if(response && response.description !== '') {
                 setData(response);
                 setEpisodeRange(response.episodes);
