@@ -16,13 +16,13 @@ import LoginPage from "./pages/LoginPage"
 import AuthLayout from "./layouts/AuthLayout"
 import RegisterPage from "./pages/RegisterPage"
 import SettingPage from "./pages/SettingPage"
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react';
 
 function App() {
 
     return (
         <>
-            <Analytics mode={'production'} />
+            {/* <Analytics mode={'production'} /> */}
             <Router>
                 <Routes>
                     <Route element={<MainLayout />} > 

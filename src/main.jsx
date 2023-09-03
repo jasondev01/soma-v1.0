@@ -5,7 +5,7 @@ import './index.css'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { ApiProvider } from './context/ApiContext.jsx'
 import { AuthContextProvider } from './context/AuthContext.jsx'
-import { inject } from '@vercel/analytics';
+// import { inject } from '@vercel/analytics';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -19,4 +19,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </React.StrictMode>,
 )
 
-inject();
+// inject();
