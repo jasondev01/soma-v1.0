@@ -28,9 +28,7 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
         }
     };
 
-
-    // console.log("anime data: ", data)
-    const findCurrentEpisode = data?.episodes?.find(episode => episode?.number === currentEpisode)
+    // const findCurrentEpisode = data?.episodes?.find(episode => episode?.number === currentEpisode)
     const findFirstEpisode = data?.episodes?.find(episode => episode?.number === firstEpisode)
 
     return (
@@ -186,13 +184,13 @@ const InfoBanner = ({data, currentEpisode, firstEpisode}) => {
                         data?.episodes?.length > 0 && data?.type !== 'MANGA' ? (
                             <div className='anime__info__buttons'>
                                 <Link 
-                                    to={`/watch/${data?.slug}/${findCurrentEpisode?.number}/${findCurrentEpisode?.id}`} 
+                                    to={`/watch/${data?.slug}/${currentEpisode?.number}/${currentEpisode?.id}`} 
                                     className="btn btn-primary"
                                 >
                                 {
                                     data?.episodes[data?.episodes.length - 1].number < 10
-                                    ? `Watch EP 0${data?.episodes[data?.episodes.length - 1].number}`
-                                    : `Watch EP ${currentEpisode}`
+                                    ? `Watch EP 0${data?.episodes[data?.episodes?.length - 1]?.number}`
+                                    : `Watch EP ${currentEpisode.number}`
                                 }
                                 </Link>
                                 <Link 
