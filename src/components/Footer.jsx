@@ -28,6 +28,18 @@ const Footer = () => {
                         •
                     </li>
                     <li>
+                        <a href='https://www.buymeacoffee.com/somae' 
+                            className='github-icon'
+                            target='_blank'
+                            rel='noreferrer'
+                        >
+                            Donate
+                        </a>
+                    </li>
+                    <li className='bulletpoints'>
+                        •
+                    </li>
+                    <li>
                         <a href='https://github.com/jasondev01/soma' 
                             className='github-icon'
                             target='_blank'
